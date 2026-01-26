@@ -1,5 +1,47 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary-50: #e6f2ff;
+  --color-primary-100: #b3d9ff;
+  --color-primary-200: #80c0ff;
+  --color-primary-300: #4da7ff;
+  --color-primary-400: #2d75cd;
+  --color-primary-500: #2d75cd;
+  --color-primary-600: #2563b0;
+  --color-primary-700: #1e4f8f;
+  --color-primary-800: #163c6f;
+  --color-primary-900: #0f2a4f;
+  
+  --color-secondary-50: #f5f5ff;
+  --color-secondary-100: #e6e6ff;
+  --color-secondary-200: #ccccff;
+  --color-secondary-300: #b3b3ff;
+  --color-secondary-400: #4d4dff;
+  --color-secondary-500: #00007f;
+  --color-secondary-600: #00006b;
+  --color-secondary-700: #000056;
+  --color-secondary-800: #000042;
+  --color-secondary-900: #00002e;
+  
+  --color-accent-50: #fff7ed;
+  --color-accent-100: #ffedd5;
+  --color-accent-200: #fed7aa;
+  --color-accent-300: #fdba74;
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+  --color-accent-800: #9a3412;
+  --color-accent-900: #7c2d12;
+  
+  --font-family-sans: Inter, system-ui, sans-serif;
+  
+  --spacing-128: 32rem;
+  --spacing-144: 36rem;
+  
+  --max-width-8xl: 88rem;
+}
+
 @layer base {
   body {
     font-family: Inter, system-ui, sans-serif;
