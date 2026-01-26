@@ -14,42 +14,43 @@
 
 @layer components {
   .btn-primary {
-    background-color: #2563eb;
+    background-color: #2d75cd;
     color: white;
     font-weight: 500;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
   }
   
   .btn-primary:hover {
-    background-color: #1d4ed8;
+    background-color: #2563b0;
   }
   
   .btn-secondary {
-    background-color: #475569;
+    background-color: #00007f;
     color: white;
     font-weight: 500;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
   }
   
   .btn-secondary:hover {
-    background-color: #334155;
+    background-color: #00006b;
   }
   
   .btn-outline {
-    border: 2px solid #2563eb;
-    color: #2563eb;
+    border: 2px solid #2d75cd;
+    color: #2d75cd;
     font-weight: 500;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
   }
   
   .btn-outline:hover {
-    background-color: #eff6ff;
+    background-color: #e6f2ff;
+    border-color: #2563b0;
   }
   
   .section-padding {

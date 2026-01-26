@@ -5,7 +5,7 @@ import companyData from '../../data/company.json';
 
 const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-br from-primary-600 to-primary-800 text-white section-padding">
+    <section className="relative bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white section-padding">
       <div className="container-custom">
         <div className="max-w-4xl">
           <motion.div

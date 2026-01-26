@@ -12,7 +12,7 @@ const Header = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="bg-white shadow-lg border-b-2 border-primary-600 sticky top-0 z-50">
+    <header className="bg-white shadow-lg border-b-4 border-secondary-500 sticky top-0 z-50">
       <nav className="container-custom py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
