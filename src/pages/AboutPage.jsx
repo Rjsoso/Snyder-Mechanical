@@ -1,9 +1,22 @@
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Shield, GraduationCap, Search, CheckCircle, Award, Quote, DollarSign, Heart, TrendingUp, Users } from 'lucide-react';
 import aboutData from '../data/about.json';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
-import * as Icons from 'lucide-react';
+
+const iconMap = {
+  'shield': Shield,
+  'graduation-cap': GraduationCap,
+  'search': Search,
+  'check-circle': CheckCircle,
+  'award': Award,
+  'quote': Quote,
+  'dollar-sign': DollarSign,
+  'heart': Heart,
+  'trending-up': TrendingUp,
+  'users': Users,
+};
 
 const AboutPage = () => {
   const { section } = useParams();
@@ -100,9 +113,7 @@ const AboutPage = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {pageData.protocols.map((protocol, index) => {
-                  const Icon = Icons[protocol.icon.split('-').map((word, i) => 
-                    word.charAt(0).toUpperCase() + word.slice(1)
-                  ).join('')] || Icons.Shield;
+                  const Icon = iconMap[protocol.icon] || Shield;
                   
                   return (
                     <motion.div
@@ -148,7 +159,7 @@ const AboutPage = () => {
                 {pageData.awards.map((award, index) => (
                   <Card key={index} className="text-center">
                     <div className="w-16 h-16 rounded-full bg-accent-100 flex items-center justify-center mx-auto mb-4">
-                      <Icons.Award className="w-8 h-8 text-accent-600" />
+                      <Award className="w-8 h-8 text-accent-600" />
                     </div>
                     <p className="text-secondary-900 font-medium">{award}</p>
                   </Card>
@@ -162,7 +173,7 @@ const AboutPage = () => {
                 {pageData.certifications.map((cert, index) => (
                   <Card key={index} className="text-center">
                     <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
-                      <Icons.CheckCircle className="w-8 h-8 text-primary-600" />
+                      <CheckCircle className="w-8 h-8 text-primary-600" />
                     </div>
                     <p className="text-secondary-900 font-medium">{cert}</p>
                   </Card>
@@ -180,7 +191,7 @@ const AboutPage = () => {
                 {pageData.testimonials.map((testimonial, index) => (
                   <Card key={index}>
                     <div className="mb-4">
-                      <Icons.Quote className="w-8 h-8 text-primary-400" />
+                      <Quote className="w-8 h-8 text-primary-400" />
                     </div>
                     <p className="text-secondary-700 mb-4 italic">
                       "{testimonial.quote}"
@@ -217,9 +228,7 @@ const AboutPage = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                 {pageData.benefits.map((benefit, index) => {
-                  const Icon = Icons[benefit.icon.split('-').map((word, i) => 
-                    word.charAt(0).toUpperCase() + word.slice(1)
-                  ).join('')] || Icons.Star;
+                  const Icon = iconMap[benefit.icon] || DollarSign;
                   
                   return (
                     <Card key={index} className="text-center">

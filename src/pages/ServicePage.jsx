@@ -1,9 +1,23 @@
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Thermometer, Droplet, AlertCircle, Wrench, Building, Wind, Factory, CircleDot, Tool, Package } from 'lucide-react';
 import servicesData from '../data/services.json';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
-import * as Icons from 'lucide-react';
+
+const iconMap = {
+  'thermometer': Thermometer,
+  'droplet': Droplet,
+  'alert-circle': AlertCircle,
+  'wrench': Wrench,
+  'building': Building,
+  'wind': Wind,
+  'pipe': Factory,
+  'factory': Factory,
+  'circle-dot': CircleDot,
+  'tool': Tool,
+  'package': Package,
+};
 
 const ServicePage = () => {
   const { slug } = useParams();
@@ -66,10 +80,7 @@ const ServicePage = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {service.services.map((item, index) => {
-              const Icon = Icons[item.icon.split('-').map((word, i) => 
-                i === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : 
-                word.charAt(0).toUpperCase() + word.slice(1)
-              ).join('')] || Icons.Wrench;
+              const Icon = iconMap[item.icon] || Wrench;
               
               return (
                 <motion.div
