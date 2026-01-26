@@ -20,7 +20,7 @@ const Header = () => {
             <img 
               src="/logo.png" 
               alt="Snyder Mechanical" 
-              className="h-10 md:h-12 w-auto"
+              className="h-16 md:h-20 w-auto"
             />
           </Link>
 
