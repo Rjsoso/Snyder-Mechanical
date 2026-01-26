@@ -17,9 +17,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <div className="text-2xl font-bold text-primary-600">
-              {companyData.name}
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Snyder Mechanical" 
+              className="h-10 md:h-12 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
