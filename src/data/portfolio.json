@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Elko Convention Center HVAC System",
+    "category": "commercial",
+    "image": "/images/portfolio/project-1.jpg",
+    "description": "Complete HVAC system design and installation for Elko's premier convention facility.",
+    "details": "20,000 sq ft facility with multi-zone climate control",
+    "year": "2023"
+  },
+  {
+    "id": 2,
+    "title": "Spring Creek Residential Community",
+    "category": "residential",
+    "image": "/images/portfolio/project-2.jpg",
+    "description": "HVAC and plumbing installation for 50-home residential development.",
+    "details": "Energy-efficient systems for modern homes",
+    "year": "2023"
+  },
+  {
+    "id": 3,
+    "title": "Mining Facility Pump Station",
+    "category": "pumps-equipment",
+    "image": "/images/portfolio/project-3.jpg",
+    "description": "Industrial pump station installation and maintenance for local mining operation.",
+    "details": "High-capacity pumping system with redundancy",
+    "year": "2022"
+  },
+  {
+    "id": 4,
+    "title": "Elko Medical Center Upgrade",
+    "category": "commercial",
+    "image": "/images/portfolio/project-4.jpg",
+    "description": "HVAC system modernization for critical healthcare facility.",
+    "details": "24/7 operation with zero downtime during transition",
+    "year": "2022"
+  },
+  {
+    "id": 5,
+    "title": "Historic Downtown Building Restoration",
+    "category": "commercial",
+    "image": "/images/portfolio/project-5.jpg",
+    "description": "Mechanical system restoration while preserving historic architecture.",
+    "details": "Custom HVAC solutions for heritage building",
+    "year": "2021"
+  },
+  {
+    "id": 6,
+    "title": "Ranch Emergency Repair",
+    "category": "residential",
+    "image": "/images/portfolio/project-6.jpg",
+    "description": "24-hour emergency plumbing repair for rural property.",
+    "details": "Rapid response prevented major water damage",
+    "year": "2023"
+  }
+]

@@ -1,0 +1,108 @@
+{
+  "residential": {
+    "id": "residential",
+    "title": "Residential Services",
+    "slug": "residential",
+    "hero": {
+      "title": "Comfort for Your Home",
+      "subtitle": "Professional HVAC & Plumbing Services for Northeastern Nevada Homes",
+      "image": "/images/residential-hero.jpg"
+    },
+    "description": "Trust Snyder Mechanical for all your home comfort needs. From HVAC installation to emergency repairs, we're here 24/7.",
+    "services": [
+      {
+        "id": "hvac-install",
+        "title": "HVAC Installation & Repair",
+        "icon": "thermometer",
+        "description": "Expert installation, repair, and maintenance of heating and cooling systems for your home."
+      },
+      {
+        "id": "plumbing",
+        "title": "Plumbing Services",
+        "icon": "droplet",
+        "description": "Comprehensive plumbing solutions including repairs, installations, and maintenance."
+      },
+      {
+        "id": "emergency",
+        "title": "Emergency Services",
+        "icon": "alert-circle",
+        "description": "24/7 emergency HVAC and plumbing services when you need us most.",
+        "badge": "24/7"
+      },
+      {
+        "id": "maintenance",
+        "title": "Maintenance Plans",
+        "icon": "wrench",
+        "description": "Preventive maintenance programs to keep your systems running efficiently year-round."
+      }
+    ]
+  },
+  "commercial": {
+    "id": "commercial",
+    "title": "Commercial Services",
+    "slug": "commercial",
+    "hero": {
+      "title": "Trusted by Businesses Across Nevada",
+      "subtitle": "Commercial Mechanical Contracting & Design/Build Projects",
+      "image": "/images/commercial-hero.jpg"
+    },
+    "description": "Comprehensive commercial mechanical solutions for businesses, industrial facilities, and new construction projects.",
+    "services": [
+      {
+        "id": "design-build",
+        "title": "Design/Build Projects",
+        "icon": "building",
+        "description": "Complete mechanical system design and construction for new commercial projects."
+      },
+      {
+        "id": "hvac-systems",
+        "title": "Commercial HVAC Systems",
+        "icon": "wind",
+        "description": "Installation, maintenance, and repair of commercial heating and cooling systems."
+      },
+      {
+        "id": "commercial-plumbing",
+        "title": "Commercial Plumbing",
+        "icon": "pipe",
+        "description": "Full-service commercial plumbing for businesses and industrial facilities."
+      },
+      {
+        "id": "industrial",
+        "title": "Industrial Mechanical",
+        "icon": "factory",
+        "description": "Specialized mechanical services for industrial and manufacturing facilities."
+      }
+    ]
+  },
+  "pumpsEquipment": {
+    "id": "pumps-equipment",
+    "title": "Pumps & Equipment",
+    "slug": "pumps-equipment",
+    "hero": {
+      "title": "Pumps & Equipment Solutions",
+      "subtitle": "Professional Installation, Maintenance & Supply",
+      "image": "/images/pumps-hero.jpg"
+    },
+    "description": "Expert pump and equipment services for residential, commercial, and industrial applications.",
+    "services": [
+      {
+        "id": "pump-install",
+        "title": "Pump Installation",
+        "icon": "circle-dot",
+        "description": "Professional installation of pumps for all applications and industries."
+      },
+      {
+        "id": "maintenance-repair",
+        "title": "Maintenance & Repair",
+        "icon": "tool",
+        "description": "Regular maintenance and emergency repairs to keep your equipment running."
+      },
+      {
+        "id": "equipment-supply",
+        "title": "Equipment Supply",
+        "icon": "package",
+        "description": "Quality pumps and equipment from trusted manufacturers."
+      }
+    ]
+  }
+}

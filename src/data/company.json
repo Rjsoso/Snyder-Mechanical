@@ -1,0 +1,33 @@
+{
+  "name": "Snyder Mechanical",
+  "tagline": "Northeastern Nevada's Premier Mechanical Contractor Since 1981",
+  "established": 1981,
+  "phone": "(775) 738-5616",
+  "email": "info@snydermechanical.com",
+  "address": {
+    "street": "",
+    "city": "Elko",
+    "state": "NV",
+    "zip": "",
+    "display": "Elko, Spring Creek, NV"
+  },
+  "serviceArea": "Northeastern Nevada",
+  "hours": {
+    "weekdays": "Monday - Friday: 8:00 AM - 5:00 PM",
+    "saturday": "Saturday: Emergency Service Only",
+    "sunday": "Sunday: Emergency Service Only",
+    "emergency": "24/7 Emergency Service Available"
+  },
+  "values": [
+    "Safety",
+    "Quality",
+    "Service",
+    "Construction"
+  ],
+  "description": "For over 40 years, Snyder Mechanical has been northern Nevada's preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we are able to meet the critical demands of our clients.",
+  "stats": {
+    "yearsInBusiness": "40+",
+    "projectsCompleted": "5000+",
+    "certifications": "Fully Licensed & Insured"
+  }
+}

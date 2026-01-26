@@ -1,0 +1,141 @@
+{
+  "company": {
+    "id": "company",
+    "title": "Company Background",
+    "hero": {
+      "title": "40+ Years of Excellence",
+      "subtitle": "Serving Northeastern Nevada Since 1981"
+    },
+    "story": [
+      "Snyder Mechanical was founded in 1981 with a simple mission: provide exceptional mechanical contracting and service to the Elko and Spring Creek communities.",
+      "Over four decades later, we continue to uphold that commitment with a team of skilled professionals dedicated to safety, quality, and customer satisfaction.",
+      "Today, Snyder Mechanical is northeastern Nevada's most trusted name in HVAC, plumbing, and mechanical contracting services."
+    ],
+    "timeline": [
+      { "year": "1981", "event": "Company Founded in Elko, NV" },
+      { "year": "1990", "event": "Expanded Commercial Division" },
+      { "year": "2000", "event": "Added Design/Build Capabilities" },
+      { "year": "2010", "event": "Launched 24/7 Emergency Services" },
+      { "year": "2021", "event": "Celebrated 40 Years of Service" }
+    ]
+  },
+  "safety": {
+    "id": "safety",
+    "title": "Safety",
+    "hero": {
+      "title": "Safety is Our #1 Priority",
+      "subtitle": "Committed to Safety on Each and Every Project"
+    },
+    "commitment": "At Snyder Mechanical, safety isn't just a policy—it's a core value that guides everything we do. We maintain the highest safety standards to protect our team, our clients, and the communities we serve.",
+    "protocols": [
+      {
+        "title": "Regular Training",
+        "icon": "graduation-cap",
+        "description": "Ongoing safety training and certification for all team members."
+      },
+      {
+        "title": "Safety Equipment",
+        "icon": "shield",
+        "description": "State-of-the-art safety equipment and protective gear for every job."
+      },
+      {
+        "title": "Site Inspections",
+        "icon": "search",
+        "description": "Thorough safety inspections before, during, and after each project."
+      },
+      {
+        "title": "Compliance",
+        "icon": "check-circle",
+        "description": "Full compliance with OSHA and industry safety regulations."
+      }
+    ]
+  },
+  "recognitions": {
+    "id": "recognitions",
+    "title": "Service Recognitions",
+    "hero": {
+      "title": "Recognized for Excellence",
+      "subtitle": "Awards, Certifications & Professional Affiliations"
+    },
+    "awards": [
+      "Nevada Contractor of the Year",
+      "Better Business Bureau A+ Rating",
+      "Elko Chamber of Commerce Member",
+      "HVAC Excellence Certified"
+    ],
+    "certifications": [
+      "Nevada State Contractors License",
+      "EPA Section 608 Certified",
+      "OSHA Safety Certified",
+      "Bonded & Insured"
+    ],
+    "testimonials": [
+      {
+        "quote": "Snyder Mechanical has been our go-to contractor for over 15 years. Their professionalism and quality work are unmatched.",
+        "author": "John Smith",
+        "company": "Elko Manufacturing Co."
+      },
+      {
+        "quote": "Fast, reliable, and professional. They installed our new HVAC system and it's been running perfectly for 3 years.",
+        "author": "Sarah Johnson",
+        "location": "Spring Creek, NV"
+      },
+      {
+        "quote": "When we had an emergency on a Saturday night, Snyder Mechanical was there within an hour. Incredible service!",
+        "author": "Mike Davis",
+        "location": "Elko, NV"
+      }
+    ]
+  },
+  "careers": {
+    "id": "careers",
+    "title": "Careers",
+    "hero": {
+      "title": "Join Our Team",
+      "subtitle": "Build Your Career with Northeastern Nevada's Leading Mechanical Contractor"
+    },
+    "why": "At Snyder Mechanical, we invest in our people. Join a team that values safety, quality workmanship, and professional growth.",
+    "benefits": [
+      {
+        "title": "Competitive Pay",
+        "icon": "dollar-sign",
+        "description": "Industry-leading wages and regular performance reviews."
+      },
+      {
+        "title": "Health Benefits",
+        "icon": "heart",
+        "description": "Comprehensive health, dental, and vision insurance."
+      },
+      {
+        "title": "Career Growth",
+        "icon": "trending-up",
+        "description": "Training programs and advancement opportunities."
+      },
+      {
+        "title": "Great Culture",
+        "icon": "users",
+        "description": "Family-friendly work environment with a strong team culture."
+      }
+    ],
+    "positions": [
+      {
+        "title": "HVAC Technician",
+        "type": "Full-Time",
+        "location": "Elko, NV",
+        "description": "Seeking experienced HVAC technicians for residential and commercial service."
+      },
+      {
+        "title": "Plumber",
+        "type": "Full-Time",
+        "location": "Elko, NV",
+        "description": "Licensed plumber needed for commercial and residential projects."
+      },
+      {
+        "title": "Project Manager",
+        "type": "Full-Time",
+        "location": "Elko, NV",
+        "description": "Manage commercial construction projects from start to finish."
+      }
+    ]
+  }
+}
