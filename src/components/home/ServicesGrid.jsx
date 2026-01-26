@@ -32,7 +32,7 @@ const services = [
 
 const ServicesGrid = () => {
   return (
-    <section className="section-padding bg-secondary-50">
+    <section className="section-padding bg-gradient-to-b from-white to-secondary-50">
       <div className="container-custom">
         <motion.div 
           className="text-center mb-12"
@@ -61,9 +61,9 @@ const ServicesGrid = () => {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Link to={service.link}>
-                  <Card hover className="h-full">
-                    <div className={`w-16 h-16 rounded-lg bg-${service.color}-100 flex items-center justify-center mb-4`}>
-                      <Icon className={`w-8 h-8 text-${service.color}-600`} />
+                  <Card hover className="h-full border-t-4 border-primary-600">
+                    <div className="w-16 h-16 rounded-lg bg-primary-100 flex items-center justify-center mb-4">
+                      <Icon className="w-8 h-8 text-primary-700" />
                     </div>
                     <h3 className="text-xl font-bold text-secondary-900 mb-3">
                       {service.title}

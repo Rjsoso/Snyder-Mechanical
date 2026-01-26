@@ -32,7 +32,7 @@ const ServicePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-primary-600 text-white py-20">
+      <section className="bg-gradient-to-br from-primary-700 via-primary-600 to-primary-800 text-white py-20">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

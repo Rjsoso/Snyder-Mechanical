@@ -22,7 +22,7 @@ const stats = [
 
 const StatsBar = () => {
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding bg-secondary-100">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stats.map((stat, index) => {
