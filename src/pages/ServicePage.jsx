@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Thermometer, Droplet, AlertCircle, Wrench, Building, Wind, Factory, CircleDot, Tool, Package } from 'lucide-react';
+import { Thermometer, Droplet, AlertCircle, Wrench, Building, Wind, Factory, CircleDot, Settings, Package } from 'lucide-react';
 import servicesData from '../data/services.json';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
@@ -15,7 +15,7 @@ const iconMap = {
   'pipe': Factory,
   'factory': Factory,
   'circle-dot': CircleDot,
-  'tool': Tool,
+  'tool': Settings,
   'package': Package,
 };
 
