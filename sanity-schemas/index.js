@@ -6,6 +6,7 @@ import reviewStats from './reviewStats'
 import portfolioProject from './portfolioProject'
 import detailedService from './detailedService'
 import certification from './certification'
+import invoice from './invoice'
 
 // Export all schemas as an array
 export const schemaTypes = [
@@ -16,4 +17,5 @@ export const schemaTypes = [
   portfolioProject,
   detailedService,
   certification,
+  invoice,
 ]

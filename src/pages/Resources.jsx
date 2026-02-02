@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { Wrench, DollarSign, Droplet, Calendar, Phone } from 'lucide-react';
+import { Wrench, DollarSign, Droplet, Calendar, Phone, Receipt } from 'lucide-react';
 import ResourceCard from '../components/resources/ResourceCard';
 import EnergySavingsCalculator from '../components/resources/EnergySavingsCalculator';
+import InvoicePayment from '../components/resources/InvoicePayment';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
 import companyData from '../data/company.json';
@@ -40,6 +41,38 @@ const Resources = () => {
       <section className="section-padding bg-white">
         <div className="container-custom max-w-2xl">
           <EnergySavingsCalculator />
+        </div>
+      </section>
+
+      {/* Invoice Payment Section */}
+      <section className="section-padding bg-secondary-50">
+        <div className="container-custom">
+          <motion.div
+            className="flex items-center space-x-3 mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="w-12 h-12 bg-accent-100 rounded-lg flex items-center justify-center">
+              <Receipt className="w-6 h-6 text-accent-600" />
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold text-secondary-900">
+                Pay Your Invoice
+              </h2>
+              <p className="text-secondary-600">Securely pay your invoice online</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <InvoicePayment />
+          </motion.div>
         </div>
       </section>
 
