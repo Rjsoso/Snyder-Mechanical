@@ -117,7 +117,7 @@ const Header = () => {
               to="/resources"
               className={`font-medium transition-colors ${isActive('/resources') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
             >
-              Resources
+              Payments
             </Link>
             <Link 
               to="/portfolio" 
@@ -202,7 +202,7 @@ const Header = () => {
               </div>
 
               <Link to="/resources" className="font-medium text-secondary-700 hover:text-primary-600">
-                Resources
+                Payments
               </Link>
 
               <Link to="/portfolio" className="font-medium text-secondary-700 hover:text-primary-600">

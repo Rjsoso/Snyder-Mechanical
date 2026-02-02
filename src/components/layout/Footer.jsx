@@ -73,7 +73,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/resources" className="text-secondary-300 hover:text-white transition-colors">
-                  Resources & Tips
+                  Payments
                 </Link>
               </li>
               <li>
