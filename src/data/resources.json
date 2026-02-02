@@ -1,0 +1,138 @@
+{
+  "hero": {
+    "title": "Homeowner Resources",
+    "subtitle": "Expert tips, guides, and tools to help you maintain your home"
+  },
+  "categories": [
+    {
+      "id": "hvac-maintenance",
+      "title": "HVAC Maintenance",
+      "icon": "wrench",
+      "resources": [
+        {
+          "id": "hvac-1",
+          "title": "When to Replace Your HVAC Filter",
+          "description": "Learn the right schedule for changing filters to maintain efficiency and air quality.",
+          "readTime": "3 min read",
+          "type": "guide"
+        },
+        {
+          "id": "hvac-2",
+          "title": "Signs Your Furnace Needs Repair",
+          "description": "Identify warning signs before your heating system fails this winter.",
+          "readTime": "5 min read",
+          "type": "guide"
+        },
+        {
+          "id": "hvac-3",
+          "title": "Preparing Your AC for Summer",
+          "description": "Spring maintenance checklist to ensure cool comfort all summer long.",
+          "readTime": "4 min read",
+          "type": "checklist"
+        }
+      ]
+    },
+    {
+      "id": "energy-savings",
+      "title": "Energy Savings",
+      "icon": "dollar-sign",
+      "resources": [
+        {
+          "id": "energy-1",
+          "title": "10 Ways to Lower Your Energy Bills",
+          "description": "Simple changes that can save you hundreds of dollars per year.",
+          "readTime": "6 min read",
+          "type": "guide"
+        },
+        {
+          "id": "energy-2",
+          "title": "Understanding SEER Ratings",
+          "description": "What efficiency ratings mean and how they affect your bills.",
+          "readTime": "4 min read",
+          "type": "guide"
+        },
+        {
+          "id": "energy-3",
+          "title": "Programmable Thermostat Benefits",
+          "description": "How smart temperature control saves money and improves comfort.",
+          "readTime": "3 min read",
+          "type": "guide"
+        }
+      ]
+    },
+    {
+      "id": "plumbing-tips",
+      "title": "Plumbing Tips",
+      "icon": "droplet",
+      "resources": [
+        {
+          "id": "plumbing-1",
+          "title": "Preventing Frozen Pipes in Winter",
+          "description": "Protect your plumbing from Nevada's cold winter nights.",
+          "readTime": "5 min read",
+          "type": "guide"
+        },
+        {
+          "id": "plumbing-2",
+          "title": "Water Heater Maintenance Schedule",
+          "description": "Extend your water heater's life with proper maintenance.",
+          "readTime": "4 min read",
+          "type": "checklist"
+        },
+        {
+          "id": "plumbing-3",
+          "title": "When to Call a Professional Plumber",
+          "description": "Know when DIY isn't enough and it's time to call the experts.",
+          "readTime": "3 min read",
+          "type": "guide"
+        }
+      ]
+    },
+    {
+      "id": "seasonal",
+      "title": "Seasonal Guides",
+      "icon": "calendar",
+      "resources": [
+        {
+          "id": "seasonal-1",
+          "title": "Fall Home Maintenance Checklist",
+          "description": "Prepare your home for the coming winter months.",
+          "readTime": "7 min read",
+          "type": "checklist"
+        },
+        {
+          "id": "seasonal-2",
+          "title": "Spring HVAC Tune-Up Guide",
+          "description": "Get your air conditioning ready for Nevada summers.",
+          "readTime": "5 min read",
+          "type": "checklist"
+        },
+        {
+          "id": "seasonal-3",
+          "title": "Winter Emergency Preparedness",
+          "description": "Be ready for heating emergencies before they happen.",
+          "readTime": "6 min read",
+          "type": "guide"
+        }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "How often should I service my HVAC system?",
+      "answer": "We recommend servicing your heating system annually in the fall and your cooling system in the spring. Regular maintenance prevents breakdowns and keeps your system running efficiently."
+    },
+    {
+      "question": "What temperature should I set my thermostat?",
+      "answer": "For comfort and efficiency, we recommend 68-72°F in winter and 74-78°F in summer. Each degree you adjust can save 3-5% on energy costs."
+    },
+    {
+      "question": "How long do HVAC systems typically last?",
+      "answer": "With proper maintenance, furnaces last 15-20 years and air conditioners last 12-15 years. Regular tune-ups can extend these lifespans significantly."
+    },
+    {
+      "question": "Should I replace my entire HVAC system at once?",
+      "answer": "If one component is old, it often makes sense to replace both heating and cooling together for better efficiency and warranty coverage. We can assess your system and advise the best approach."
+    }
+  ]
+}

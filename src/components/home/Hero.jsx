@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
-import { Phone } from 'lucide-react';
+import { Phone, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Button from '../shared/Button';
+import TrustBadges from '../shared/TrustBadges';
 import companyData from '../../data/company.json';
 
 const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white section-padding">
+    <section className="relative bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white section-padding overflow-hidden">
       <div className="container-custom">
         <div className="max-w-4xl">
           <motion.div
@@ -13,37 +15,58 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            {/* Audience Toggle */}
+            <motion.div
+              className="mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <Link 
+                to="/commercial"
+                className="inline-flex items-center text-primary-100 hover:text-white transition-colors text-sm"
+              >
+                <span>Looking for commercial services?</span>
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Link>
+            </motion.div>
+
             <motion.h1 
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {companyData.tagline}
+              Comfort & Reliability for Your Home
             </motion.h1>
             
-            <motion.div 
-              className="flex flex-wrap gap-4 mb-8 text-lg md:text-xl"
+            <motion.p
+              className="text-xl md:text-2xl mb-6 text-primary-100"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+            >
+              Expert HVAC & Plumbing Services in Northeastern Nevada
+            </motion.p>
+            
+            <motion.p 
+              className="text-lg mb-8 text-primary-100 max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              {companyData.values.map((value, index) => (
-                <span key={index} className="flex items-center">
-                  <span className="w-2 h-2 bg-accent-400 rounded-full mr-2"></span>
-                  {value}
-                </span>
-              ))}
-            </motion.div>
+              Trusted by homeowners across Elko and Spring Creek since 1981. From routine maintenance to emergency repairs, we're here for you 24/7.
+            </motion.p>
             
-            <motion.p 
-              className="text-lg md:text-xl mb-8 text-primary-100 max-w-2xl"
+            {/* Trust Badges */}
+            <motion.div
+              className="mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              {companyData.description}
-            </motion.p>
+              <TrustBadges />
+            </motion.div>
             
             <motion.div 
               className="flex flex-col sm:flex-row gap-4"
@@ -51,11 +74,21 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
+              <a 
+                href={`tel:${companyData.phone}`}
+                className="flex items-center justify-center space-x-3 px-8 py-4 text-lg font-semibold bg-accent-600 hover:bg-accent-700 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+              >
+                <Phone className="w-6 h-6" />
+                <div className="text-left">
+                  <div className="text-xs text-accent-100">Call Now</div>
+                  <div>{companyData.phone}</div>
+                </div>
+              </a>
               <Button 
                 to="/?modal=schedule" 
-                variant="accent" 
+                variant="outline" 
                 size="lg"
-                className="shadow-lg hover:shadow-xl"
+                className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-primary-600"
               >
                 Schedule Service
               </Button>
@@ -63,17 +96,10 @@ const Hero = () => {
                 to="/?modal=estimate" 
                 variant="outline" 
                 size="lg"
-                className="bg-white/10 border-white text-white hover:bg-white hover:text-primary-600"
+                className="bg-white/10 border-2 border-white text-white hover:bg-white hover:text-primary-600"
               >
-                Request Estimate
+                Get Free Quote
               </Button>
-              <a 
-                href={`tel:${companyData.phone}`}
-                className="flex items-center justify-center space-x-2 px-8 py-4 text-lg font-medium text-white hover:text-accent-300 transition-colors"
-              >
-                <Phone className="w-5 h-5" />
-                <span>{companyData.phone}</span>
-              </a>
             </motion.div>
           </motion.div>
         </div>

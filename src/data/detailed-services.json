@@ -1,0 +1,298 @@
+{
+  "heating": {
+    "id": "heating",
+    "title": "Heating Services",
+    "slug": "heating",
+    "hero": {
+      "title": "Stay Warm All Winter Long",
+      "subtitle": "Expert Heating Installation, Repair & Maintenance in Northeastern Nevada",
+      "image": "/images/heating-hero.jpg"
+    },
+    "description": "When the temperature drops in Northeastern Nevada, you need a heating system you can count on. Our certified technicians provide comprehensive heating services to keep your home comfortable all winter long.",
+    "services": [
+      {
+        "id": "furnace-repair",
+        "title": "Furnace Repair",
+        "description": "Fast, reliable repairs for all furnace makes and models. We diagnose and fix issues quickly to restore warmth to your home.",
+        "icon": "wrench",
+        "startingPrice": "$95"
+      },
+      {
+        "id": "furnace-installation",
+        "title": "Furnace Installation",
+        "description": "Professional installation of high-efficiency furnaces tailored to your home's size and heating needs.",
+        "icon": "thermometer",
+        "startingPrice": "$3,500"
+      },
+      {
+        "id": "heat-pump",
+        "title": "Heat Pump Services",
+        "description": "Energy-efficient heating and cooling solutions with heat pump installation and maintenance.",
+        "icon": "wind",
+        "startingPrice": "$4,000"
+      },
+      {
+        "id": "heating-maintenance",
+        "title": "Annual Maintenance",
+        "description": "Preventive maintenance keeps your heating system running efficiently and prevents costly breakdowns.",
+        "icon": "check-circle",
+        "startingPrice": "$129"
+      }
+    ],
+    "commonProblems": [
+      {
+        "problem": "No heat or insufficient heating",
+        "solution": "Could be a thermostat issue, pilot light problem, or faulty heating element. We'll diagnose and fix it."
+      },
+      {
+        "problem": "Strange noises (banging, rattling)",
+        "solution": "Often indicates loose components or airflow issues. Our technicians will inspect and repair."
+      },
+      {
+        "problem": "High energy bills",
+        "solution": "An inefficient system wastes money. We can tune it up or recommend an energy-efficient replacement."
+      },
+      {
+        "problem": "Frequent cycling on/off",
+        "solution": "Usually a thermostat or airflow problem. We'll restore proper operation."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "How often should I service my furnace?",
+        "answer": "We recommend annual maintenance before the heating season begins, typically in the fall."
+      },
+      {
+        "question": "How long do furnaces typically last?",
+        "answer": "With proper maintenance, most furnaces last 15-20 years. If yours is older, we can assess whether repair or replacement is more cost-effective."
+      },
+      {
+        "question": "What size furnace do I need?",
+        "answer": "The right size depends on your home's square footage, insulation, and climate. We'll perform a load calculation to determine the perfect size."
+      }
+    ]
+  },
+  "cooling": {
+    "id": "cooling",
+    "title": "Cooling Services",
+    "slug": "cooling",
+    "hero": {
+      "title": "Beat the Nevada Heat",
+      "subtitle": "Professional Air Conditioning Installation, Repair & Maintenance",
+      "image": "/images/cooling-hero.jpg"
+    },
+    "description": "Nevada summers can be brutal. Our expert technicians ensure your air conditioning system keeps you cool and comfortable when you need it most.",
+    "services": [
+      {
+        "id": "ac-repair",
+        "title": "AC Repair",
+        "description": "Quick diagnosis and repair of all AC problems. We'll get your cooling system back up and running fast.",
+        "icon": "wrench",
+        "startingPrice": "$95"
+      },
+      {
+        "id": "ac-installation",
+        "title": "AC Installation",
+        "description": "Professional installation of energy-efficient air conditioning systems sized perfectly for your home.",
+        "icon": "snowflake",
+        "startingPrice": "$3,200"
+      },
+      {
+        "id": "ac-tune-up",
+        "title": "Spring AC Tune-Up",
+        "description": "Pre-season maintenance to ensure peak performance during hot summer months.",
+        "icon": "settings",
+        "startingPrice": "$119"
+      },
+      {
+        "id": "ductless-mini-split",
+        "title": "Ductless Mini-Splits",
+        "description": "Efficient cooling solutions for additions, garages, or homes without ductwork.",
+        "icon": "wind",
+        "startingPrice": "$2,800"
+      }
+    ],
+    "commonProblems": [
+      {
+        "problem": "AC not cooling properly",
+        "solution": "Could be low refrigerant, dirty filters, or compressor issues. We'll diagnose and repair."
+      },
+      {
+        "problem": "AC won't turn on",
+        "solution": "Often an electrical issue, thermostat problem, or tripped breaker. We'll get it running."
+      },
+      {
+        "problem": "Frozen evaporator coils",
+        "solution": "Usually caused by restricted airflow or low refrigerant. We'll fix the root cause."
+      },
+      {
+        "problem": "Water leaking from unit",
+        "solution": "Could be a clogged drain line or damaged drain pan. We'll repair it quickly."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "When should I schedule AC maintenance?",
+        "answer": "Spring is ideal - before the hot weather hits. This ensures your system is ready for summer."
+      },
+      {
+        "question": "How long should my AC last?",
+        "answer": "With regular maintenance, most air conditioners last 12-15 years."
+      },
+      {
+        "question": "What SEER rating should I look for?",
+        "answer": "We recommend systems with SEER 16+ for optimal efficiency and lower energy bills."
+      }
+    ]
+  },
+  "plumbing": {
+    "id": "plumbing",
+    "title": "Plumbing Services",
+    "slug": "plumbing",
+    "hero": {
+      "title": "Complete Plumbing Solutions",
+      "subtitle": "Fast, Reliable Plumbing Services for Your Home",
+      "image": "/images/plumbing-hero.jpg"
+    },
+    "description": "From leaky faucets to major pipe repairs, our licensed plumbers handle all your residential plumbing needs with expertise and care.",
+    "services": [
+      {
+        "id": "drain-cleaning",
+        "title": "Drain Cleaning",
+        "description": "Professional drain cleaning to remove clogs and restore proper flow throughout your home.",
+        "icon": "droplet",
+        "startingPrice": "$125"
+      },
+      {
+        "id": "water-heater",
+        "title": "Water Heater Services",
+        "description": "Installation, repair, and maintenance of traditional and tankless water heaters.",
+        "icon": "flame",
+        "startingPrice": "$95"
+      },
+      {
+        "id": "leak-repair",
+        "title": "Leak Detection & Repair",
+        "description": "Advanced leak detection technology to find and fix leaks before they cause major damage.",
+        "icon": "alert-circle",
+        "startingPrice": "$95"
+      },
+      {
+        "id": "fixture-installation",
+        "title": "Fixture Installation",
+        "description": "Professional installation of faucets, sinks, toilets, and other plumbing fixtures.",
+        "icon": "wrench",
+        "startingPrice": "$150"
+      }
+    ],
+    "commonProblems": [
+      {
+        "problem": "Clogged drains or toilets",
+        "solution": "We use professional-grade equipment to clear even the toughest clogs safely."
+      },
+      {
+        "problem": "Dripping faucets",
+        "solution": "Often a worn washer or cartridge. We'll repair or replace it to stop the waste."
+      },
+      {
+        "problem": "No hot water",
+        "solution": "Could be a water heater issue. We'll diagnose and repair or recommend replacement."
+      },
+      {
+        "problem": "Low water pressure",
+        "solution": "May be sediment buildup, leaks, or valve issues. We'll restore proper pressure."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "How do I know if I need to replace my water heater?",
+        "answer": "Signs include age (10+ years), rust-colored water, strange noises, or frequent repairs. We'll assess and advise."
+      },
+      {
+        "question": "What causes low water pressure?",
+        "answer": "Common causes include mineral buildup, leaks, or main line issues. We'll identify and fix the problem."
+      },
+      {
+        "question": "Are tankless water heaters worth it?",
+        "answer": "They're very efficient and provide endless hot water. We'll help you determine if they're right for your home."
+      }
+    ]
+  },
+  "emergency": {
+    "id": "emergency",
+    "title": "24/7 Emergency Services",
+    "slug": "emergency",
+    "hero": {
+      "title": "Help When You Need It Most",
+      "subtitle": "24/7 Emergency HVAC & Plumbing Services",
+      "image": "/images/emergency-hero.jpg"
+    },
+    "description": "HVAC and plumbing emergencies don't wait for business hours. That's why we're available 24/7/365 to respond to your urgent needs.",
+    "responseTime": "Average response time: 45 minutes",
+    "emergencies": [
+      {
+        "id": "no-heat-winter",
+        "title": "No Heat in Winter",
+        "description": "When your heating system fails in freezing weather, we respond immediately to restore warmth and safety to your home.",
+        "icon": "thermometer",
+        "urgent": true
+      },
+      {
+        "id": "ac-failure-summer",
+        "title": "AC Failure in Summer",
+        "description": "Extreme heat can be dangerous. We'll get your cooling system back online fast.",
+        "icon": "snowflake",
+        "urgent": true
+      },
+      {
+        "id": "water-leak",
+        "title": "Major Water Leaks",
+        "description": "Stop water damage in its tracks with our emergency plumbing response.",
+        "icon": "droplet",
+        "urgent": true
+      },
+      {
+        "id": "gas-leak",
+        "title": "Gas Leak Detection",
+        "description": "Gas leaks are life-threatening. Call us immediately for safe, professional response.",
+        "icon": "alert-circle",
+        "urgent": true
+      },
+      {
+        "id": "sewage-backup",
+        "title": "Sewage Backup",
+        "description": "Sewage emergencies require immediate attention. We'll handle it quickly and safely.",
+        "icon": "alert-triangle",
+        "urgent": true
+      },
+      {
+        "id": "burst-pipe",
+        "title": "Burst Pipes",
+        "description": "Frozen or burst pipes can cause major damage. We'll stop the water and repair the damage.",
+        "icon": "pipe",
+        "urgent": true
+      }
+    ],
+    "whenToCall": [
+      "No heat when temperatures are below freezing",
+      "No cooling during extreme heat",
+      "Active water leaks or flooding",
+      "Smell of gas or carbon monoxide alarm",
+      "Sewage backup into your home",
+      "Burst pipes or major leaks",
+      "Complete loss of hot water in winter",
+      "Electrical issues with HVAC equipment"
+    ],
+    "emergencyTips": [
+      {
+        "title": "While You Wait",
+        "tips": [
+          "For water leaks: Turn off the main water valve",
+          "For gas smell: Evacuate immediately and call from outside",
+          "For no heat: Layer clothing and close off unused rooms",
+          "For AC failure: Stay hydrated and use fans if available"
+        ]
+      }
+    ]
+  }
+}

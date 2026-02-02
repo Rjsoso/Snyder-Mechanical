@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, ChevronDown } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown, AlertCircle } from 'lucide-react';
 import companyData from '../../data/company.json';
 
 const Header = () => {
@@ -61,7 +61,7 @@ const Header = () => {
               )}
             </div>
 
-            {/* Services Dropdown */}
+            {/* Services Mega Dropdown */}
             <div 
               className="relative"
               onMouseEnter={() => setServicesDropdownOpen(true)}
@@ -72,20 +72,68 @@ const Header = () => {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {servicesDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 border border-secondary-100">
-                  <Link to="/services/residential" className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Residential
-                  </Link>
-                  <Link to="/services/commercial" className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Commercial
-                  </Link>
-                  <Link to="/services/pumps-equipment" className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Pumps & Equipment
-                  </Link>
+                <div className="absolute top-full left-0 mt-2 w-96 bg-white rounded-lg shadow-xl py-4 border border-secondary-100">
+                  <div className="grid grid-cols-2 gap-4 px-4">
+                    {/* For Homeowners */}
+                    <div>
+                      <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
+                        For Homeowners
+                      </div>
+                      <Link to="/services/heating" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Heating Services
+                      </Link>
+                      <Link to="/services/cooling" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Cooling Services
+                      </Link>
+                      <Link to="/services/plumbing" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Plumbing Services
+                      </Link>
+                      <Link to="/services/emergency" className="block px-2 py-2 text-red-700 hover:bg-red-50 hover:text-red-800 transition-colors rounded font-medium">
+                        <span className="flex items-center">
+                          <AlertCircle className="w-4 h-4 mr-1" />
+                          24/7 Emergency
+                        </span>
+                      </Link>
+                      <Link to="/maintenance-plans" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Maintenance Plans
+                      </Link>
+                    </div>
+                    
+                    {/* For Businesses */}
+                    <div className="border-l border-secondary-200 pl-4">
+                      <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
+                        For Businesses
+                      </div>
+                      <Link to="/commercial" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Commercial Overview
+                      </Link>
+                      <Link to="/services/commercial" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Commercial HVAC
+                      </Link>
+                      <Link to="/services/commercial#design-build" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Design/Build Projects
+                      </Link>
+                      <Link to="/services/pumps-equipment" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
+                        Pumps & Equipment
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
+            <Link 
+              to="/maintenance-plans"
+              className={`font-medium transition-colors ${isActive('/maintenance-plans') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+            >
+              Maintenance Plans
+            </Link>
+            <Link 
+              to="/resources"
+              className={`font-medium transition-colors ${isActive('/resources') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+            >
+              Resources
+            </Link>
             <Link 
               to="/portfolio" 
               className={`font-medium transition-colors ${isActive('/portfolio') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
@@ -99,19 +147,23 @@ const Header = () => {
               Contact
             </Link>
 
+            {/* Emergency Button */}
+            <Link
+              to="/services/emergency"
+              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
+            >
+              <AlertCircle className="w-4 h-4" />
+              <span>Emergency</span>
+            </Link>
+
             {/* Phone Number */}
             <a 
               href={`tel:${companyData.phone}`} 
               className="flex items-center space-x-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span>{companyData.phone}</span>
+              <span className="hidden xl:inline">{companyData.phone}</span>
             </a>
-
-            {/* CTA Button */}
-            <Link to="/?modal=schedule" className="btn-primary">
-              Schedule Service
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -151,16 +203,41 @@ const Header = () => {
               {/* Services Submenu */}
               <div className="space-y-2">
                 <div className="font-medium text-secondary-900">Services</div>
-                <Link to="/services/residential" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Residential
+                <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-2">For Homeowners</div>
+                <Link to="/services/heating" className="block pl-4 text-secondary-700 hover:text-primary-600">
+                  Heating Services
+                </Link>
+                <Link to="/services/cooling" className="block pl-4 text-secondary-700 hover:text-primary-600">
+                  Cooling Services
+                </Link>
+                <Link to="/services/plumbing" className="block pl-4 text-secondary-700 hover:text-primary-600">
+                  Plumbing Services
+                </Link>
+                <Link to="/services/emergency" className="block pl-4 text-red-700 hover:text-red-800 font-medium">
+                  24/7 Emergency Service
+                </Link>
+                <Link to="/maintenance-plans" className="block pl-4 text-secondary-700 hover:text-primary-600">
+                  Maintenance Plans
+                </Link>
+                <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-3">For Businesses</div>
+                <Link to="/commercial" className="block pl-4 text-secondary-700 hover:text-primary-600">
+                  Commercial Overview
                 </Link>
                 <Link to="/services/commercial" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Commercial
+                  Commercial HVAC
                 </Link>
                 <Link to="/services/pumps-equipment" className="block pl-4 text-secondary-700 hover:text-primary-600">
                   Pumps & Equipment
                 </Link>
               </div>
+              
+              <Link to="/maintenance-plans" className="font-medium text-secondary-700 hover:text-primary-600">
+                Maintenance Plans
+              </Link>
+
+              <Link to="/resources" className="font-medium text-secondary-700 hover:text-primary-600">
+                Resources
+              </Link>
 
               <Link to="/portfolio" className="font-medium text-secondary-700 hover:text-primary-600">
                 Portfolio
@@ -168,16 +245,23 @@ const Header = () => {
               <Link to="/contact" className="font-medium text-secondary-700 hover:text-primary-600">
                 Contact
               </Link>
+              
+              {/* Emergency Button Mobile */}
+              <Link 
+                to="/services/emergency"
+                className="flex items-center justify-center space-x-2 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
+              >
+                <AlertCircle className="w-5 h-5" />
+                <span>24/7 Emergency Service</span>
+              </Link>
+              
               <a 
                 href={`tel:${companyData.phone}`} 
-                className="flex items-center space-x-2 text-primary-600 font-semibold"
+                className="flex items-center space-x-2 text-primary-600 font-semibold text-lg justify-center py-2"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-5 h-5" />
                 <span>{companyData.phone}</span>
               </a>
-              <Link to="/?modal=schedule" className="btn-primary text-center">
-                Schedule Service
-              </Link>
             </div>
           </div>
         )}

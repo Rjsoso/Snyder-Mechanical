@@ -5,6 +5,13 @@ import ServicePage from './pages/ServicePage';
 import AboutPage from './pages/AboutPage';
 import Portfolio from './pages/Portfolio';
 import Contact from './pages/Contact';
+import HeatingServices from './pages/services/HeatingServices';
+import CoolingServices from './pages/services/CoolingServices';
+import PlumbingServices from './pages/services/PlumbingServices';
+import EmergencyServices from './pages/services/EmergencyServices';
+import MaintenancePlans from './pages/MaintenancePlans';
+import Resources from './pages/Resources';
+import CommercialLanding from './pages/CommercialLanding';
 
 function App() {
   return (
@@ -13,7 +20,22 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           
-          {/* Service Routes */}
+          {/* Specific Service Routes */}
+          <Route path="/services/heating" element={<HeatingServices />} />
+          <Route path="/services/cooling" element={<CoolingServices />} />
+          <Route path="/services/plumbing" element={<PlumbingServices />} />
+          <Route path="/services/emergency" element={<EmergencyServices />} />
+          
+          {/* Maintenance Plans */}
+          <Route path="/maintenance-plans" element={<MaintenancePlans />} />
+          
+          {/* Resources */}
+          <Route path="/resources" element={<Resources />} />
+          
+          {/* Commercial Landing */}
+          <Route path="/commercial" element={<CommercialLanding />} />
+          
+          {/* General Service Routes */}
           <Route path="/services/:slug" element={<ServicePage />} />
           
           {/* About Routes */}

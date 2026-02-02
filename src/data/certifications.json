@@ -1,0 +1,34 @@
+{
+  "badges": [
+    {
+      "id": "licensed-insured",
+      "title": "Licensed & Insured",
+      "description": "Fully licensed and insured in Nevada",
+      "icon": "shield-check"
+    },
+    {
+      "id": "years-experience",
+      "title": "40+ Years",
+      "description": "Serving Northeastern Nevada since 1981",
+      "icon": "award"
+    },
+    {
+      "id": "emergency-service",
+      "title": "24/7 Emergency",
+      "description": "Available whenever you need us",
+      "icon": "clock"
+    },
+    {
+      "id": "satisfaction",
+      "title": "100% Satisfaction",
+      "description": "Guaranteed quality workmanship",
+      "icon": "thumbs-up"
+    }
+  ],
+  "certifications": [
+    "Nevada State Contractors License",
+    "EPA Certified Technicians",
+    "OSHA Safety Certified",
+    "BBB Accredited Business"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "featured": [
+    {
+      "id": "review-1",
+      "name": "Sarah Johnson",
+      "location": "Elko, NV",
+      "rating": 5,
+      "date": "2026-01-15",
+      "service": "Heating Repair",
+      "text": "When our furnace went out on a freezing night, Snyder Mechanical came out within an hour. The technician was professional, explained everything clearly, and had us warm again in no time. Highly recommend!",
+      "avatar": "SJ"
+    },
+    {
+      "id": "review-2",
+      "name": "Mike Rodriguez",
+      "location": "Spring Creek, NV",
+      "rating": 5,
+      "date": "2026-01-08",
+      "service": "AC Installation",
+      "text": "Best HVAC company in the area! They installed our new AC system quickly and professionally. The pricing was fair and transparent. Five stars all around!",
+      "avatar": "MR"
+    },
+    {
+      "id": "review-3",
+      "name": "Lisa Chen",
+      "location": "Elko, NV",
+      "rating": 5,
+      "date": "2025-12-20",
+      "service": "Maintenance Plan",
+      "text": "I've been on their maintenance plan for 3 years now. My system runs perfectly and I've saved money on my energy bills. Great preventive service!",
+      "avatar": "LC"
+    },
+    {
+      "id": "review-4",
+      "name": "Tom Anderson",
+      "location": "Spring Creek, NV",
+      "rating": 5,
+      "date": "2025-12-10",
+      "service": "Plumbing Repair",
+      "text": "Had a major leak that needed immediate attention. They responded quickly and fixed it right. Very professional team that I trust completely.",
+      "avatar": "TA"
+    }
+  ],
+  "stats": {
+    "averageRating": 4.9,
+    "totalReviews": 487,
+    "fiveStarPercentage": 94
+  }
+}
