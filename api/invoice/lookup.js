@@ -80,8 +80,19 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('Invoice lookup error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      invoiceNumber: req.body.invoiceNumber,
+      sanityConfig: {
+        projectId: process.env.SANITY_PROJECT_ID,
+        dataset: process.env.SANITY_DATASET,
+        hasToken: !!process.env.SANITY_API_TOKEN
+      }
+    });
     return res.status(500).json({ 
-      error: 'An error occurred while looking up the invoice. Please try again.' 
+      error: 'An error occurred while looking up the invoice. Please try again.',
+      debug: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 }
