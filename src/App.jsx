@@ -9,7 +9,6 @@ import HeatingServices from './pages/services/HeatingServices';
 import CoolingServices from './pages/services/CoolingServices';
 import PlumbingServices from './pages/services/PlumbingServices';
 import EmergencyServices from './pages/services/EmergencyServices';
-import MaintenancePlans from './pages/MaintenancePlans';
 import Resources from './pages/Resources';
 import CommercialLanding from './pages/CommercialLanding';
 
@@ -25,9 +24,6 @@ function App() {
           <Route path="/services/cooling" element={<CoolingServices />} />
           <Route path="/services/plumbing" element={<PlumbingServices />} />
           <Route path="/services/emergency" element={<EmergencyServices />} />
-          
-          {/* Maintenance Plans */}
-          <Route path="/maintenance-plans" element={<MaintenancePlans />} />
           
           {/* Resources */}
           <Route path="/resources" element={<Resources />} />

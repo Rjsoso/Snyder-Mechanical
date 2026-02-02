@@ -94,9 +94,6 @@ const Header = () => {
                           24/7 Emergency
                         </span>
                       </Link>
-                      <Link to="/maintenance-plans" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Maintenance Plans
-                      </Link>
                     </div>
                     
                     {/* For Businesses */}
@@ -122,12 +119,6 @@ const Header = () => {
               )}
             </div>
 
-            <Link 
-              to="/maintenance-plans"
-              className={`font-medium transition-colors ${isActive('/maintenance-plans') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
-            >
-              Maintenance Plans
-            </Link>
             <Link 
               to="/resources"
               className={`font-medium transition-colors ${isActive('/resources') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
@@ -207,9 +198,6 @@ const Header = () => {
                 <Link to="/services/emergency" className="block pl-4 text-red-700 hover:text-red-800 font-medium">
                   24/7 Emergency Service
                 </Link>
-                <Link to="/maintenance-plans" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Maintenance Plans
-                </Link>
                 <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-3">For Businesses</div>
                 <Link to="/commercial" className="block pl-4 text-secondary-700 hover:text-primary-600">
                   Commercial Overview
@@ -221,10 +209,6 @@ const Header = () => {
                   Pumps & Equipment
                 </Link>
               </div>
-              
-              <Link to="/maintenance-plans" className="font-medium text-secondary-700 hover:text-primary-600">
-                Maintenance Plans
-              </Link>
 
               <Link to="/resources" className="font-medium text-secondary-700 hover:text-primary-600">
                 Resources
