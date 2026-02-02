@@ -147,15 +147,6 @@ const Header = () => {
               Contact
             </Link>
 
-            {/* Emergency Button */}
-            <Link
-              to="/services/emergency"
-              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
-            >
-              <AlertCircle className="w-4 h-4" />
-              <span>Emergency</span>
-            </Link>
-
             {/* Phone Number */}
             <a 
               href={`tel:${companyData.phone}`} 
@@ -244,15 +235,6 @@ const Header = () => {
               </Link>
               <Link to="/contact" className="font-medium text-secondary-700 hover:text-primary-600">
                 Contact
-              </Link>
-              
-              {/* Emergency Button Mobile */}
-              <Link 
-                to="/services/emergency"
-                className="flex items-center justify-center space-x-2 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
-              >
-                <AlertCircle className="w-5 h-5" />
-                <span>24/7 Emergency Service</span>
               </Link>
               
               <a 
