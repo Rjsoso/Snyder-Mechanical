@@ -39,7 +39,7 @@
    - Add Reviews and set some as "featured"
    - Add one "Review Statistics" document
    - Add Portfolio Projects
-   - Add Detailed Services (heating, cooling, plumbing, emergency)
+   - Add Detailed Services (heating, cooling, plumbing)
    - Add Certifications (both "badge" and "certification" types)
 
 ## Schema Types Overview
@@ -49,7 +49,7 @@
 3. **review** - Multiple customer reviews
 4. **reviewStats** - Single document with review statistics
 5. **portfolioProject** - Multiple portfolio projects
-6. **detailedService** - Detailed service pages (heating, cooling, plumbing, emergency)
+6. **detailedService** - Detailed service pages (heating, cooling, plumbing)
 7. **certification** - Trust badges and certifications
 
 ## Important Notes

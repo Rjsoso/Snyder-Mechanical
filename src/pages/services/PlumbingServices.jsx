@@ -170,7 +170,7 @@ const PlumbingServices = () => {
             Need a Reliable Plumber?
           </h2>
           <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-            From routine maintenance to emergency repairs, we're here to help with all your plumbing needs.
+            From routine maintenance to repairs, we're here to help with all your plumbing needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

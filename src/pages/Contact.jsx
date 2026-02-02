@@ -117,23 +117,25 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Business Hours</h3>
                     <p className="text-secondary-700">{companyData.hours.weekdays}</p>
-                    <p className="text-sm text-secondary-600 mt-1">{companyData.hours.emergency}</p>
+                    <p className="text-sm text-secondary-600 mt-1">{companyData.hours.saturday}</p>
+                    <p className="text-sm text-secondary-600">{companyData.hours.sunday}</p>
                   </div>
                 </div>
               </Card>
 
-              <Card className="bg-accent-600 text-white">
-                <h3 className="font-semibold text-lg mb-2">24/7 Emergency Service</h3>
-                <p className="text-accent-100 mb-4">
-                  Need immediate assistance? We're available 24/7 for emergency HVAC and plumbing services.
-                </p>
-                <Button 
-                  href={`tel:${companyData.phone}`}
-                  variant="outline"
-                  className="bg-white/10 border-white text-white hover:bg-white hover:text-accent-600"
-                >
-                  Call Now: {companyData.phone}
-                </Button>
+              <Card>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-primary-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-secondary-900 mb-1">Email</h3>
+                    <a href={`mailto:${companyData.email}`} className="text-primary-600 hover:text-primary-700 font-medium">
+                      {companyData.email}
+                    </a>
+                    <p className="text-sm text-secondary-600 mt-1">We'll respond within 24 hours</p>
+                  </div>
+                </div>
               </Card>
             </div>
           </div>

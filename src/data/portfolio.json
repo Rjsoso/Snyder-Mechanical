@@ -32,7 +32,7 @@
     "category": "commercial",
     "image": "/images/portfolio/project-4.jpg",
     "description": "HVAC system modernization for critical healthcare facility.",
-    "details": "24/7 operation with zero downtime during transition",
+    "details": "Continuous operation with zero downtime during transition",
     "year": "2022"
   },
   {
@@ -46,11 +46,11 @@
   },
   {
     "id": 6,
-    "title": "Ranch Emergency Repair",
+    "title": "Ranch Plumbing Repair",
     "category": "residential",
     "image": "/images/portfolio/project-6.jpg",
-    "description": "24-hour emergency plumbing repair for rural property.",
-    "details": "Rapid response prevented major water damage",
+    "description": "Comprehensive plumbing repair for rural property.",
+    "details": "Professional service prevented major water damage",
     "year": "2023"
   }
 ]

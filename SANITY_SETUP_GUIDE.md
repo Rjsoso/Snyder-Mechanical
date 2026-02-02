@@ -73,7 +73,6 @@ Once Studio is running (usually at http://localhost:3333), create these document
    - Heating (slug: heating)
    - Cooling (slug: cooling)
    - Plumbing (slug: plumbing)
-   - Emergency (slug: emergency)
    - Copy data from `src/data/detailed-services.json` for each
 
 5. **Reviews** (Create 4+ documents):

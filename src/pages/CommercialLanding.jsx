@@ -39,11 +39,11 @@ const CommercialLanding = () => {
     'Fully insured with commercial liability coverage',
     'In-house design and engineering team',
     'Project management from start to finish',
-    '24/7 emergency commercial service',
-    'Preventive maintenance programs',
+    'Responsive service and support',
     'Energy-efficient solutions',
     'Code compliance expertise',
-    'Safety-first approach'
+    'Safety-first approach',
+    'Quality workmanship guaranteed'
   ];
 
   return (
