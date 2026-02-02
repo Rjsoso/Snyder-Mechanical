@@ -10,6 +10,7 @@ import CoolingServices from './pages/services/CoolingServices';
 import PlumbingServices from './pages/services/PlumbingServices';
 import Resources from './pages/Resources';
 import CommercialLanding from './pages/CommercialLanding';
+import InvoiceSyncDashboard from './pages/admin/InvoiceSyncDashboard';
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           
           {/* Commercial Landing */}
           <Route path="/commercial" element={<CommercialLanding />} />
+          
+          {/* Admin Dashboard */}
+          <Route path="/admin/invoice-sync" element={<InvoiceSyncDashboard />} />
           
           {/* General Service Routes */}
           <Route path="/services/:slug" element={<ServicePage />} />

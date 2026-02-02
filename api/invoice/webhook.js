@@ -69,6 +69,23 @@ export default async function handler(req, res) {
             .commit();
           
           console.log(`Invoice ${invoiceId} marked as paid`);
+
+          // Sync payment back to ComputerEase (non-blocking)
+          try {
+            await fetch(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api/sync/update-computerease-payment`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                invoiceId,
+                paymentIntentId: paymentIntent.id,
+              }),
+            });
+          } catch (syncError) {
+            // Log but don't fail webhook if sync fails
+            console.error('Failed to sync payment to ComputerEase:', syncError);
+          }
         }
         break;
 
