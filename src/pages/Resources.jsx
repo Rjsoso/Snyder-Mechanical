@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Wrench, DollarSign, Droplet, Calendar, Phone, Receipt } from 'lucide-react';
 import ResourceCard from '../components/resources/ResourceCard';
-import EnergySavingsCalculator from '../components/resources/EnergySavingsCalculator';
 import InvoicePayment from '../components/resources/InvoicePayment';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
@@ -34,13 +33,6 @@ const Resources = () => {
               {resourcesData.hero.subtitle}
             </p>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Energy Savings Calculator */}
-      <section className="section-padding bg-white">
-        <div className="container-custom max-w-2xl">
-          <EnergySavingsCalculator />
         </div>
       </section>
 
