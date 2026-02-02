@@ -8,7 +8,7 @@ const services = [
   {
     id: 'residential',
     title: 'Residential Services',
-    description: 'Expert HVAC and plumbing services for your home. Installation, repair, maintenance, and 24/7 emergency services.',
+    description: 'Expert HVAC and plumbing services for your home. Installation, repair, and maintenance for all your comfort needs.',
     icon: Home,
     link: '/services/residential',
     color: 'primary',

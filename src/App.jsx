@@ -8,7 +8,6 @@ import Contact from './pages/Contact';
 import HeatingServices from './pages/services/HeatingServices';
 import CoolingServices from './pages/services/CoolingServices';
 import PlumbingServices from './pages/services/PlumbingServices';
-import EmergencyServices from './pages/services/EmergencyServices';
 import Resources from './pages/Resources';
 import CommercialLanding from './pages/CommercialLanding';
 
@@ -23,7 +22,6 @@ function App() {
           <Route path="/services/heating" element={<HeatingServices />} />
           <Route path="/services/cooling" element={<CoolingServices />} />
           <Route path="/services/plumbing" element={<PlumbingServices />} />
-          <Route path="/services/emergency" element={<EmergencyServices />} />
           
           {/* Resources */}
           <Route path="/resources" element={<Resources />} />

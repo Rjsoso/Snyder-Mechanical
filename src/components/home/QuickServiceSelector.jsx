@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Flame, Snowflake, Droplets, AlertCircle } from 'lucide-react';
+import { Flame, Snowflake, Droplets } from 'lucide-react';
 
 const services = [
   {
@@ -26,14 +26,6 @@ const services = [
     link: '/services/plumbing',
     color: 'from-blue-500 to-blue-600',
     description: 'Complete plumbing solutions'
-  },
-  {
-    id: 'emergency',
-    title: '24/7 Emergency',
-    icon: AlertCircle,
-    link: '/services/emergency',
-    color: 'from-red-600 to-red-700',
-    description: 'Immediate assistance'
   }
 ];
 
@@ -52,11 +44,11 @@ const QuickServiceSelector = () => {
             What Do You Need?
           </h2>
           <p className="text-lg text-secondary-600 max-w-2xl mx-auto">
-            Select a service to get started or call us for immediate assistance
+            Select a service to get started or call us for assistance
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {services.map((service, index) => {
             const Icon = service.icon;
             

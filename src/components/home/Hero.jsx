@@ -55,7 +55,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              Trusted by homeowners across Elko and Spring Creek since 1981. From routine maintenance to emergency repairs, we're here for you 24/7.
+              Trusted by homeowners across Elko and Spring Creek since 1981. From installations to repairs, we're here to keep your home comfortable.
             </motion.p>
             
             {/* Trust Badges */}

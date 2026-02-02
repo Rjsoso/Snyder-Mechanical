@@ -13,16 +13,16 @@
       "icon": "award"
     },
     {
-      "id": "emergency-service",
-      "title": "24/7 Emergency",
-      "description": "Available whenever you need us",
-      "icon": "clock"
-    },
-    {
       "id": "satisfaction",
       "title": "100% Satisfaction",
       "description": "Guaranteed quality workmanship",
       "icon": "thumbs-up"
+    },
+    {
+      "id": "same-day",
+      "title": "Same-Day Service",
+      "description": "Fast response for your convenience",
+      "icon": "clock"
     }
   ],
   "certifications": [

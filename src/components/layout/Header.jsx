@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, ChevronDown, AlertCircle } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import companyData from '../../data/company.json';
 
 const Header = () => {
@@ -87,12 +87,6 @@ const Header = () => {
                       </Link>
                       <Link to="/services/plumbing" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
                         Plumbing Services
-                      </Link>
-                      <Link to="/services/emergency" className="block px-2 py-2 text-red-700 hover:bg-red-50 hover:text-red-800 transition-colors rounded font-medium">
-                        <span className="flex items-center">
-                          <AlertCircle className="w-4 h-4 mr-1" />
-                          24/7 Emergency
-                        </span>
                       </Link>
                     </div>
                     
@@ -194,9 +188,6 @@ const Header = () => {
                 </Link>
                 <Link to="/services/plumbing" className="block pl-4 text-secondary-700 hover:text-primary-600">
                   Plumbing Services
-                </Link>
-                <Link to="/services/emergency" className="block pl-4 text-red-700 hover:text-red-800 font-medium">
-                  24/7 Emergency Service
                 </Link>
                 <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-3">For Businesses</div>
                 <Link to="/commercial" className="block pl-4 text-secondary-700 hover:text-primary-600">

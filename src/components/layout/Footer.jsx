@@ -100,9 +100,9 @@ const Footer = () => {
                   <p className="text-sm">8:00 AM - 5:00 PM</p>
                 </div>
               </div>
-              <div className="mt-4 p-4 bg-accent-600 rounded-lg">
-                <p className="font-semibold text-white">24/7 Emergency Service</p>
-                <p className="text-sm text-accent-100">Available whenever you need us</p>
+              <div className="mt-4 text-sm">
+                <p>Saturday: By Appointment</p>
+                <p>Sunday: Closed</p>
               </div>
             </div>
           </div>

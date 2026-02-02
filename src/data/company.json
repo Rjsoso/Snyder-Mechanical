@@ -14,9 +14,8 @@
   "serviceArea": "Northeastern Nevada",
   "hours": {
     "weekdays": "Monday - Friday: 8:00 AM - 5:00 PM",
-    "saturday": "Saturday: Emergency Service Only",
-    "sunday": "Sunday: Emergency Service Only",
-    "emergency": "24/7 Emergency Service Available"
+    "saturday": "Saturday: By Appointment",
+    "sunday": "Sunday: Closed"
   },
   "values": [
     "Safety",

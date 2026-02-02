@@ -8,7 +8,7 @@
       "subtitle": "Professional HVAC & Plumbing Services for Northeastern Nevada Homes",
       "image": "/images/residential-hero.jpg"
     },
-    "description": "Trust Snyder Mechanical for all your home comfort needs. From HVAC installation to emergency repairs, we're here 24/7.",
+    "description": "Trust Snyder Mechanical for all your home comfort needs. From HVAC installation to repairs, we're here to help.",
     "services": [
       {
         "id": "hvac-install",
@@ -21,19 +21,6 @@
         "title": "Plumbing Services",
         "icon": "droplet",
         "description": "Comprehensive plumbing solutions including repairs, installations, and maintenance."
-      },
-      {
-        "id": "emergency",
-        "title": "Emergency Services",
-        "icon": "alert-circle",
-        "description": "24/7 emergency HVAC and plumbing services when you need us most.",
-        "badge": "24/7"
-      },
-      {
-        "id": "maintenance",
-        "title": "Maintenance Plans",
-        "icon": "wrench",
-        "description": "Preventive maintenance programs to keep your systems running efficiently year-round."
       }
     ]
   },

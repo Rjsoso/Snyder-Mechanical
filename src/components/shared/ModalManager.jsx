@@ -4,7 +4,6 @@ import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ServiceRequestForm from '../forms/ServiceRequestForm';
 import QuickEstimateForm from '../forms/QuickEstimateForm';
-import EmergencyForm from '../forms/EmergencyForm';
 
 const ModalManager = () => {
   const location = useLocation();
@@ -26,8 +25,6 @@ const ModalManager = () => {
         return <ServiceRequestForm onClose={closeModal} />;
       case 'estimate':
         return <QuickEstimateForm onClose={closeModal} />;
-      case 'emergency':
-        return <EmergencyForm onClose={closeModal} />;
       default:
         return null;
     }
