@@ -9,6 +9,8 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [canMakePayment, setCanMakePayment] = useState(false);
   const [email, setEmail] = useState(invoice.customerEmail || '');
+  const [paymentMethodsChecked, setPaymentMethodsChecked] = useState(false);
+  const [availableMethods, setAvailableMethods] = useState(null);
 
   useEffect(() => {
     if (!stripe || !invoice) {
@@ -28,12 +30,28 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
     });
 
     // Check if Apple Pay or Google Pay is available
-    pr.canMakePayment().then(result => {
-      if (result) {
-        setPaymentRequest(pr);
-        setCanMakePayment(true);
-      }
-    });
+    pr.canMakePayment()
+      .then(result => {
+        console.log('Payment Request canMakePayment result:', result);
+        setPaymentMethodsChecked(true);
+        setAvailableMethods(result);
+        
+        if (result) {
+          console.log('Payment methods available:', {
+            applePay: result.applePay || false,
+            googlePay: result.googlePay || false,
+            link: result.link || false
+          });
+          setPaymentRequest(pr);
+          setCanMakePayment(true);
+        } else {
+          console.log('No payment methods available (Apple Pay/Google Pay)');
+        }
+      })
+      .catch(error => {
+        console.error('Payment Request canMakePayment error:', error);
+        setPaymentMethodsChecked(true);
+      });
 
     // Handle payment method received from Apple Pay / Google Pay
     pr.on('paymentmethod', async (e) => {
@@ -187,6 +205,18 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
               },
             }}
           />
+        )}
+
+        {/* Debug Info (Remove after testing) */}
+        {process.env.NODE_ENV === 'development' && paymentMethodsChecked && (
+          <div className="text-xs text-secondary-500 p-2 bg-secondary-50 rounded">
+            <div>Payment methods checked: ✓</div>
+            {availableMethods ? (
+              <div>Available: {availableMethods.applePay ? '🍎 Apple Pay ' : ''}{availableMethods.googlePay ? '🤖 Google Pay' : ''}</div>
+            ) : (
+              <div>No Apple/Google Pay available</div>
+            )}
+          </div>
         )}
 
         {/* Stripe Link */}
