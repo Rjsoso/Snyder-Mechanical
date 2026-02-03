@@ -70,9 +70,9 @@ export default async function handler(req, res) {
     // Use requested amount (with fees) if provided, otherwise use invoice amount
     const chargeAmount = requestedAmount || Math.round(invoice.amount * 100);
 
-    // Create Payment Intent for ACH with payment method data
+    // Create and confirm Payment Intent for ACH in one step
     // Stripe automatically verifies test routing numbers
-    const paymentIntent = await stripe.paymentIntents.create({
+    const confirmedIntent = await stripe.paymentIntents.create({
       amount: chargeAmount, // Amount in cents (may include processing fee)
       currency: 'usd',
       customer: customer.id,
@@ -96,6 +96,8 @@ export default async function handler(req, res) {
         originalAmount: Math.round(invoice.amount * 100),
         totalAmount: chargeAmount
       },
+      // Confirm immediately (required when using mandate_data)
+      confirm: true,
       // ACH requires mandate acceptance
       mandate_data: {
         customer_acceptance: {
@@ -107,9 +109,6 @@ export default async function handler(req, res) {
         },
       },
     });
-    
-    // Confirm the payment intent (verification happens automatically in test mode)
-    const confirmedIntent = await stripe.paymentIntents.confirm(paymentIntent.id);
     
     // Update invoice status to "processing"
     await sanityClient
