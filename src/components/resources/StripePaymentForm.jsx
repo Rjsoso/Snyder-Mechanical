@@ -32,10 +32,6 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
 
-  console.log('StripePaymentForm - stripe loaded:', !!stripe);
-  console.log('StripePaymentForm - elements loaded:', !!elements);
-  console.log('StripePaymentForm - clientSecret:', clientSecret ? 'Present' : 'Missing');
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -146,13 +142,7 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
         <div className="p-4 border-2 border-secondary-300 rounded-lg bg-white focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-200 transition-all min-h-[44px]">
           <CardElement 
             options={CARD_ELEMENT_OPTIONS}
-            onReady={(element) => {
-              console.log('CardElement ready', element);
-              // Focus the element to ensure it's interactive
-              element.focus();
-            }}
             onChange={(event) => {
-              console.log('CardElement changed', event);
               if (event.error) {
                 setError(event.error.message);
               } else {

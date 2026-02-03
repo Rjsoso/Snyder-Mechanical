@@ -12,9 +12,7 @@ import PaymentMethodSelector from './PaymentMethodSelector';
 import ACHPaymentForm from './ACHPaymentForm';
 
 // Initialize Stripe
-const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
-console.log('Stripe Key:', stripePublishableKey ? 'Found' : 'Missing');
-const stripePromise = loadStripe(stripePublishableKey);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const InvoicePayment = () => {
   const [step, setStep] = useState('lookup'); // lookup, select-method, payment, ach-pending, success
