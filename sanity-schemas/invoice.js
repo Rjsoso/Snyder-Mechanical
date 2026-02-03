@@ -60,6 +60,7 @@ export default {
       options: {
         list: [
           { title: 'Unpaid', value: 'unpaid' },
+          { title: 'Processing', value: 'processing' },
           { title: 'Paid', value: 'paid' },
           { title: 'Overdue', value: 'overdue' },
           { title: 'Cancelled', value: 'cancelled' }
@@ -128,6 +129,44 @@ export default {
       type: 'datetime',
       readOnly: true,
       hidden: ({ document }) => document?.status !== 'paid'
+    },
+    {
+      name: 'paymentMethod',
+      title: 'Payment Method',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Credit Card', value: 'card' },
+          { title: 'ACH Bank Transfer', value: 'ach' },
+          { title: 'Check', value: 'check' },
+          { title: 'Cash', value: 'cash' },
+        ]
+      },
+      readOnly: true,
+      hidden: ({ document }) => !document?.paymentMethod
+    },
+    {
+      name: 'achProcessingStatus',
+      title: 'ACH Processing Status',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Pending', value: 'pending' },
+          { title: 'Processing', value: 'processing' },
+          { title: 'Completed', value: 'completed' },
+          { title: 'Failed', value: 'failed' },
+        ]
+      },
+      readOnly: true,
+      hidden: ({ document }) => document?.paymentMethod !== 'ach'
+    },
+    {
+      name: 'paymentFailureReason',
+      title: 'Payment Failure Reason',
+      type: 'text',
+      rows: 2,
+      readOnly: true,
+      hidden: ({ document }) => document?.achProcessingStatus !== 'failed'
     },
     {
       name: 'notes',

@@ -51,6 +51,28 @@ export default async function handler(req, res) {
   // Handle the event
   try {
     switch (event.type) {
+      case 'payment_intent.processing':
+        // ACH payment initiated and processing
+        const processingIntent = event.data.object;
+        const processingInvoiceId = processingIntent.metadata.invoiceId;
+        
+        if (processingInvoiceId) {
+          const isACH = processingIntent.payment_method_types.includes('us_bank_account');
+          
+          if (isACH) {
+            await sanityClient
+              .patch(processingInvoiceId)
+              .set({ 
+                status: 'processing',
+                achProcessingStatus: 'processing'
+              })
+              .commit();
+            
+            console.log(`ACH payment processing for invoice ${processingInvoiceId}`);
+          }
+        }
+        break;
+
       case 'payment_intent.succeeded':
         const paymentIntent = event.data.object;
         
@@ -58,17 +80,26 @@ export default async function handler(req, res) {
         const invoiceId = paymentIntent.metadata.invoiceId;
         
         if (invoiceId) {
+          const isACH = paymentIntent.payment_method_types.includes('us_bank_account');
+          
           // Update invoice status in Sanity
+          const updateData = {
+            status: 'paid',
+            paidAt: new Date().toISOString(),
+            stripePaymentIntentId: paymentIntent.id
+          };
+          
+          // Add ACH-specific status if applicable
+          if (isACH) {
+            updateData.achProcessingStatus = 'completed';
+          }
+          
           await sanityClient
             .patch(invoiceId)
-            .set({ 
-              status: 'paid',
-              paidAt: new Date().toISOString(),
-              stripePaymentIntentId: paymentIntent.id
-            })
+            .set(updateData)
             .commit();
           
-          console.log(`Invoice ${invoiceId} marked as paid`);
+          console.log(`Invoice ${invoiceId} marked as paid (${isACH ? 'ACH' : 'Card'})`);
 
           // Sync payment back to ComputerEase (non-blocking)
           try {
@@ -90,9 +121,33 @@ export default async function handler(req, res) {
         break;
 
       case 'payment_intent.payment_failed':
-        const failedPayment = event.data.object;
-        console.error('Payment failed:', failedPayment.id);
-        // Optionally notify admin or log failure
+        // Handle payment failures (especially important for ACH)
+        const failedIntent = event.data.object;
+        const failedInvoiceId = failedIntent.metadata.invoiceId;
+        
+        if (failedInvoiceId) {
+          const isACH = failedIntent.payment_method_types.includes('us_bank_account');
+          const failureReason = failedIntent.last_payment_error?.message || 'Unknown error';
+          
+          const updateData = {
+            status: 'unpaid'
+          };
+          
+          // Add ACH-specific failure info
+          if (isACH) {
+            updateData.achProcessingStatus = 'failed';
+            updateData.paymentFailureReason = failureReason;
+          }
+          
+          await sanityClient
+            .patch(failedInvoiceId)
+            .set(updateData)
+            .commit();
+          
+          console.error(`Payment failed for invoice ${failedInvoiceId}: ${failureReason}`);
+          
+          // TODO: Send email notification to customer about failed payment
+        }
         break;
 
       default:
