@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { CreditCard, Loader2, CheckCircle, Lock } from 'lucide-react';
+import { CreditCard, Loader2, Lock } from 'lucide-react';
 import Button from '../shared/Button';
 import StripeLogo from '../shared/StripeLogo';
 import CardBrandIcons from '../shared/CardBrandIcons';
 import SecurityBadge from '../shared/SecurityBadge';
 import ExpressCheckoutButtons from './ExpressCheckoutButtons';
+import FeeBreakdown from './FeeBreakdown';
+import { calculateTotal } from '../../utils/paymentFees';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -105,32 +107,17 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
     }).format(amount);
   };
 
+  const { total } = calculateTotal(invoice.amount, 'card');
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Enhanced Payment Summary */}
-      <div className="bg-gradient-to-r from-primary-50 to-blue-50 border-2 border-primary-200 rounded-xl p-6 shadow-sm">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-              <CreditCard className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <p className="text-xs text-secondary-600 uppercase tracking-wide">Amount Due</p>
-              <p className="text-sm text-secondary-700 font-medium">{invoice.customerName}</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-3xl font-bold text-primary-600">
-              {formatCurrency(invoice.amount)}
-            </p>
-            <p className="text-xs text-secondary-500">Invoice {invoice.invoiceNumber}</p>
-          </div>
-        </div>
-        <div className="flex items-center justify-center space-x-2 text-xs text-primary-700 bg-white/50 rounded-lg py-2">
-          <CheckCircle className="w-4 h-4" />
-          <span>Secure one-time payment</span>
-        </div>
-      </div>
+      {/* Payment Summary with Fee Breakdown */}
+      <FeeBreakdown
+        invoiceAmount={invoice.amount}
+        paymentMethod="card"
+        invoiceNumber={invoice.invoiceNumber}
+        customerName={invoice.customerName}
+      />
 
       {/* Express Checkout Options (Apple Pay, Google Pay, Link) */}
       <ExpressCheckoutButtons
@@ -194,7 +181,7 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
         ) : (
           <>
             <CreditCard className="w-5 h-5 mr-2" />
-            Pay {formatCurrency(invoice.amount)}
+            Pay {formatCurrency(total)}
           </>
         )}
       </Button>

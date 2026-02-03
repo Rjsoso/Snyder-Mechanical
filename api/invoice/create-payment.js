@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { invoiceId } = req.body;
+    const { invoiceId, amount: requestedAmount } = req.body;
 
     // Validate input
     if (!invoiceId) {
@@ -73,15 +73,20 @@ export default async function handler(req, res) {
       }
     }
 
+    // Use requested amount (with fees) if provided, otherwise use invoice amount
+    const chargeAmount = requestedAmount || Math.round(invoice.amount * 100);
+
     // Create Stripe Payment Intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(invoice.amount * 100), // Convert to cents
+      amount: chargeAmount, // Amount in cents (may include processing fee)
       currency: 'usd',
       metadata: {
         invoiceId: invoice._id,
         invoiceNumber: invoice.invoiceNumber,
         customerName: invoice.customerName,
-        customerEmail: invoice.customerEmail
+        customerEmail: invoice.customerEmail,
+        originalAmount: Math.round(invoice.amount * 100),
+        totalAmount: chargeAmount
       },
       receipt_email: invoice.customerEmail,
       description: `Payment for Invoice ${invoice.invoiceNumber}`

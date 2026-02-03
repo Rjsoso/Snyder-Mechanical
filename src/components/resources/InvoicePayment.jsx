@@ -10,6 +10,7 @@ import InvoiceDisplay from './InvoiceDisplay';
 import StripePaymentForm from './StripePaymentForm';
 import PaymentMethodSelector from './PaymentMethodSelector';
 import ACHPaymentForm from './ACHPaymentForm';
+import { calculateTotal } from '../../utils/paymentFees';
 
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -59,6 +60,8 @@ const InvoicePayment = () => {
     if (selectedMethod === 'card') {
       // Create payment intent for credit card
       try {
+        const { total } = calculateTotal(invoice.amount, 'card');
+        
         const response = await fetch('/api/invoice/create-payment', {
           method: 'POST',
           headers: {
@@ -66,6 +69,7 @@ const InvoicePayment = () => {
           },
           body: JSON.stringify({
             invoiceId: invoice._id,
+            amount: Math.round(total * 100), // Amount in cents with processing fee
           }),
         });
 

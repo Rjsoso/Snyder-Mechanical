@@ -2,6 +2,8 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Building2, Loader2, AlertCircle } from 'lucide-react';
 import Button from '../shared/Button';
+import FeeBreakdown from './FeeBreakdown';
+import { calculateTotal } from '../../utils/paymentFees';
 
 const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
   const [accountNumber, setAccountNumber] = useState('');
@@ -27,7 +29,7 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         throw new Error('Account number must be between 4 and 17 digits');
       }
       
-      // Create ACH payment intent
+      // Create ACH payment intent with fees
       const response = await fetch('/api/invoice/create-ach-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -37,6 +39,7 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
           routingNumber,
           accountType,
           accountHolder: accountHolder.trim(),
+          amount: Math.round(total * 100), // Amount in cents with processing fee
         }),
       });
       
@@ -57,8 +60,18 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
     }
   };
   
+  const { total } = calculateTotal(invoice.amount, 'ach');
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Payment Summary with Fee Breakdown */}
+      <FeeBreakdown
+        invoiceAmount={invoice.amount}
+        paymentMethod="ach"
+        invoiceNumber={invoice.invoiceNumber}
+        customerName={invoice.customerName || invoice.customerEmail}
+      />
+
       {/* Info Banner */}
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <div className="flex items-start space-x-3">
@@ -205,8 +218,9 @@ ACHPaymentForm.propTypes = {
   invoice: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     invoiceNumber: PropTypes.string.isRequired,
-    amount: PropTypes.number.isRequired,
+    customerName: PropTypes.string,
     customerEmail: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
   }).isRequired,
   onSuccess: PropTypes.func.isRequired,
   onError: PropTypes.func,

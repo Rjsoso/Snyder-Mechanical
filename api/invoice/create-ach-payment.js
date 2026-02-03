@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   }
   
   try {
-    const { invoiceId, accountNumber, routingNumber, accountType, accountHolder } = req.body;
+    const { invoiceId, accountNumber, routingNumber, accountType, accountHolder, amount: requestedAmount } = req.body;
     
     // Validate required fields
     if (!invoiceId || !accountNumber || !routingNumber || !accountType || !accountHolder) {
@@ -87,9 +87,12 @@ export default async function handler(req, res) {
       customer: customer.id,
     });
     
+    // Use requested amount (with fees) if provided, otherwise use invoice amount
+    const chargeAmount = requestedAmount || Math.round(invoice.amount * 100);
+
     // Create Payment Intent for ACH
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(invoice.amount * 100), // Convert to cents
+      amount: chargeAmount, // Amount in cents (may include processing fee)
       currency: 'usd',
       customer: customer.id,
       payment_method: paymentMethod.id,
@@ -97,6 +100,8 @@ export default async function handler(req, res) {
       metadata: {
         invoiceId: invoice._id,
         invoiceNumber: invoice.invoiceNumber,
+        originalAmount: Math.round(invoice.amount * 100),
+        totalAmount: chargeAmount
       },
       // ACH requires mandate acceptance
       mandate_data: {

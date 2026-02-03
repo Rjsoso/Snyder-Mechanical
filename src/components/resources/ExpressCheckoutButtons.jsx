@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { PaymentRequestButtonElement, LinkAuthenticationElement } from '@stripe/react-stripe-js';
+import { calculateTotal } from '../../utils/paymentFees';
 
 const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) => {
   const stripe = useStripe();
@@ -17,13 +18,16 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
       return;
     }
 
+    // Calculate total with processing fees (Apple Pay/Google Pay use card rate)
+    const { total } = calculateTotal(invoice.amount, 'card');
+
     // Create payment request for Apple Pay / Google Pay
     const pr = stripe.paymentRequest({
       country: 'US',
       currency: 'usd',
       total: {
-        label: `Invoice ${invoice.invoiceNumber}`,
-        amount: Math.round(invoice.amount * 100), // Convert to cents
+        label: `Invoice ${invoice.invoiceNumber} (incl. processing fee)`,
+        amount: Math.round(total * 100), // Convert to cents with fees
       },
       requestPayerName: true,
       requestPayerEmail: true,
