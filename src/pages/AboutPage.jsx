@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Shield, GraduationCap, Search, CheckCircle, Award, Quote, DollarSign, Heart, TrendingUp, Users } from 'lucide-react';
-import aboutData from '../data/about.json';
+import { useAboutPageData } from '../hooks/useSanityData';
+import aboutDataFallback from '../data/about.json';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
 
@@ -20,7 +21,21 @@ const iconMap = {
 
 const AboutPage = () => {
   const { section } = useParams();
-  const pageData = aboutData[section];
+  const { data: sanityData, loading } = useAboutPageData(section);
+  
+  // Use Sanity data if available, otherwise fallback to JSON
+  const pageData = sanityData || aboutDataFallback[section];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
+          <p className="text-secondary-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!pageData) {
     return (

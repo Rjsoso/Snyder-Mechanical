@@ -3,6 +3,7 @@ import { Home, Building2, Droplets, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Card from '../shared/Card';
 import Badge from '../shared/Badge';
+import { useHomePageData } from '../../hooks/useSanityData';
 
 const services = [
   {
@@ -36,6 +37,14 @@ const services = [
 ];
 
 const ServicesGrid = () => {
+  const { data: homePageData } = useHomePageData();
+
+  // Fallback content if Sanity data is not available
+  const section = homePageData?.servicesGridSection || {
+    heading: 'Our Services',
+    description: 'Comprehensive mechanical solutions for residential, commercial, and industrial clients'
+  };
+
   return (
     <section className="section-padding bg-gradient-to-b from-white to-secondary-50">
       <div className="container-custom">
@@ -47,10 +56,10 @@ const ServicesGrid = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
-            Our Services
+            {section.heading}
           </h2>
           <p className="text-lg text-secondary-600 max-w-2xl mx-auto">
-            Comprehensive mechanical solutions for residential, commercial, and industrial clients
+            {section.description}
           </p>
         </motion.div>
 

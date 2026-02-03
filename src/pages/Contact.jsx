@@ -1,17 +1,56 @@
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
-import companyData from '../data/company.json';
+import { useCompanyData, useContactPageData } from '../hooks/useSanityData';
 
 const Contact = () => {
+  const { data: companyData } = useCompanyData();
+  const { data: contactPageData } = useContactPageData();
+
+  // Fallback content if Sanity data is not available
+  const hero = contactPageData?.hero || {
+    title: 'Contact Us',
+    subtitle: 'Get in touch with Snyder Mechanical today'
+  };
+
+  const formSection = contactPageData?.formSection || {
+    heading: 'Send Us a Message',
+    nameLabel: 'Name',
+    namePlaceholder: 'Your name',
+    emailLabel: 'Email',
+    emailPlaceholder: 'your@email.com',
+    phoneLabel: 'Phone',
+    phonePlaceholder: '(775) 123-4567',
+    messageLabel: 'Message',
+    messagePlaceholder: 'Tell us about your project...',
+    submitButtonText: 'Send Message'
+  };
+
+  const contactInfoSection = contactPageData?.contactInfoSection || {
+    heading: 'Contact Information',
+    phoneCardSubtext: 'Call us anytime',
+    locationCardSubtext: 'Serving',
+    emailCardSubtext: "We'll respond within 24 hours"
+  };
+
+  const phone = companyData?.phone || '(775) 738-5616';
+  const email = companyData?.email || 'info@snydermechanical.com';
+  const address = companyData?.address?.display || 'Elko, Spring Creek, NV';
+  const serviceArea = companyData?.serviceArea || 'Northeastern Nevada';
+  const hours = companyData?.hours || {
+    weekdays: 'Monday - Friday: 8:00 AM - 5:00 PM',
+    saturday: 'Saturday: By Appointment',
+    sunday: 'Sunday: Closed'
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white py-20">
         <div className="container-custom text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">{hero.title}</h1>
           <p className="text-xl text-primary-100 max-w-2xl mx-auto">
-            Get in touch with Snyder Mechanical today
+            {hero.subtitle}
           </p>
         </div>
       </section>
@@ -23,54 +62,54 @@ const Contact = () => {
             {/* Contact Form */}
             <div>
               <h2 className="text-3xl font-bold text-secondary-900 mb-6">
-                Send Us a Message
+                {formSection.heading}
               </h2>
               <form className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-secondary-700 mb-2">
-                    Name *
+                    {formSection.nameLabel} *
                   </label>
                   <input
                     type="text"
                     required
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="Your name"
+                    placeholder={formSection.namePlaceholder}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-secondary-700 mb-2">
-                    Email *
+                    {formSection.emailLabel} *
                   </label>
                   <input
                     type="email"
                     required
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="your@email.com"
+                    placeholder={formSection.emailPlaceholder}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-secondary-700 mb-2">
-                    Phone
+                    {formSection.phoneLabel}
                   </label>
                   <input
                     type="tel"
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="(775) 123-4567"
+                    placeholder={formSection.phonePlaceholder}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-secondary-700 mb-2">
-                    Message *
+                    {formSection.messageLabel} *
                   </label>
                   <textarea
                     required
                     rows="5"
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                    placeholder="Tell us about your project..."
+                    placeholder={formSection.messagePlaceholder}
                   />
                 </div>
                 <Button type="submit" variant="primary" size="lg" className="w-full">
-                  Send Message
+                  {formSection.submitButtonText}
                 </Button>
               </form>
             </div>
@@ -78,7 +117,7 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-6">
               <h2 className="text-3xl font-bold text-secondary-900 mb-6">
-                Contact Information
+                {contactInfoSection.heading}
               </h2>
 
               <Card>
@@ -88,10 +127,10 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Phone</h3>
-                    <a href={`tel:${companyData.phone}`} className="text-primary-600 hover:text-primary-700 font-medium">
-                      {companyData.phone}
+                    <a href={`tel:${phone}`} className="text-primary-600 hover:text-primary-700 font-medium">
+                      {phone}
                     </a>
-                    <p className="text-sm text-secondary-600 mt-1">Call us anytime</p>
+                    <p className="text-sm text-secondary-600 mt-1">{contactInfoSection.phoneCardSubtext}</p>
                   </div>
                 </div>
               </Card>
@@ -103,8 +142,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Location</h3>
-                    <p className="text-secondary-700">{companyData.address.display}</p>
-                    <p className="text-sm text-secondary-600 mt-1">Serving {companyData.serviceArea}</p>
+                    <p className="text-secondary-700">{address}</p>
+                    <p className="text-sm text-secondary-600 mt-1">{contactInfoSection.locationCardSubtext} {serviceArea}</p>
                   </div>
                 </div>
               </Card>
@@ -116,9 +155,9 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Business Hours</h3>
-                    <p className="text-secondary-700">{companyData.hours.weekdays}</p>
-                    <p className="text-sm text-secondary-600 mt-1">{companyData.hours.saturday}</p>
-                    <p className="text-sm text-secondary-600">{companyData.hours.sunday}</p>
+                    <p className="text-secondary-700">{hours.weekdays}</p>
+                    <p className="text-sm text-secondary-600 mt-1">{hours.saturday}</p>
+                    <p className="text-sm text-secondary-600">{hours.sunday}</p>
                   </div>
                 </div>
               </Card>
@@ -130,10 +169,10 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Email</h3>
-                    <a href={`mailto:${companyData.email}`} className="text-primary-600 hover:text-primary-700 font-medium">
-                      {companyData.email}
+                    <a href={`mailto:${email}`} className="text-primary-600 hover:text-primary-700 font-medium">
+                      {email}
                     </a>
-                    <p className="text-sm text-secondary-600 mt-1">We'll respond within 24 hours</p>
+                    <p className="text-sm text-secondary-600 mt-1">{contactInfoSection.emailCardSubtext}</p>
                   </div>
                 </div>
               </Card>

@@ -5,6 +5,7 @@ Modern, responsive website for Snyder Mechanical - Northeastern Nevada's Premier
 ## Tech Stack
 
 - **Framework**: React 18 with Vite 5
+- **CMS**: Sanity.io (Headless CMS)
 - **Routing**: React Router DOM 6
 - **Styling**: Tailwind CSS 3 with @tailwindcss/postcss
 - **Animations**: Framer Motion & GSAP
@@ -24,9 +25,14 @@ src/
 │   ├── forms/           # Contact and service request forms
 │   └── shared/          # Reusable components (Button, Card, etc.)
 ├── pages/               # Page components (Home, About, Services, etc.)
-├── data/                # JSON data files for content
-├── hooks/               # Custom React hooks
+├── data/                # JSON data files (fallback content)
+├── hooks/               # Custom React hooks (including Sanity data hooks)
+├── lib/                 # Sanity client configuration
 └── utils/               # Utility functions
+
+snyder-mechanicalllc/    # Sanity Studio
+├── schemaTypes/         # Content schemas
+└── sanity.config.ts     # Sanity configuration
 ```
 
 ## Features
@@ -35,10 +41,12 @@ src/
 - 🎨 Modern, clean UI with Tailwind CSS
 - 🎭 Smooth animations with Framer Motion
 - 🏠 11 complete pages with all content sections
+- 📝 **Full CMS integration with Sanity** - Edit all content without code
 - 📞 Service request CTAs throughout
 - 💬 AI Chatbot placeholder (ready for future integration)
 - 🔍 SEO-friendly structure
 - ⚡ Fast performance with Vite
+- 🔄 Automatic fallback to JSON if Sanity content not yet migrated
 
 ## Pages
 
@@ -57,6 +65,8 @@ src/
 
 ## Development
 
+### Frontend (React App)
+
 ```bash
 # Install dependencies
 npm install
@@ -71,6 +81,32 @@ npm run build
 npm run preview
 ```
 
+### Sanity Studio (CMS)
+
+```bash
+# Navigate to Sanity directory
+cd snyder-mechanicalllc
+
+# Install dependencies
+npm install
+
+# Start Sanity Studio
+npm run dev
+
+# Deploy Sanity Studio
+npm run deploy
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory with your Sanity credentials:
+
+```env
+VITE_SANITY_PROJECT_ID=your_project_id
+VITE_SANITY_DATASET=production
+VITE_SANITY_API_VERSION=2024-01-01
+```
+
 ## Deployment
 
 This project is configured for deployment on Vercel:
@@ -81,21 +117,52 @@ This project is configured for deployment on Vercel:
 
 ## Content Management
 
-Content is managed through JSON files in the `src/data/` directory:
+**The website is now fully content-managed through Sanity CMS!** 
 
-- `company.json` - Company information, contact details, hours
-- `services.json` - Service offerings and descriptions
-- `about.json` - About pages content
-- `portfolio.json` - Portfolio projects
+### Editing Content
+
+1. Navigate to `snyder-mechanicalllc` directory
+2. Run `npm run dev` to start Sanity Studio
+3. Access the Studio at http://localhost:3333
+4. Edit any content and click "Publish"
+5. Changes appear on the website immediately
+
+### Content Types Available
+
+- **Company Information** - Business details, contact info, hours
+- **Home Page** - Hero, sections, CTAs
+- **Site Settings** - Navigation menus, footer configuration
+- **About Pages** - Company, safety, recognitions, careers
+- **Commercial Page** - Commercial landing page content
+- **Contact Page** - Contact form labels and text
+- **Services** - Service categories and detailed service pages
+- **Portfolio** - Project showcase
+- **Reviews** - Customer testimonials
+- **Certifications** - Trust badges and certifications
+
+### Detailed Guide
+
+See [SANITY_CONTENT_GUIDE.md](./SANITY_CONTENT_GUIDE.md) for complete content management instructions.
+
+### Fallback Content
+
+JSON files in `src/data/` serve as fallback content during migration. Once all content is in Sanity, these can be removed.
+
+## Recent Updates
+
+- ✅ **Sanity CMS Integration** - Full content management system implemented
+- ✅ All pages now editable through Sanity Studio
+- ✅ Automatic fallback to JSON during content migration
+- ✅ Comprehensive content editor documentation
 
 ## Future Enhancements
 
-- [ ] Sanity CMS integration for easier content management
 - [ ] AI chatbot integration
 - [ ] Schedule service form with email integration
 - [ ] Request estimate form with file uploads
 - [ ] Customer portal
-- [ ] Blog section
+- [ ] Blog section with Sanity
+- [ ] Image optimization with Sanity CDN
 
 ## License
 

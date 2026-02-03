@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Flame, Snowflake, Droplets } from 'lucide-react';
+import { useHomePageData } from '../../hooks/useSanityData';
 
 const services = [
   {
@@ -30,6 +31,14 @@ const services = [
 ];
 
 const QuickServiceSelector = () => {
+  const { data: homePageData } = useHomePageData();
+
+  // Fallback content if Sanity data is not available
+  const section = homePageData?.quickServiceSelector || {
+    heading: 'What Do You Need?',
+    description: 'Select a service to get started or call us for assistance'
+  };
+
   return (
     <section className="section-padding bg-gradient-to-b from-white to-secondary-50">
       <div className="container-custom">
@@ -41,10 +50,10 @@ const QuickServiceSelector = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
-            What Do You Need?
+            {section.heading}
           </h2>
           <p className="text-lg text-secondary-600 max-w-2xl mx-auto">
-            Select a service to get started or call us for assistance
+            {section.description}
           </p>
         </motion.div>
 

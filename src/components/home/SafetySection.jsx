@@ -1,8 +1,18 @@
 import { motion } from 'framer-motion';
 import { Shield } from 'lucide-react';
 import Button from '../shared/Button';
+import { useHomePageData } from '../../hooks/useSanityData';
 
 const SafetySection = () => {
+  const { data: homePageData } = useHomePageData();
+
+  // Fallback content if Sanity data is not available
+  const section = homePageData?.safetySection || {
+    heading: 'Committed to Safety',
+    description: 'Safety is our top priority, each and every project. We maintain the highest safety standards to protect our team, our clients, and the communities we serve.',
+    buttonText: 'Learn More About Our Safety Commitment'
+  };
+
   return (
     <section className="section-padding bg-accent-600 text-white">
       <div className="container-custom">
@@ -17,17 +27,17 @@ const SafetySection = () => {
               <Shield className="w-10 h-10" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Committed to Safety
+              {section.heading}
             </h2>
             <p className="text-xl text-accent-100 mb-8">
-              Safety is our top priority, each and every project. We maintain the highest safety standards to protect our team, our clients, and the communities we serve.
+              {section.description}
             </p>
             <Button 
               to="/about/safety" 
               variant="outline"
               className="bg-white/10 border-white text-white hover:bg-white hover:text-accent-600"
             >
-              Learn More About Our Safety Commitment
+              {section.buttonText}
             </Button>
           </motion.div>
         </div>

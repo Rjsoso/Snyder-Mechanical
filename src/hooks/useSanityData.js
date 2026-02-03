@@ -337,3 +337,171 @@ export function useMaintenancePlans() {
 
   return { data, loading, error };
 }
+
+/**
+ * Hook to fetch home page content
+ * Replaces: hardcoded content in home components
+ */
+export function useHomePageData() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    client
+      .fetch(`*[_type == "homePage"][0]{
+        hero,
+        quickServiceSelector,
+        servicesGridSection,
+        safetySection
+      }`)
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching home page data:', err);
+        setError(err);
+        setLoading(false);
+      });
+  }, []);
+
+  return { data, loading, error };
+}
+
+/**
+ * Hook to fetch site settings (navigation, footer)
+ * Replaces: hardcoded navigation and footer content
+ */
+export function useSiteSettings() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    client
+      .fetch(`*[_type == "siteSettings"][0]{
+        navigation,
+        footer
+      }`)
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching site settings:', err);
+        setError(err);
+        setLoading(false);
+      });
+  }, []);
+
+  return { data, loading, error };
+}
+
+/**
+ * Hook to fetch about page content by section
+ * Updated to use new aboutPage schema
+ */
+export function useAboutPageData(section) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!section) {
+      setLoading(false);
+      return;
+    }
+
+    client
+      .fetch(
+        `*[_type == "aboutPage" && section == $section][0]{
+          section,
+          hero,
+          story,
+          timeline,
+          commitment,
+          protocols,
+          awards,
+          certifications,
+          testimonials,
+          why,
+          benefits,
+          positions
+        }`,
+        { section }
+      )
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching about page data:', err);
+        setError(err);
+        setLoading(false);
+      });
+  }, [section]);
+
+  return { data, loading, error };
+}
+
+/**
+ * Hook to fetch commercial page content
+ * Replaces: hardcoded content in CommercialLanding.jsx
+ */
+export function useCommercialPageData() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    client
+      .fetch(`*[_type == "commercialPage"][0]{
+        hero,
+        capabilitiesSection,
+        whyChooseSection,
+        ctaSection
+      }`)
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching commercial page data:', err);
+        setError(err);
+        setLoading(false);
+      });
+  }, []);
+
+  return { data, loading, error };
+}
+
+/**
+ * Hook to fetch contact page content
+ * Replaces: hardcoded content in Contact.jsx
+ */
+export function useContactPageData() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    client
+      .fetch(`*[_type == "contactPage"][0]{
+        hero,
+        formSection,
+        contactInfoSection
+      }`)
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching contact page data:', err);
+        setError(err);
+        setLoading(false);
+      });
+  }, []);
+
+  return { data, loading, error };
+}

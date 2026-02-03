@@ -3,48 +3,85 @@ import { Building2, Wrench, Factory, Droplets, CheckCircle, Phone, ArrowRight } 
 import { Link } from 'react-router-dom';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
-import companyData from '../data/company.json';
-import servicesData from '../data/services.json';
+import { useCompanyData, useServiceCategories, useCommercialPageData } from '../hooks/useSanityData';
+
+// Icon mapping for Sanity data
+const iconMap = {
+  'Building2': Building2,
+  'Wrench': Wrench,
+  'Factory': Factory,
+  'Droplets': Droplets
+};
 
 const CommercialLanding = () => {
-  const commercialService = servicesData.commercial;
-  const pumpsService = servicesData.pumpsEquipment;
+  const { data: companyData } = useCompanyData();
+  const { data: servicesData } = useServiceCategories();
+  const { data: commercialPageData } = useCommercialPageData();
 
-  const capabilities = [
-    {
-      title: 'Design/Build Expertise',
-      description: 'Complete mechanical system design and construction for new commercial projects from concept to completion.',
-      icon: Building2
-    },
-    {
-      title: 'Commercial HVAC',
-      description: 'Installation, maintenance, and repair of commercial heating and cooling systems of any size.',
-      icon: Wrench
-    },
-    {
-      title: 'Industrial Systems',
-      description: 'Specialized mechanical services for industrial and manufacturing facilities.',
-      icon: Factory
-    },
-    {
-      title: 'Pumps & Equipment',
-      description: 'Professional pump installation, maintenance, and equipment supply for commercial applications.',
-      icon: Droplets
-    }
-  ];
+  const commercialService = servicesData?.commercial;
+  const pumpsService = servicesData?.pumpsEquipment;
+  const phone = companyData?.phone || '(775) 738-5616';
 
-  const advantages = [
-    'Over 40 years of commercial experience',
-    'Licensed for large-scale projects',
-    'Fully insured with commercial liability coverage',
-    'In-house design and engineering team',
-    'Project management from start to finish',
-    'Responsive service and support',
-    'Energy-efficient solutions',
-    'Code compliance expertise',
-    'Safety-first approach',
-    'Quality workmanship guaranteed'
-  ];
+  // Fallback content if Sanity data is not available
+  const hero = commercialPageData?.hero || {
+    title: 'Commercial Mechanical Contracting Excellence',
+    description: 'Trusted by businesses across Northeastern Nevada for over 40 years. From design/build projects to ongoing maintenance, we deliver professional commercial mechanical solutions.',
+    backLinkText: '← Back to Home',
+    primaryButtonText: 'Call Now',
+    secondaryButtonText: 'Request Project Bid'
+  };
+
+  const capabilitiesSection = commercialPageData?.capabilitiesSection || {
+    heading: 'Our Commercial Capabilities',
+    description: 'Comprehensive mechanical solutions for businesses, industrial facilities, and new construction',
+    capabilities: [
+      {
+        title: 'Design/Build Expertise',
+        description: 'Complete mechanical system design and construction for new commercial projects from concept to completion.',
+        icon: 'Building2'
+      },
+      {
+        title: 'Commercial HVAC',
+        description: 'Installation, maintenance, and repair of commercial heating and cooling systems of any size.',
+        icon: 'Wrench'
+      },
+      {
+        title: 'Industrial Systems',
+        description: 'Specialized mechanical services for industrial and manufacturing facilities.',
+        icon: 'Factory'
+      },
+      {
+        title: 'Pumps & Equipment',
+        description: 'Professional pump installation, maintenance, and equipment supply for commercial applications.',
+        icon: 'Droplets'
+      }
+    ]
+  };
+
+  const whyChooseSection = commercialPageData?.whyChooseSection || {
+    heading: 'Why Businesses Choose Snyder Mechanical',
+    description: 'We understand the unique challenges of commercial mechanical systems. Our team brings decades of experience, professional certifications, and a commitment to minimizing downtime for your business.',
+    buttonText: 'View Our Projects',
+    advantages: [
+      'Over 40 years of commercial experience',
+      'Licensed for large-scale projects',
+      'Fully insured with commercial liability coverage',
+      'In-house design and engineering team',
+      'Project management from start to finish',
+      'Responsive service and support',
+      'Energy-efficient solutions',
+      'Code compliance expertise',
+      'Safety-first approach',
+      'Quality workmanship guaranteed'
+    ]
+  };
+
+  const ctaSection = commercialPageData?.ctaSection || {
+    heading: 'Ready to Discuss Your Commercial Project?',
+    description: 'From design/build projects to routine maintenance, we're here to support your business.',
+    primaryButtonText: 'Call Now',
+    secondaryButtonText: 'Request Project Bid'
+  };
 
   return (
     <div className="min-h-screen">
@@ -61,22 +98,22 @@ const CommercialLanding = () => {
               to="/"
               className="inline-flex items-center text-secondary-200 hover:text-white transition-colors mb-6 text-sm"
             >
-              ← Back to Home
+              {hero.backLinkText}
             </Link>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Commercial Mechanical Contracting Excellence
+              {hero.title}
             </h1>
             <p className="text-xl text-secondary-100 mb-8 max-w-3xl">
-              Trusted by businesses across Northeastern Nevada for over 40 years. From design/build projects to ongoing maintenance, we deliver professional commercial mechanical solutions.
+              {hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
-                href={`tel:${companyData.phone}`}
+                href={`tel:${phone}`}
                 className="flex items-center justify-center space-x-2 px-8 py-4 bg-accent-600 hover:bg-accent-700 rounded-lg font-semibold transition-colors text-lg"
               >
                 <Phone className="w-5 h-5" />
-                <span>{companyData.phone}</span>
+                <span>{phone}</span>
               </a>
               <Button
                 to="/?modal=estimate"
@@ -84,7 +121,7 @@ const CommercialLanding = () => {
                 size="lg"
                 className="border-2 border-white text-white hover:bg-white hover:text-secondary-700"
               >
-                Request Project Bid
+                {hero.secondaryButtonText}
               </Button>
             </div>
           </motion.div>
@@ -102,16 +139,16 @@ const CommercialLanding = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
-              Our Commercial Capabilities
+              {capabilitiesSection.heading}
             </h2>
             <p className="text-lg text-secondary-600 max-w-3xl mx-auto">
-              Comprehensive mechanical solutions for businesses, industrial facilities, and new construction
+              {capabilitiesSection.description}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {capabilities.map((capability, index) => {
-              const Icon = capability.icon;
+            {capabilitiesSection.capabilities.map((capability, index) => {
+              const Icon = iconMap[capability.icon] || Building2;
               
               return (
                 <motion.div
@@ -154,10 +191,10 @@ const CommercialLanding = () => {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-6">
-                Why Businesses Choose Snyder Mechanical
+                {whyChooseSection.heading}
               </h2>
               <p className="text-lg text-secondary-600 mb-8">
-                We understand the unique challenges of commercial mechanical systems. Our team brings decades of experience, professional certifications, and a commitment to minimizing downtime for your business.
+                {whyChooseSection.description}
               </p>
               <Button
                 to="/portfolio"
@@ -165,7 +202,7 @@ const CommercialLanding = () => {
                 size="lg"
                 className="inline-flex items-center"
               >
-                View Our Projects
+                {whyChooseSection.buttonText}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </motion.div>
@@ -181,7 +218,7 @@ const CommercialLanding = () => {
                   Commercial Advantages
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {advantages.map((advantage, index) => (
+                  {whyChooseSection.advantages.map((advantage, index) => (
                     <div key={index} className="flex items-start space-x-2">
                       <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <span className="text-secondary-700 text-sm">{advantage}</span>
@@ -244,18 +281,18 @@ const CommercialLanding = () => {
       <section className="section-padding bg-gradient-to-br from-secondary-700 to-secondary-900 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Discuss Your Commercial Project?
+            {ctaSection.heading}
           </h2>
           <p className="text-xl text-secondary-200 mb-8 max-w-2xl mx-auto">
-            From design/build projects to routine maintenance, we're here to support your business.
+            {ctaSection.description}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href={`tel:${companyData.phone}`}
+              href={`tel:${phone}`}
               className="flex items-center justify-center space-x-2 px-8 py-4 bg-accent-600 hover:bg-accent-700 rounded-lg font-semibold transition-colors text-lg"
             >
               <Phone className="w-5 h-5" />
-              <span>{companyData.phone}</span>
+              <span>{phone}</span>
             </a>
             <Button
               to="/?modal=estimate"
@@ -263,7 +300,7 @@ const CommercialLanding = () => {
               size="lg"
               className="border-2 border-white text-white hover:bg-white hover:text-secondary-700"
             >
-              Request Project Bid
+              {ctaSection.secondaryButtonText}
             </Button>
           </div>
         </div>

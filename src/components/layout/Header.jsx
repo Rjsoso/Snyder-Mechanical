@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, ChevronDown } from 'lucide-react';
-import companyData from '../../data/company.json';
+import { useCompanyData, useSiteSettings } from '../../hooks/useSanityData';
 
 const Header = () => {
+  const { data: companyData } = useCompanyData();
+  const { data: siteSettings } = useSiteSettings();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
@@ -12,6 +14,30 @@ const Header = () => {
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
+
+  // Fallback navigation if Sanity data is not available
+  const aboutDropdown = siteSettings?.navigation?.aboutDropdown || [
+    { label: 'Company Background', path: '/about/company' },
+    { label: 'Safety', path: '/about/safety' },
+    { label: 'Service Recognitions', path: '/about/recognitions' },
+    { label: 'Careers', path: '/about/careers' }
+  ];
+
+  const homeownersServices = siteSettings?.navigation?.servicesDropdown?.homeownersServices || [
+    { label: 'Heating Services', path: '/services/heating' },
+    { label: 'Cooling Services', path: '/services/cooling' },
+    { label: 'Plumbing Services', path: '/services/plumbing' }
+  ];
+
+  const businessServices = siteSettings?.navigation?.servicesDropdown?.businessServices || [
+    { label: 'Commercial Overview', path: '/commercial' },
+    { label: 'Commercial HVAC', path: '/services/commercial' },
+    { label: 'Design/Build Projects', path: '/services/commercial#design-build' },
+    { label: 'Pumps & Equipment', path: '/services/pumps-equipment' }
+  ];
+
+  const paymentsLabel = siteSettings?.navigation?.paymentsLabel || 'Payments';
+  const phone = companyData?.phone || '(775) 738-5616';
 
   // About dropdown handlers
   const handleAboutMouseEnter = () => {
@@ -69,18 +95,15 @@ const Header = () => {
               </button>
               {aboutDropdownOpen && (
                 <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 border border-secondary-100">
-                  <Link to="/about/company" className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Company Background
-                  </Link>
-                  <Link to="/about/safety" className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Safety
-                  </Link>
-                  <Link to="/about/recognitions" className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Service Recognitions
-                  </Link>
-                  <Link to="/about/careers" className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors">
-                    Careers
-                  </Link>
+                  {aboutDropdown.map((item, index) => (
+                    <Link 
+                      key={index}
+                      to={item.path} 
+                      className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
@@ -103,15 +126,15 @@ const Header = () => {
                       <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
                         For Homeowners
                       </div>
-                      <Link to="/services/heating" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Heating Services
-                      </Link>
-                      <Link to="/services/cooling" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Cooling Services
-                      </Link>
-                      <Link to="/services/plumbing" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Plumbing Services
-                      </Link>
+                      {homeownersServices.map((item, index) => (
+                        <Link 
+                          key={index}
+                          to={item.path} 
+                          className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
                     </div>
                     
                     {/* For Businesses */}
@@ -119,18 +142,15 @@ const Header = () => {
                       <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
                         For Businesses
                       </div>
-                      <Link to="/commercial" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Commercial Overview
-                      </Link>
-                      <Link to="/services/commercial" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Commercial HVAC
-                      </Link>
-                      <Link to="/services/commercial#design-build" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Design/Build Projects
-                      </Link>
-                      <Link to="/services/pumps-equipment" className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded">
-                        Pumps & Equipment
-                      </Link>
+                      {businessServices.map((item, index) => (
+                        <Link 
+                          key={index}
+                          to={item.path} 
+                          className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -159,16 +179,16 @@ const Header = () => {
                   : 'bg-primary-50 text-primary-700 hover:bg-primary-100'
               }`}
             >
-              Payments
+              {paymentsLabel}
             </Link>
 
             {/* Phone Number */}
             <a 
-              href={`tel:${companyData.phone}`} 
+              href={`tel:${phone}`} 
               className="flex items-center space-x-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
             >
               <Phone className="w-4 h-4" />
-              <span className="hidden xl:inline">{companyData.phone}</span>
+              <span className="hidden xl:inline">{phone}</span>
             </a>
           </div>
 
@@ -192,43 +212,40 @@ const Header = () => {
               {/* About Submenu */}
               <div className="space-y-2">
                 <div className="font-medium text-secondary-900">About</div>
-                <Link to="/about/company" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Company Background
-                </Link>
-                <Link to="/about/safety" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Safety
-                </Link>
-                <Link to="/about/recognitions" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Service Recognitions
-                </Link>
-                <Link to="/about/careers" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Careers
-                </Link>
+                {aboutDropdown.map((item, index) => (
+                  <Link 
+                    key={index}
+                    to={item.path} 
+                    className="block pl-4 text-secondary-700 hover:text-primary-600"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
 
               {/* Services Submenu */}
               <div className="space-y-2">
                 <div className="font-medium text-secondary-900">Services</div>
                 <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-2">For Homeowners</div>
-                <Link to="/services/heating" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Heating Services
-                </Link>
-                <Link to="/services/cooling" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Cooling Services
-                </Link>
-                <Link to="/services/plumbing" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Plumbing Services
-                </Link>
+                {homeownersServices.map((item, index) => (
+                  <Link 
+                    key={index}
+                    to={item.path} 
+                    className="block pl-4 text-secondary-700 hover:text-primary-600"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
                 <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-3">For Businesses</div>
-                <Link to="/commercial" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Commercial Overview
-                </Link>
-                <Link to="/services/commercial" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Commercial HVAC
-                </Link>
-                <Link to="/services/pumps-equipment" className="block pl-4 text-secondary-700 hover:text-primary-600">
-                  Pumps & Equipment
-                </Link>
+                {businessServices.map((item, index) => (
+                  <Link 
+                    key={index}
+                    to={item.path} 
+                    className="block pl-4 text-secondary-700 hover:text-primary-600"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
 
               <Link to="/portfolio" className="font-medium text-secondary-700 hover:text-primary-600">
@@ -239,15 +256,15 @@ const Header = () => {
               </Link>
               
               <Link to="/resources" className="font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 px-4 py-2 rounded-lg text-center transition-colors">
-                Payments
+                {paymentsLabel}
               </Link>
 
               <a 
-                href={`tel:${companyData.phone}`} 
+                href={`tel:${phone}`} 
                 className="flex items-center space-x-2 text-primary-600 font-semibold text-lg justify-center py-2"
               >
                 <Phone className="w-5 h-5" />
-                <span>{companyData.phone}</span>
+                <span>{phone}</span>
               </a>
             </div>
           </div>

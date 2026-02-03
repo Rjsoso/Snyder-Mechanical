@@ -1,26 +1,28 @@
 import { motion } from 'framer-motion';
 import { Award, Briefcase, Shield } from 'lucide-react';
-import companyData from '../../data/company.json';
-
-const stats = [
-  {
-    icon: Briefcase,
-    value: companyData.stats.yearsInBusiness,
-    label: 'Years in Business'
-  },
-  {
-    icon: Award,
-    value: companyData.stats.projectsCompleted,
-    label: 'Projects Completed'
-  },
-  {
-    icon: Shield,
-    value: companyData.stats.certifications,
-    label: ''
-  }
-];
+import { useCompanyData } from '../../hooks/useSanityData';
 
 const StatsBar = () => {
+  const { data: companyData } = useCompanyData();
+
+  // Fallback stats if Sanity data is not available
+  const stats = [
+    {
+      icon: Briefcase,
+      value: companyData?.stats?.yearsInBusiness || '40+',
+      label: 'Years in Business'
+    },
+    {
+      icon: Award,
+      value: companyData?.stats?.projectsCompleted || '5000+',
+      label: 'Projects Completed'
+    },
+    {
+      icon: Shield,
+      value: companyData?.stats?.certifications || 'Fully Licensed & Insured',
+      label: ''
+    }
+  ];
   return (
     <section className="section-padding bg-secondary-100">
       <div className="container-custom">
