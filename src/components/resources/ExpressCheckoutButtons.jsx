@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useStripe } from '@stripe/react-stripe-js';
-import { PaymentRequestButtonElement } from '@stripe/react-stripe-js';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { PaymentRequestButtonElement, LinkAuthenticationElement } from '@stripe/react-stripe-js';
 
-const PaymentRequestButton = ({ invoice, clientSecret, onSuccess, onError }) => {
+const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) => {
   const stripe = useStripe();
+  const elements = useElements();
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [canMakePayment, setCanMakePayment] = useState(false);
+  const [email, setEmail] = useState(invoice.customerEmail || '');
 
   useEffect(() => {
     if (!stripe || !invoice) {
       return;
     }
 
-    // Create payment request
+    // Create payment request for Apple Pay / Google Pay
     const pr = stripe.paymentRequest({
       country: 'US',
       currency: 'usd',
@@ -33,7 +35,7 @@ const PaymentRequestButton = ({ invoice, clientSecret, onSuccess, onError }) => 
       }
     });
 
-    // Handle payment method received
+    // Handle payment method received from Apple Pay / Google Pay
     pr.on('paymentmethod', async (e) => {
       try {
         // Confirm the payment with the payment method from Apple Pay/Google Pay
@@ -120,7 +122,47 @@ const PaymentRequestButton = ({ invoice, clientSecret, onSuccess, onError }) => 
     }
   };
 
-  if (!canMakePayment || !paymentRequest) {
+  const handleLinkSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    try {
+      // Confirm payment using Link
+      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.href, // Not used since we handle redirect: 'if_required'
+          payment_method_data: {
+            billing_details: {
+              email: email,
+            },
+          },
+        },
+        redirect: 'if_required',
+      });
+
+      if (confirmError) {
+        if (onError) onError(confirmError.message);
+        return;
+      }
+
+      if (paymentIntent && paymentIntent.status === 'succeeded') {
+        // Confirm with backend
+        await confirmPaymentWithBackend(paymentIntent);
+      }
+    } catch (err) {
+      console.error('Link payment error:', err);
+      if (onError) onError('An error occurred while processing your payment');
+    }
+  };
+
+  // Show nothing if neither payment method is available
+  const hasExpressOptions = canMakePayment || true; // Link is always available
+
+  if (!hasExpressOptions) {
     return null;
   }
 
@@ -129,26 +171,49 @@ const PaymentRequestButton = ({ invoice, clientSecret, onSuccess, onError }) => 
       <div className="text-center">
         <p className="text-sm text-secondary-600 mb-3">Express checkout</p>
       </div>
-      <PaymentRequestButtonElement
-        options={{
-          paymentRequest,
-          style: {
-            paymentRequestButton: {
-              type: 'default',
-              theme: 'dark',
-              height: '48px',
-            },
-          },
-        }}
-      />
+      
+      <div className="space-y-3">
+        {/* Apple Pay / Google Pay Button */}
+        {canMakePayment && paymentRequest && (
+          <PaymentRequestButtonElement
+            options={{
+              paymentRequest,
+              style: {
+                paymentRequestButton: {
+                  type: 'default',
+                  theme: 'dark',
+                  height: '48px',
+                },
+              },
+            }}
+          />
+        )}
+
+        {/* Stripe Link */}
+        <div className="space-y-2">
+          <LinkAuthenticationElement
+            options={{
+              defaultValues: {
+                email: invoice.customerEmail,
+              },
+            }}
+            onChange={(e) => {
+              if (e.value.email) {
+                setEmail(e.value.email);
+              }
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
-PaymentRequestButton.propTypes = {
+ExpressCheckoutButtons.propTypes = {
   invoice: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     invoiceNumber: PropTypes.string.isRequired,
+    customerEmail: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
   }).isRequired,
   clientSecret: PropTypes.string.isRequired,
@@ -156,4 +221,4 @@ PaymentRequestButton.propTypes = {
   onError: PropTypes.func,
 };
 
-export default PaymentRequestButton;
+export default ExpressCheckoutButtons;

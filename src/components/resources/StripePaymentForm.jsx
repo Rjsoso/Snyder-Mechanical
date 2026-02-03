@@ -6,7 +6,7 @@ import Button from '../shared/Button';
 import StripeLogo from '../shared/StripeLogo';
 import CardBrandIcons from '../shared/CardBrandIcons';
 import SecurityBadge from '../shared/SecurityBadge';
-import PaymentRequestButton from './PaymentRequestButton';
+import ExpressCheckoutButtons from './ExpressCheckoutButtons';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -132,8 +132,8 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
         </div>
       </div>
 
-      {/* Apple Pay / Google Pay Button */}
-      <PaymentRequestButton
+      {/* Express Checkout Options (Apple Pay, Google Pay, Link) */}
+      <ExpressCheckoutButtons
         invoice={invoice}
         clientSecret={clientSecret}
         onSuccess={onSuccess}
@@ -223,6 +223,7 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
 StripePaymentForm.propTypes = {
   invoice: PropTypes.shape({
     _id: PropTypes.string.isRequired,
+    invoiceNumber: PropTypes.string.isRequired,
     customerName: PropTypes.string.isRequired,
     customerEmail: PropTypes.string.isRequired,
     amount: PropTypes.number.isRequired,
