@@ -7,9 +7,33 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [aboutCloseTimeout, setAboutCloseTimeout] = useState(null);
+  const [servicesCloseTimeout, setServicesCloseTimeout] = useState(null);
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path;
+
+  // About dropdown handlers
+  const handleAboutMouseEnter = () => {
+    if (aboutCloseTimeout) clearTimeout(aboutCloseTimeout);
+    setAboutDropdownOpen(true);
+  };
+
+  const handleAboutMouseLeave = () => {
+    const timeout = setTimeout(() => setAboutDropdownOpen(false), 150);
+    setAboutCloseTimeout(timeout);
+  };
+
+  // Services dropdown handlers
+  const handleServicesMouseEnter = () => {
+    if (servicesCloseTimeout) clearTimeout(servicesCloseTimeout);
+    setServicesDropdownOpen(true);
+  };
+
+  const handleServicesMouseLeave = () => {
+    const timeout = setTimeout(() => setServicesDropdownOpen(false), 150);
+    setServicesCloseTimeout(timeout);
+  };
 
   return (
     <header className="bg-white shadow-lg border-b-4 border-secondary-500 sticky top-0 z-50">
@@ -36,8 +60,8 @@ const Header = () => {
             {/* About Dropdown */}
             <div 
               className="relative"
-              onMouseEnter={() => setAboutDropdownOpen(true)}
-              onMouseLeave={() => setAboutDropdownOpen(false)}
+              onMouseEnter={handleAboutMouseEnter}
+              onMouseLeave={handleAboutMouseLeave}
             >
               <button className="flex items-center space-x-1 font-medium text-secondary-700 hover:text-primary-600 transition-colors">
                 <span>About</span>
@@ -64,8 +88,8 @@ const Header = () => {
             {/* Services Mega Dropdown */}
             <div 
               className="relative"
-              onMouseEnter={() => setServicesDropdownOpen(true)}
-              onMouseLeave={() => setServicesDropdownOpen(false)}
+              onMouseEnter={handleServicesMouseEnter}
+              onMouseLeave={handleServicesMouseLeave}
             >
               <button className="flex items-center space-x-1 font-medium text-secondary-700 hover:text-primary-600 transition-colors">
                 <span>Services</span>
