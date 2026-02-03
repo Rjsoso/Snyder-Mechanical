@@ -6,6 +6,7 @@ import Button from '../shared/Button';
 import StripeLogo from '../shared/StripeLogo';
 import CardBrandIcons from '../shared/CardBrandIcons';
 import SecurityBadge from '../shared/SecurityBadge';
+import PaymentRequestButton from './PaymentRequestButton';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -129,6 +130,21 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
           <CheckCircle className="w-4 h-4" />
           <span>Secure one-time payment</span>
         </div>
+      </div>
+
+      {/* Apple Pay / Google Pay Button */}
+      <PaymentRequestButton
+        invoice={invoice}
+        clientSecret={clientSecret}
+        onSuccess={onSuccess}
+        onError={onError}
+      />
+
+      {/* OR Divider */}
+      <div className="relative flex items-center">
+        <div className="flex-grow border-t border-secondary-300"></div>
+        <span className="flex-shrink mx-4 text-sm text-secondary-500 font-medium">OR pay with card</span>
+        <div className="flex-grow border-t border-secondary-300"></div>
       </div>
 
       {/* Enhanced Card Input */}
