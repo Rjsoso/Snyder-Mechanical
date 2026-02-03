@@ -12,14 +12,18 @@ const CARD_ELEMENT_OPTIONS = {
     base: {
       fontSize: '16px',
       color: '#374151',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      fontSmoothing: 'antialiased',
       '::placeholder': {
         color: '#9CA3AF',
       },
     },
     invalid: {
       color: '#EF4444',
+      iconColor: '#EF4444',
     },
   },
+  hidePostalCode: false,
 };
 
 const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
@@ -27,6 +31,10 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
+
+  console.log('StripePaymentForm - stripe loaded:', !!stripe);
+  console.log('StripePaymentForm - elements loaded:', !!elements);
+  console.log('StripePaymentForm - clientSecret:', clientSecret ? 'Present' : 'Missing');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,8 +143,23 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
           </label>
           <CardBrandIcons className="scale-75" />
         </div>
-        <div className="p-4 border-2 border-secondary-300 rounded-lg bg-white focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-200 transition-all">
-          <CardElement options={CARD_ELEMENT_OPTIONS} />
+        <div className="p-4 border-2 border-secondary-300 rounded-lg bg-white focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-200 transition-all min-h-[44px]">
+          <CardElement 
+            options={CARD_ELEMENT_OPTIONS}
+            onReady={(element) => {
+              console.log('CardElement ready', element);
+              // Focus the element to ensure it's interactive
+              element.focus();
+            }}
+            onChange={(event) => {
+              console.log('CardElement changed', event);
+              if (event.error) {
+                setError(event.error.message);
+              } else {
+                setError('');
+              }
+            }}
+          />
         </div>
         <div className="mt-2 flex items-center space-x-1 text-xs text-secondary-500">
           <Lock className="w-3 h-3" />

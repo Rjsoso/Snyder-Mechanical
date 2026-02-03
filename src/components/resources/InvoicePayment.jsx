@@ -12,7 +12,9 @@ import PaymentMethodSelector from './PaymentMethodSelector';
 import ACHPaymentForm from './ACHPaymentForm';
 
 // Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+const stripePublishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+console.log('Stripe Key:', stripePublishableKey ? 'Found' : 'Missing');
+const stripePromise = loadStripe(stripePublishableKey);
 
 const InvoicePayment = () => {
   const [step, setStep] = useState('lookup'); // lookup, select-method, payment, ach-pending, success
@@ -219,15 +221,7 @@ const InvoicePayment = () => {
               </h3>
               
               {paymentMethod === 'card' && clientSecret ? (
-                <Elements 
-                  stripe={stripePromise}
-                  options={{
-                    clientSecret: clientSecret,
-                    appearance: {
-                      theme: 'stripe',
-                    },
-                  }}
-                >
+                <Elements stripe={stripePromise}>
                   <StripePaymentForm
                     invoice={invoice}
                     clientSecret={clientSecret}
