@@ -78,7 +78,7 @@ const CommercialLanding = () => {
 
   const ctaSection = commercialPageData?.ctaSection || {
     heading: 'Ready to Discuss Your Commercial Project?',
-    description: 'From design/build projects to routine maintenance, we're here to support your business.',
+    description: 'From design/build projects to routine maintenance, we are here to support your business.',
     primaryButtonText: 'Call Now',
     secondaryButtonText: 'Request Project Bid'
   };
