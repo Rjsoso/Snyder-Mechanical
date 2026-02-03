@@ -67,41 +67,40 @@ export default async function handler(req, res) {
       },
     });
     
-    // Create bank account payment method
-    const paymentMethod = await stripe.paymentMethods.create({
-      type: 'us_bank_account',
-      us_bank_account: {
-        account_number: accountNumber,
-        routing_number: routingNumber,
-        account_holder_type: 'individual',
-        account_type: accountType,
-      },
-      billing_details: {
-        name: accountHolder,
-        email: invoice.customerEmail,
-      },
-    });
-    
-    // Attach payment method to customer
-    await stripe.paymentMethods.attach(paymentMethod.id, {
-      customer: customer.id,
-    });
-    
     // Use requested amount (with fees) if provided, otherwise use invoice amount
     const chargeAmount = requestedAmount || Math.round(invoice.amount * 100);
 
-    // Create Payment Intent for ACH
+    // Create Payment Intent for ACH with payment method data
+    // This approach lets Stripe handle verification automatically
     const paymentIntent = await stripe.paymentIntents.create({
       amount: chargeAmount, // Amount in cents (may include processing fee)
       currency: 'usd',
       customer: customer.id,
-      payment_method: paymentMethod.id,
       payment_method_types: ['us_bank_account'],
+      payment_method_data: {
+        type: 'us_bank_account',
+        us_bank_account: {
+          account_number: accountNumber,
+          routing_number: routingNumber,
+          account_holder_type: 'individual',
+          account_type: accountType,
+        },
+        billing_details: {
+          name: accountHolder,
+          email: invoice.customerEmail,
+        },
+      },
       metadata: {
         invoiceId: invoice._id,
         invoiceNumber: invoice.invoiceNumber,
         originalAmount: Math.round(invoice.amount * 100),
         totalAmount: chargeAmount
+      },
+      // Use instant verification for test mode (automatic for test routing numbers)
+      payment_method_options: {
+        us_bank_account: {
+          verification_method: 'instant',
+        },
       },
       // ACH requires mandate acceptance
       mandate_data: {
@@ -115,7 +114,7 @@ export default async function handler(req, res) {
       },
     });
     
-    // Confirm the payment intent
+    // Confirm the payment intent (verification happens automatically in test mode)
     const confirmedIntent = await stripe.paymentIntents.confirm(paymentIntent.id);
     
     // Update invoice status to "processing"
