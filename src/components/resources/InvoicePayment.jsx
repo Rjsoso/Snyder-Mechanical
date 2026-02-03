@@ -219,7 +219,12 @@ const InvoicePayment = () => {
               </h3>
               
               {paymentMethod === 'card' && clientSecret ? (
-                <Elements stripe={stripePromise}>
+                <Elements 
+                  stripe={stripePromise}
+                  options={{
+                    clientSecret: clientSecret,
+                  }}
+                >
                   <StripePaymentForm
                     invoice={invoice}
                     clientSecret={clientSecret}
