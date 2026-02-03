@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { CreditCard, Loader2, CheckCircle } from 'lucide-react';
+import { CreditCard, Loader2, CheckCircle, Lock } from 'lucide-react';
 import Button from '../shared/Button';
+import StripeLogo from '../shared/StripeLogo';
+import CardBrandIcons from '../shared/CardBrandIcons';
+import SecurityBadge from '../shared/SecurityBadge';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -99,25 +102,46 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="p-6 bg-primary-50 rounded-lg border border-primary-200">
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-medium text-secondary-900">Amount to Pay:</span>
-          <span className="text-2xl font-bold text-primary-600">
-            {formatCurrency(invoice.amount)}
-          </span>
+      {/* Enhanced Payment Summary */}
+      <div className="bg-gradient-to-r from-primary-50 to-blue-50 border-2 border-primary-200 rounded-xl p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
+              <CreditCard className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <p className="text-xs text-secondary-600 uppercase tracking-wide">Amount Due</p>
+              <p className="text-sm text-secondary-700 font-medium">{invoice.customerName}</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-3xl font-bold text-primary-600">
+              {formatCurrency(invoice.amount)}
+            </p>
+            <p className="text-xs text-secondary-500">Invoice {invoice.invoiceNumber}</p>
+          </div>
+        </div>
+        <div className="flex items-center justify-center space-x-2 text-xs text-primary-700 bg-white/50 rounded-lg py-2">
+          <CheckCircle className="w-4 h-4" />
+          <span>Secure one-time payment</span>
         </div>
       </div>
 
+      {/* Enhanced Card Input */}
       <div>
-        <label className="block text-sm font-medium text-secondary-700 mb-2">
-          Card Information *
-        </label>
-        <div className="p-4 border border-secondary-300 rounded-lg bg-white">
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-secondary-700">
+            Card Information *
+          </label>
+          <CardBrandIcons className="scale-75" />
+        </div>
+        <div className="p-4 border-2 border-secondary-300 rounded-lg bg-white focus-within:border-primary-500 focus-within:ring-2 focus-within:ring-primary-200 transition-all">
           <CardElement options={CARD_ELEMENT_OPTIONS} />
         </div>
-        <p className="mt-2 text-xs text-secondary-500">
-          Your payment is secure and encrypted. We never store your card details.
-        </p>
+        <div className="mt-2 flex items-center space-x-1 text-xs text-secondary-500">
+          <Lock className="w-3 h-3" />
+          <span>Your payment is secure and encrypted. We never store your card details.</span>
+        </div>
       </div>
 
       {error && (
@@ -146,9 +170,22 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
         )}
       </Button>
 
-      <div className="flex items-center justify-center space-x-2 text-sm text-secondary-500">
-        <CheckCircle className="w-4 h-4" />
-        <span>Powered by Stripe - Secure Payment Processing</span>
+      {/* Enhanced Stripe Branding & Trust Indicators */}
+      <div className="border-t border-secondary-200 pt-6 space-y-4">
+        {/* Powered by Stripe with Logo */}
+        <div className="flex items-center justify-center space-x-2">
+          <span className="text-sm text-secondary-600">Powered by</span>
+          <StripeLogo className="h-5" />
+        </div>
+        
+        {/* Accepted Card Types */}
+        <div className="flex flex-col items-center space-y-2">
+          <span className="text-xs text-secondary-500">Accepted payment methods</span>
+          <CardBrandIcons />
+        </div>
+        
+        {/* Security Badges */}
+        <SecurityBadge />
       </div>
     </form>
   );

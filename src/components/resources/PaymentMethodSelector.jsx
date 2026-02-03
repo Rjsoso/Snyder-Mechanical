@@ -1,5 +1,6 @@
 import { CreditCard, Building2, Info, CheckCircle } from 'lucide-react';
 import PropTypes from 'prop-types';
+import CardBrandIcons from '../shared/CardBrandIcons';
 
 const PaymentMethodSelector = ({ amount, selected, onChange, recommendACH }) => {
   const cardFee = (amount * 0.029 + 0.30).toFixed(2);
@@ -29,7 +30,10 @@ const PaymentMethodSelector = ({ amount, selected, onChange, recommendACH }) => 
               }`} />
             </div>
             <div>
-              <h4 className="font-semibold text-secondary-900">Credit/Debit Card</h4>
+              <div className="flex items-center space-x-2 mb-1">
+                <h4 className="font-semibold text-secondary-900">Credit/Debit Card</h4>
+              </div>
+              <CardBrandIcons className="scale-75 mb-2" />
               <p className="text-sm text-secondary-600">Instant processing</p>
               <p className="text-xs text-secondary-500 mt-1">Processing fee: ${cardFee}</p>
             </div>
