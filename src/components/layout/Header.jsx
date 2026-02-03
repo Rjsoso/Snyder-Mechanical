@@ -138,12 +138,6 @@ const Header = () => {
             </div>
 
             <Link 
-              to="/resources"
-              className={`font-medium transition-colors ${isActive('/resources') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
-            >
-              Payments
-            </Link>
-            <Link 
               to="/portfolio" 
               className={`font-medium transition-colors ${isActive('/portfolio') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
             >
@@ -164,6 +158,18 @@ const Header = () => {
               <Phone className="w-4 h-4" />
               <span className="hidden xl:inline">{companyData.phone}</span>
             </a>
+
+            {/* Payments - Highlighted */}
+            <Link 
+              to="/resources"
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                isActive('/resources') 
+                  ? 'bg-primary-100 text-primary-700' 
+                  : 'bg-primary-50 text-primary-700 hover:bg-primary-100'
+              }`}
+            >
+              Payments
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -225,10 +231,6 @@ const Header = () => {
                 </Link>
               </div>
 
-              <Link to="/resources" className="font-medium text-secondary-700 hover:text-primary-600">
-                Payments
-              </Link>
-
               <Link to="/portfolio" className="font-medium text-secondary-700 hover:text-primary-600">
                 Portfolio
               </Link>
@@ -243,6 +245,10 @@ const Header = () => {
                 <Phone className="w-5 h-5" />
                 <span>{companyData.phone}</span>
               </a>
+
+              <Link to="/resources" className="font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 px-4 py-2 rounded-lg text-center transition-colors">
+                Payments
+              </Link>
             </div>
           </div>
         )}
