@@ -32,34 +32,16 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
     // Check if Apple Pay or Google Pay is available
     pr.canMakePayment()
       .then(result => {
-        console.log('=== PAYMENT REQUEST DEBUG ===');
-        console.log('canMakePayment returned:', JSON.stringify(result, null, 2));
-        
         setPaymentMethodsChecked(true);
         setAvailableMethods(result);
         
-        if (result) {
-          const hasApplePay = result.applePay === true;
-          const hasGooglePay = result.googlePay === true;
-          
-          console.log('APPLE PAY AVAILABLE:', hasApplePay);
-          console.log('GOOGLE PAY AVAILABLE:', hasGooglePay);
-          
-          if (hasApplePay || hasGooglePay) {
-            setPaymentRequest(pr);
-            setCanMakePayment(true);
-            console.log('✅ Payment button will be displayed');
-          } else {
-            console.log('❌ No wallet payment methods available');
-          }
-        } else {
-          console.log('❌ canMakePayment returned null/false');
+        if (result && (result.applePay || result.googlePay)) {
+          setPaymentRequest(pr);
+          setCanMakePayment(true);
         }
-        console.log('=== END DEBUG ===');
       })
       .catch(error => {
-        console.error('❌ Payment Request ERROR:', error.message);
-        console.error('Full error:', error);
+        console.error('Payment Request error:', error);
         setPaymentMethodsChecked(true);
       });
 
@@ -215,22 +197,6 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
               },
             }}
           />
-        )}
-
-        {/* Debug Info - Always visible for now */}
-        {paymentMethodsChecked && (
-          <div className="text-xs text-secondary-500 p-3 bg-yellow-50 border border-yellow-200 rounded">
-            <div className="font-semibold mb-1">Debug Info:</div>
-            <div>✓ Payment methods checked</div>
-            {availableMethods ? (
-              <>
-                <div>Apple Pay: {availableMethods.applePay ? '✅ Available' : '❌ Not available'}</div>
-                <div>Google Pay: {availableMethods.googlePay ? '✅ Available' : '❌ Not available'}</div>
-              </>
-            ) : (
-              <div>❌ No wallet methods detected</div>
-            )}
-          </div>
         )}
 
         {/* Stripe Link */}
