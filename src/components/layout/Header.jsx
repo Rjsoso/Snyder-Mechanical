@@ -150,15 +150,6 @@ const Header = () => {
               Contact
             </Link>
 
-            {/* Phone Number */}
-            <a 
-              href={`tel:${companyData.phone}`} 
-              className="flex items-center space-x-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              <span className="hidden xl:inline">{companyData.phone}</span>
-            </a>
-
             {/* Payments - Highlighted */}
             <Link 
               to="/resources"
@@ -170,6 +161,15 @@ const Header = () => {
             >
               Payments
             </Link>
+
+            {/* Phone Number */}
+            <a 
+              href={`tel:${companyData.phone}`} 
+              className="flex items-center space-x-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
+            >
+              <Phone className="w-4 h-4" />
+              <span className="hidden xl:inline">{companyData.phone}</span>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -238,6 +238,10 @@ const Header = () => {
                 Contact
               </Link>
               
+              <Link to="/resources" className="font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 px-4 py-2 rounded-lg text-center transition-colors">
+                Payments
+              </Link>
+
               <a 
                 href={`tel:${companyData.phone}`} 
                 className="flex items-center space-x-2 text-primary-600 font-semibold text-lg justify-center py-2"
@@ -245,10 +249,6 @@ const Header = () => {
                 <Phone className="w-5 h-5" />
                 <span>{companyData.phone}</span>
               </a>
-
-              <Link to="/resources" className="font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 px-4 py-2 rounded-lg text-center transition-colors">
-                Payments
-              </Link>
             </div>
           </div>
         )}
