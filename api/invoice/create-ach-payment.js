@@ -71,7 +71,7 @@ export default async function handler(req, res) {
     const chargeAmount = requestedAmount || Math.round(invoice.amount * 100);
 
     // Create Payment Intent for ACH with payment method data
-    // This approach lets Stripe handle verification automatically
+    // Stripe automatically verifies test routing numbers
     const paymentIntent = await stripe.paymentIntents.create({
       amount: chargeAmount, // Amount in cents (may include processing fee)
       currency: 'usd',
@@ -95,12 +95,6 @@ export default async function handler(req, res) {
         invoiceNumber: invoice.invoiceNumber,
         originalAmount: Math.round(invoice.amount * 100),
         totalAmount: chargeAmount
-      },
-      // Use instant verification for test mode (automatic for test routing numbers)
-      payment_method_options: {
-        us_bank_account: {
-          verification_method: 'instant',
-        },
       },
       // ACH requires mandate acceptance
       mandate_data: {
