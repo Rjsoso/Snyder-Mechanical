@@ -32,24 +32,34 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
     // Check if Apple Pay or Google Pay is available
     pr.canMakePayment()
       .then(result => {
-        console.log('Payment Request canMakePayment result:', result);
+        console.log('=== PAYMENT REQUEST DEBUG ===');
+        console.log('canMakePayment returned:', JSON.stringify(result, null, 2));
+        
         setPaymentMethodsChecked(true);
         setAvailableMethods(result);
         
         if (result) {
-          console.log('Payment methods available:', {
-            applePay: result.applePay || false,
-            googlePay: result.googlePay || false,
-            link: result.link || false
-          });
-          setPaymentRequest(pr);
-          setCanMakePayment(true);
+          const hasApplePay = result.applePay === true;
+          const hasGooglePay = result.googlePay === true;
+          
+          console.log('APPLE PAY AVAILABLE:', hasApplePay);
+          console.log('GOOGLE PAY AVAILABLE:', hasGooglePay);
+          
+          if (hasApplePay || hasGooglePay) {
+            setPaymentRequest(pr);
+            setCanMakePayment(true);
+            console.log('✅ Payment button will be displayed');
+          } else {
+            console.log('❌ No wallet payment methods available');
+          }
         } else {
-          console.log('No payment methods available (Apple Pay/Google Pay)');
+          console.log('❌ canMakePayment returned null/false');
         }
+        console.log('=== END DEBUG ===');
       })
       .catch(error => {
-        console.error('Payment Request canMakePayment error:', error);
+        console.error('❌ Payment Request ERROR:', error.message);
+        console.error('Full error:', error);
         setPaymentMethodsChecked(true);
       });
 
@@ -207,14 +217,18 @@ const ExpressCheckoutButtons = ({ invoice, clientSecret, onSuccess, onError }) =
           />
         )}
 
-        {/* Debug Info (Remove after testing) */}
-        {process.env.NODE_ENV === 'development' && paymentMethodsChecked && (
-          <div className="text-xs text-secondary-500 p-2 bg-secondary-50 rounded">
-            <div>Payment methods checked: ✓</div>
+        {/* Debug Info - Always visible for now */}
+        {paymentMethodsChecked && (
+          <div className="text-xs text-secondary-500 p-3 bg-yellow-50 border border-yellow-200 rounded">
+            <div className="font-semibold mb-1">Debug Info:</div>
+            <div>✓ Payment methods checked</div>
             {availableMethods ? (
-              <div>Available: {availableMethods.applePay ? '🍎 Apple Pay ' : ''}{availableMethods.googlePay ? '🤖 Google Pay' : ''}</div>
+              <>
+                <div>Apple Pay: {availableMethods.applePay ? '✅ Available' : '❌ Not available'}</div>
+                <div>Google Pay: {availableMethods.googlePay ? '✅ Available' : '❌ Not available'}</div>
+              </>
             ) : (
-              <div>No Apple/Google Pay available</div>
+              <div>❌ No wallet methods detected</div>
             )}
           </div>
         )}
