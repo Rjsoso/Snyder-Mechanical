@@ -10,9 +10,12 @@ const iconMap = {
 };
 
 const TrustBadges = ({ className = '' }) => {
+  // Ensure badges array exists
+  const badges = certificationsData?.badges || [];
+  
   return (
     <div className={`flex flex-wrap gap-4 justify-center ${className}`}>
-      {certificationsData.badges.map((badge, index) => {
+      {badges.map((badge, index) => {
         const Icon = iconMap[badge.icon] || ShieldCheck;
         
         return (
