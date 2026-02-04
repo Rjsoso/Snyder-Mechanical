@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { RefreshCw, CheckCircle, XCircle, Clock, Download, Upload, AlertCircle } from 'lucide-react';
+import { RefreshCw, CheckCircle, XCircle, Clock, Download, Upload, AlertCircle, Lock } from 'lucide-react';
 import Card from '../../components/shared/Card';
 import Button from '../../components/shared/Button';
-import Badge from '../../components/shared/Badge';
+
+const STORAGE_KEY = 'admin_authenticated';
 
 const InvoiceSyncDashboard = () => {
+  const [authenticated, setAuthenticated] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return sessionStorage.getItem(STORAGE_KEY) === 'true';
+  });
+  const [dashboardPassword, setDashboardPassword] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [syncStatus, setSyncStatus] = useState(null);
   const [syncing, setSyncing] = useState(false);
   const [lastSync, setLastSync] = useState(null);
@@ -16,41 +24,84 @@ const InvoiceSyncDashboard = () => {
     syncedFromCE: 0,
   });
 
-  // Fetch invoice stats from Sanity
   useEffect(() => {
-    fetchStats();
-  }, []);
+    if (authenticated) {
+      sessionStorage.setItem(STORAGE_KEY, 'true');
+    } else {
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+  }, [authenticated]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoginError('');
+    if (!loginPassword.trim()) {
+      setLoginError('Enter the dashboard password.');
+      return;
+    }
+    try {
+      const response = await fetch('/api/admin/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: loginPassword }),
+      });
+      const data = await response.json();
+      if (response.ok && data.ok) {
+        setDashboardPassword(loginPassword);
+        setAuthenticated(true);
+        setLoginPassword('');
+      } else {
+        setLoginError(data.error || 'Invalid password');
+      }
+    } catch (err) {
+      setLoginError('Could not verify. Try again.');
+    }
+  };
+
+  const handleLogout = () => {
+    setAuthenticated(false);
+    setDashboardPassword('');
+    setSyncStatus(null);
+  };
+
+  const authHeader = () => ({
+    'Content-Type': 'application/json',
+    ...(dashboardPassword ? { Authorization: `Bearer ${dashboardPassword}` } : {}),
+  });
 
   const fetchStats = async () => {
     try {
-      // This would query Sanity for invoice statistics
-      // For now, placeholder
-      setStats({
-        totalInvoices: 0,
-        unpaidInvoices: 0,
-        paidInvoices: 0,
-        syncedFromCE: 0,
+      const response = await fetch('/api/admin/invoice-stats', {
+        method: 'GET',
+        headers: dashboardPassword ? { Authorization: `Bearer ${dashboardPassword}` } : {},
       });
+      if (response.ok) {
+        const data = await response.json();
+        setStats({
+          totalInvoices: data.totalInvoices ?? 0,
+          unpaidInvoices: data.unpaidInvoices ?? 0,
+          paidInvoices: data.paidInvoices ?? 0,
+          syncedFromCE: data.syncedFromCE ?? 0,
+        });
+      }
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
   };
 
+  useEffect(() => {
+    if (authenticated) fetchStats();
+  }, [authenticated]);
+
   const triggerSync = async () => {
     setSyncing(true);
     setSyncStatus(null);
-
     try {
       const response = await fetch('/api/sync/computerease-import', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': prompt('Enter sync API key:'), // In production, use proper auth
-        },
+        headers: authHeader(),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         setSyncStatus({
           success: true,
@@ -58,7 +109,7 @@ const InvoiceSyncDashboard = () => {
           timestamp: data.timestamp,
         });
         setLastSync(new Date().toLocaleString());
-        fetchStats(); // Refresh stats
+        fetchStats();
       } else {
         setSyncStatus({
           success: false,
@@ -66,10 +117,7 @@ const InvoiceSyncDashboard = () => {
         });
       }
     } catch (error) {
-      setSyncStatus({
-        success: false,
-        error: error.message,
-      });
+      setSyncStatus({ success: false, error: error.message });
     } finally {
       setSyncing(false);
     }
@@ -78,24 +126,16 @@ const InvoiceSyncDashboard = () => {
   const handleCSVUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-
     setSyncing(true);
     setSyncStatus(null);
-
     try {
       const csvText = await file.text();
-
       const response = await fetch('/api/sync/csv-import', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': prompt('Enter sync API key:'),
-        },
+        headers: authHeader(),
         body: JSON.stringify({ csvData: csvText }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         setSyncStatus({
           success: true,
@@ -111,22 +151,65 @@ const InvoiceSyncDashboard = () => {
         });
       }
     } catch (error) {
-      setSyncStatus({
-        success: false,
-        error: error.message,
-      });
+      setSyncStatus({ success: false, error: error.message });
     } finally {
       setSyncing(false);
     }
   };
 
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen bg-secondary-50 flex items-center justify-center p-6">
+        <Card className="max-w-md w-full">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center">
+              <Lock className="w-6 h-6 text-secondary-600" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-secondary-900">Admin Login</h1>
+              <p className="text-secondary-600 text-sm">Invoice Sync Dashboard</p>
+            </div>
+          </div>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <label className="block">
+              <span className="text-sm font-medium text-secondary-700">Password</span>
+              <input
+                type="password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                className="mt-1 block w-full rounded-lg border border-secondary-300 px-4 py-2"
+                placeholder="Dashboard password"
+                autoComplete="current-password"
+              />
+            </label>
+            {loginError && (
+              <p className="text-sm text-red-600">{loginError}</p>
+            )}
+            <Button type="submit" variant="primary" className="w-full">
+              Log in
+            </Button>
+          </form>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-secondary-50">
       {/* Header */}
       <section className="bg-gradient-to-r from-secondary-600 to-secondary-700 text-white py-12">
-        <div className="container-custom">
-          <h1 className="text-4xl font-bold mb-2">Invoice Sync Dashboard</h1>
-          <p className="text-secondary-200">Manage ComputerEase invoice synchronization</p>
+        <div className="container-custom flex items-center justify-between">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">Invoice Sync Dashboard</h1>
+            <p className="text-secondary-200">Manage ComputerEase invoice synchronization</p>
+          </div>
+          <Button
+            variant="outline"
+            className="!text-white !border-white hover:!bg-white/10"
+            onClick={handleLogout}
+          >
+            Log out
+          </Button>
         </div>
       </section>
 

@@ -13,24 +13,25 @@ const sanityClient = createClient({
  * Fetch invoices from ComputerEase API
  */
 async function fetchFromComputerEaseAPI() {
-  const { baseUrl, username, password, apiKey } = computerEaseConfig.api;
-  
-  try {
-    // Build authentication header
-    const authHeader = apiKey 
-      ? { 'Authorization': `Bearer ${apiKey}` }
-      : { 'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}` };
+  const { baseUrl, username, password, apiKey, timeout } = computerEaseConfig.api;
+  const authHeader = apiKey
+    ? { 'Authorization': `Bearer ${apiKey}` }
+    : { 'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}` };
 
-    // Fetch unpaid invoices from ComputerEase
-    // Note: Actual endpoint may vary - check ComputerEase API docs
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout || 30000);
+
+  try {
     const response = await fetch(`${baseUrl}/invoices?status=unpaid`, {
       method: 'GET',
+      signal: controller.signal,
       headers: {
         'Content-Type': 'application/json',
         ...authHeader,
       },
-      timeout: computerEaseConfig.api.timeout,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`ComputerEase API error: ${response.status} ${response.statusText}`);
@@ -39,6 +40,10 @@ async function fetchFromComputerEaseAPI() {
     const data = await response.json();
     return data.invoices || data || [];
   } catch (error) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error('ComputerEase API request timed out');
+    }
     console.error('Error fetching from ComputerEase API:', error);
     throw error;
   }
@@ -131,9 +136,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Validate API key for manual triggers
+  // Auth: accept CRON_SECRET (Vercel cron), DASHBOARD_PASSWORD (dashboard UI), or x-api-key (manual/external)
+  const authHeader = req.headers['authorization'];
   const apiKey = req.headers['x-api-key'];
-  if (apiKey !== process.env.SYNC_API_KEY) {
+  const cronMatch = process.env.CRON_SECRET && authHeader === `Bearer ${process.env.CRON_SECRET}`;
+  const dashboardMatch = process.env.DASHBOARD_PASSWORD && authHeader === `Bearer ${process.env.DASHBOARD_PASSWORD}`;
+  const apiKeyMatch = apiKey && apiKey === process.env.SYNC_API_KEY;
+  if (!cronMatch && !dashboardMatch && !apiKeyMatch) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 

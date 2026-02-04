@@ -3,9 +3,27 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { useCompanyData, useSiteSettings } from '../../hooks/useSanityData';
 
+const DEFAULT_ABOUT_DROPDOWN = [
+  { label: 'Company Background', path: '/about/company' },
+  { label: 'Safety', path: '/about/safety' },
+  { label: 'Service Recognitions', path: '/about/recognitions' },
+  { label: 'Careers', path: '/about/careers' }
+];
+const DEFAULT_HOMEOWNERS_SERVICES = [
+  { label: 'Heating Services', path: '/services/heating' },
+  { label: 'Cooling Services', path: '/services/cooling' },
+  { label: 'Plumbing Services', path: '/services/plumbing' }
+];
+const DEFAULT_BUSINESS_SERVICES = [
+  { label: 'Commercial Overview', path: '/commercial' },
+  { label: 'Commercial HVAC', path: '/services/commercial' },
+  { label: 'Design/Build Projects', path: '/services/commercial#design-build' },
+  { label: 'Pumps & Equipment', path: '/services/pumps-equipment' }
+];
+
 const Header = () => {
-  const { data: companyData } = useCompanyData();
-  const { data: siteSettings } = useSiteSettings();
+  const { data: companyData, loading: companyLoading, error: companyError } = useCompanyData();
+  const { data: siteSettings, loading: settingsLoading, error: settingsError } = useSiteSettings();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
@@ -13,31 +31,15 @@ const Header = () => {
   const [servicesCloseTimeout, setServicesCloseTimeout] = useState(null);
   const location = useLocation();
 
+  const useFallback = companyLoading || companyError || settingsLoading || settingsError;
+
   const isActive = (path) => location.pathname === path;
 
-  // Fallback navigation if Sanity data is not available
-  const aboutDropdown = siteSettings?.navigation?.aboutDropdown || [
-    { label: 'Company Background', path: '/about/company' },
-    { label: 'Safety', path: '/about/safety' },
-    { label: 'Service Recognitions', path: '/about/recognitions' },
-    { label: 'Careers', path: '/about/careers' }
-  ];
-
-  const homeownersServices = siteSettings?.navigation?.servicesDropdown?.homeownersServices || [
-    { label: 'Heating Services', path: '/services/heating' },
-    { label: 'Cooling Services', path: '/services/cooling' },
-    { label: 'Plumbing Services', path: '/services/plumbing' }
-  ];
-
-  const businessServices = siteSettings?.navigation?.servicesDropdown?.businessServices || [
-    { label: 'Commercial Overview', path: '/commercial' },
-    { label: 'Commercial HVAC', path: '/services/commercial' },
-    { label: 'Design/Build Projects', path: '/services/commercial#design-build' },
-    { label: 'Pumps & Equipment', path: '/services/pumps-equipment' }
-  ];
-
-  const paymentsLabel = siteSettings?.navigation?.paymentsLabel || 'Payments';
-  const phone = companyData?.phone || '(775) 738-5616';
+  const aboutDropdown = useFallback ? DEFAULT_ABOUT_DROPDOWN : (siteSettings?.navigation?.aboutDropdown || DEFAULT_ABOUT_DROPDOWN);
+  const homeownersServices = useFallback ? DEFAULT_HOMEOWNERS_SERVICES : (siteSettings?.navigation?.servicesDropdown?.homeownersServices || DEFAULT_HOMEOWNERS_SERVICES);
+  const businessServices = useFallback ? DEFAULT_BUSINESS_SERVICES : (siteSettings?.navigation?.servicesDropdown?.businessServices || DEFAULT_BUSINESS_SERVICES);
+  const paymentsLabel = useFallback ? 'Payments' : (siteSettings?.navigation?.paymentsLabel || 'Payments');
+  const phone = useFallback ? '(775) 738-5616' : (companyData?.phone || '(775) 738-5616');
 
   // About dropdown handlers
   const handleAboutMouseEnter = () => {

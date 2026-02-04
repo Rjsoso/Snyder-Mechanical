@@ -2,41 +2,43 @@ import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { useCompanyData, useSiteSettings } from '../../hooks/useSanityData';
 
+const DEFAULT_ABOUT_LINKS = [
+  { label: 'Company Background', path: '/about/company' },
+  { label: 'Safety', path: '/about/safety' },
+  { label: 'Service Recognitions', path: '/about/recognitions' },
+  { label: 'Careers', path: '/about/careers' }
+];
+const DEFAULT_SERVICES_LINKS = [
+  { label: 'Residential Services', path: '/services/residential' },
+  { label: 'Commercial Services', path: '/commercial' },
+  { label: 'Payments', path: '/resources' },
+  { label: 'Portfolio', path: '/portfolio' },
+  { label: 'Contact Us', path: '/contact' }
+];
+const DEFAULT_FOOTER = {
+  hoursHeading: 'Business Hours',
+  mondayFridayLabel: 'Monday - Friday',
+  mondayFridayHours: '8:00 AM - 5:00 PM',
+  saturdayText: 'Saturday: By Appointment',
+  sundayText: 'Sunday: Closed',
+  licensedText: 'Fully Licensed & Insured'
+};
+
 const Footer = () => {
-  const { data: companyData } = useCompanyData();
-  const { data: siteSettings } = useSiteSettings();
+  const { data: companyData, loading: companyLoading, error: companyError } = useCompanyData();
+  const { data: siteSettings, loading: settingsLoading, error: settingsError } = useSiteSettings();
   const currentYear = new Date().getFullYear();
 
-  // Fallback footer data if Sanity data is not available
-  const aboutLinks = siteSettings?.footer?.aboutLinks || [
-    { label: 'Company Background', path: '/about/company' },
-    { label: 'Safety', path: '/about/safety' },
-    { label: 'Service Recognitions', path: '/about/recognitions' },
-    { label: 'Careers', path: '/about/careers' }
-  ];
+  const useFallback = companyLoading || companyError || settingsLoading || settingsError;
 
-  const servicesLinks = siteSettings?.footer?.servicesLinks || [
-    { label: 'Residential Services', path: '/services/residential' },
-    { label: 'Commercial Services', path: '/commercial' },
-    { label: 'Payments', path: '/resources' },
-    { label: 'Portfolio', path: '/portfolio' },
-    { label: 'Contact Us', path: '/contact' }
-  ];
-
-  const footer = siteSettings?.footer || {
-    hoursHeading: 'Business Hours',
-    mondayFridayLabel: 'Monday - Friday',
-    mondayFridayHours: '8:00 AM - 5:00 PM',
-    saturdayText: 'Saturday: By Appointment',
-    sundayText: 'Sunday: Closed',
-    licensedText: 'Fully Licensed & Insured'
-  };
-
-  const name = companyData?.name || 'Snyder Mechanical';
-  const description = companyData?.description || '';
-  const phone = companyData?.phone || '(775) 738-5616';
-  const address = companyData?.address?.display || 'Elko, Spring Creek, NV';
-  const serviceArea = companyData?.serviceArea || 'Northeastern Nevada';
+  const aboutLinks = useFallback ? DEFAULT_ABOUT_LINKS : (siteSettings?.footer?.aboutLinks || DEFAULT_ABOUT_LINKS);
+  const servicesLinks = useFallback ? DEFAULT_SERVICES_LINKS : (siteSettings?.footer?.servicesLinks || DEFAULT_SERVICES_LINKS);
+  const footer = useFallback ? DEFAULT_FOOTER : (siteSettings?.footer || DEFAULT_FOOTER);
+  const name = useFallback ? 'Snyder Mechanical' : (companyData?.name || 'Snyder Mechanical');
+  const description = useFallback ? '' : (companyData?.description || '');
+  const phone = useFallback ? '(775) 738-5616' : (companyData?.phone || '(775) 738-5616');
+  const address = useFallback ? 'Elko, Spring Creek, NV' : (companyData?.address?.display || 'Elko, Spring Creek, NV');
+  const serviceArea = useFallback ? 'Northeastern Nevada' : (companyData?.serviceArea || 'Northeastern Nevada');
 
   return (
     <footer className="bg-gradient-to-b from-secondary-700 to-secondary-800 text-white border-t-4 border-secondary-500">

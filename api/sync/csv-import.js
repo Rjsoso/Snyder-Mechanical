@@ -66,9 +66,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Validate API key
+  // Auth: accept CRON_SECRET (Vercel cron), DASHBOARD_PASSWORD (dashboard UI), or x-api-key (manual/external)
+  const authHeader = req.headers['authorization'];
   const apiKey = req.headers['x-api-key'];
-  if (apiKey !== process.env.SYNC_API_KEY) {
+  const cronMatch = process.env.CRON_SECRET && authHeader === `Bearer ${process.env.CRON_SECRET}`;
+  const dashboardMatch = process.env.DASHBOARD_PASSWORD && authHeader === `Bearer ${process.env.DASHBOARD_PASSWORD}`;
+  const apiKeyMatch = apiKey && apiKey === process.env.SYNC_API_KEY;
+  if (!cronMatch && !dashboardMatch && !apiKeyMatch) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 

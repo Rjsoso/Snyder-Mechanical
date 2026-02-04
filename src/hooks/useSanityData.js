@@ -308,37 +308,6 @@ export function useAboutData() {
 }
 
 /**
- * Hook to fetch maintenance plans
- * Replaces: src/data/maintenance-plans.json
- */
-export function useMaintenancePlans() {
-  const [data, setData] = useState({ hero: {}, plans: [], benefits: [], faqs: [] });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    client
-      .fetch(`*[_type == "maintenancePlansPage"][0]{
-        hero,
-        plans,
-        benefits,
-        faqs
-      }`)
-      .then((data) => {
-        setData(data || { hero: {}, plans: [], benefits: [], faqs: [] });
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching maintenance plans:', err);
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
-
-  return { data, loading, error };
-}
-
-/**
  * Hook to fetch home page content
  * Replaces: hardcoded content in home components
  */

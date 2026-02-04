@@ -17,6 +17,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('Confirm payment: STRIPE_SECRET_KEY is not configured');
+    return res.status(503).json({ error: 'Payment service is temporarily unavailable. Please try again later.' });
+  }
+
   try {
     const { invoiceId, paymentIntentId } = req.body;
 

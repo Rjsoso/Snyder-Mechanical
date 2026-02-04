@@ -96,6 +96,16 @@ I need the following ComputerEase information:
 Purpose: Allow customers to pay invoices online via our website.
 ```
 
+## Sync API Authentication
+
+The ComputerEase import endpoints (`/api/sync/computerease-import` and `/api/sync/csv-import`) accept one of:
+
+1. **Vercel Cron:** Set `CRON_SECRET` in Vercel. The cron job sends `Authorization: Bearer <CRON_SECRET>` so the scheduled import can run without `x-api-key`.
+2. **Dashboard:** Set `DASHBOARD_PASSWORD` in env. When triggering sync from the admin dashboard, use this password; the request sends `Authorization: Bearer <DASHBOARD_PASSWORD>`.
+3. **Manual/External:** Send `x-api-key: <SYNC_API_KEY>` for scripted or external calls.
+
+Set at least one of `CRON_SECRET`, `DASHBOARD_PASSWORD`, or `SYNC_API_KEY` so cron and/or the dashboard can authenticate.
+
 ## Current Status
 
 ✅ Invoice payment system is built and ready

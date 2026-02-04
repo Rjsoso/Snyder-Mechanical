@@ -13,18 +13,19 @@ const sanityClient = createClient({
  * Update payment status in ComputerEase via API
  */
 async function updateComputerEaseAPI(invoiceData) {
-  const { baseUrl, username, password, apiKey } = computerEaseConfig.api;
+  const { baseUrl, username, password, apiKey, timeout } = computerEaseConfig.api;
+
+  const authHeader = apiKey
+    ? { 'Authorization': `Bearer ${apiKey}` }
+    : { 'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}` };
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout || 30000);
 
   try {
-    // Build authentication header
-    const authHeader = apiKey 
-      ? { 'Authorization': `Bearer ${apiKey}` }
-      : { 'Authorization': `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}` };
-
-    // Update invoice in ComputerEase
-    // Note: Actual endpoint may vary - check ComputerEase API docs
     const response = await fetch(`${baseUrl}/invoices/${invoiceData.computerEaseInvoiceId}/payment`, {
       method: 'POST',
+      signal: controller.signal,
       headers: {
         'Content-Type': 'application/json',
         ...authHeader,
@@ -36,8 +37,9 @@ async function updateComputerEaseAPI(invoiceData) {
         reference: invoiceData.stripePaymentIntentId,
         notes: `Paid online via website - Stripe Payment Intent: ${invoiceData.stripePaymentIntentId}`
       }),
-      timeout: computerEaseConfig.api.timeout,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`ComputerEase API error: ${response.status} ${response.statusText}`);
@@ -45,6 +47,10 @@ async function updateComputerEaseAPI(invoiceData) {
 
     return await response.json();
   } catch (error) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error('ComputerEase API request timed out');
+    }
     console.error('Error updating ComputerEase:', error);
     throw error;
   }

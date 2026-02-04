@@ -31,6 +31,11 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+    console.error('Webhook: Stripe keys not configured (STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET missing)');
+    return res.status(503).json({ error: 'Webhook not configured' });
+  }
+
   const buf = await buffer(req);
   const sig = req.headers['stripe-signature'];
 
@@ -103,7 +108,8 @@ export default async function handler(req, res) {
 
           // Sync payment back to ComputerEase (non-blocking)
           try {
-            await fetch(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api/sync/update-computerease-payment`, {
+            const baseUrl = process.env.APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+            await fetch(`${baseUrl}/api/sync/update-computerease-payment`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

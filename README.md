@@ -99,13 +99,13 @@ npm run deploy
 
 ### Environment Variables
 
-Create a `.env` file in the root directory with your Sanity credentials:
+Copy `.env.example` to `.env` or `.env.local` and fill in values. Required for CMS and payments:
 
-```env
-VITE_SANITY_PROJECT_ID=your_project_id
-VITE_SANITY_DATASET=production
-VITE_SANITY_API_VERSION=2024-01-01
-```
+- **Sanity:** `VITE_SANITY_PROJECT_ID`, `VITE_SANITY_DATASET` (frontend); `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` (API routes).
+- **Stripe:** `VITE_STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` for invoice payments.
+- **Admin/Sync:** `DASHBOARD_PASSWORD` for the invoice sync dashboard; `CRON_SECRET` (Vercel) and/or `SYNC_API_KEY` for sync endpoints.
+
+See `.env.example` for the full list and optional vars (ComputerEase, `APP_URL`).
 
 ## Deployment
 

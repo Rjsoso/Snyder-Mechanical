@@ -171,10 +171,12 @@ Here's what makes it safe:
 - ✅ Your business never sees or stores card numbers
 
 ### For Bank Accounts:
-- ✅ Bank account info encrypted
-- ✅ Used only once for that payment
+- ✅ Bank account info encrypted in transit (HTTPS)
+- ✅ Used only once for that payment (not stored)
 - ✅ Customer must authorize the charge
 - ✅ Same security as online bill pay
+
+**Note:** Card numbers go only to Stripe, not your server. Bank account details are sent through your site to Stripe over encrypted connections for that single payment. See "Technical Reference" at the end of this guide for more detail.
 
 **Bottom line:** It's as safe as paying on Amazon or any major website. Millions of businesses use Stripe.
 
@@ -393,6 +395,44 @@ Your system is already set up and ready to go! Here's what you need to know:
 
 ---
 
+## Technical Reference (For Developers / Operations)
+
+This section documents how the payment system is wired and what to check if something stops working.
+
+### Required Environment Variables
+
+| Variable | Used by | Purpose |
+|----------|---------|---------|
+| `STRIPE_SECRET_KEY` | All payment API routes | Stripe API authentication. If missing, payment and webhook handlers return 503. |
+| `STRIPE_WEBHOOK_SECRET` | Webhook handler only | Verifies that webhook events really come from Stripe. Required for webhook to run. |
+| `VITE_STRIPE_PUBLISHABLE_KEY` | Frontend only | Lets the browser talk to Stripe for card and express checkout (never used for ACH bank details). |
+
+### Optional: Webhook → ComputerEase Sync URL
+
+When a payment succeeds, the webhook calls your own API to sync the payment back to ComputerEase. That internal request needs a full URL:
+
+- **Production (Vercel):** `VERCEL_URL` is set automatically but is hostname-only (no `https://`). The app builds the URL as `https://${VERCEL_URL}`. For custom domains or if the internal call fails, set **`APP_URL`** to the full base URL (e.g. `https://yourdomain.com`).
+- **Local:** Defaults to `http://localhost:3000`.
+
+If this URL is wrong, payments still succeed and invoices are marked paid in Sanity; only the sync back to ComputerEase will fail (and will be logged).
+
+### What Happens When Stripe Keys Are Missing
+
+- **create-payment**, **create-ach-payment**, **confirm-payment:** Return **503** with a generic message: "Payment service is temporarily unavailable. Please try again later." No Stripe or key details are exposed.
+- **Webhook:** Returns **503** with "Webhook not configured" if `STRIPE_SECRET_KEY` or `STRIPE_WEBHOOK_SECRET` is missing. Stripe will retry; fix the env and the next retry will succeed.
+
+### Payment Flow Summary
+
+- **Card:** Customer → your site → create-payment (PaymentIntent) → Stripe.js (card details go only to Stripe) → confirm-payment + Stripe webhook → Sanity updated; webhook then calls update-computerease-payment if applicable.
+- **ACH:** Customer → your site → create-ach-payment (bank details sent to your API, then to Stripe). Stripe processes the transfer; webhook receives `payment_intent.processing` then `payment_intent.succeeded` and updates Sanity and triggers ComputerEase sync the same way as card.
+
+### Security Notes
+
+- **Card data:** Never touches your server; it goes from the customer’s browser to Stripe via Stripe.js.
+- **ACH bank details:** Sent to your API and then to Stripe over HTTPS; used only for that payment and not stored. For stricter compliance, a future improvement is to collect ACH via Stripe.js on the client so bank details never hit your server.
+
+---
+
 ## Support Resources
 
 ### Check Payment Status
@@ -436,4 +476,4 @@ Get paid faster, with less work, and look more professional. All at no cost to y
 ---
 
 *Simple Payment Guide - Snyder Mechanical LLC*  
-*Last updated: February 3, 2026*
+*Last updated: February 4, 2026*
