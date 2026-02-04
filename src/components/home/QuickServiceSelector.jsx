@@ -1,39 +1,28 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Flame, Snowflake, Droplets } from 'lucide-react';
 import { useHomePageData } from '../../hooks/useSanityData';
+import FlowingMenu from './FlowingMenu';
 
-const services = [
+const flowingMenuItems = [
   {
-    id: 'heating',
-    title: 'Heating',
-    icon: Flame,
     link: '/services/heating',
-    color: 'from-orange-500 to-red-500',
-    description: 'Furnace & heating repairs'
+    text: 'Heating',
+    image: 'https://picsum.photos/600/400?random=1'
   },
   {
-    id: 'cooling',
-    title: 'Cooling',
-    icon: Snowflake,
     link: '/services/cooling',
-    color: 'from-blue-400 to-cyan-500',
-    description: 'AC installation & service'
+    text: 'Cooling',
+    image: 'https://picsum.photos/600/400?random=2'
   },
   {
-    id: 'plumbing',
-    title: 'Plumbing',
-    icon: Droplets,
     link: '/services/plumbing',
-    color: 'from-blue-500 to-blue-600',
-    description: 'Complete plumbing solutions'
+    text: 'Plumbing',
+    image: 'https://picsum.photos/600/400?random=3'
   }
 ];
 
 const QuickServiceSelector = () => {
   const { data: homePageData } = useHomePageData();
 
-  // Fallback content if Sanity data is not available
   const section = homePageData?.quickServiceSelector || {
     heading: 'What Do You Need?',
     description: 'Select a service to get started or call us for assistance'
@@ -57,36 +46,16 @@ const QuickServiceSelector = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            
-            return (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Link
-                  to={service.link}
-                  className="group block relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-                >
-                  <div className={`bg-gradient-to-br ${service.color} p-8 text-white h-full min-h-[200px] flex flex-col items-center justify-center text-center`}>
-                    <div className="w-16 h-16 mb-4 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-8 h-8" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                    <p className="text-sm text-white/90">{service.description}</p>
-                    
-                    {/* Hover effect */}
-                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
-                  </div>
-                </Link>
-              </motion.div>
-            );
-          })}
+        <div className="relative" style={{ height: '500px', minHeight: '60vh' }}>
+          <FlowingMenu
+            items={flowingMenuItems}
+            speed={15}
+            textColor="#ffffff"
+            bgColor="#00002e"
+            marqueeBgColor="#ffffff"
+            marqueeTextColor="#00002e"
+            borderColor="#ffffff"
+          />
         </div>
       </div>
     </section>
