@@ -29,7 +29,7 @@ const QuickServiceSelector = () => {
   };
 
   return (
-    <section className="py-6 md:py-8 bg-gradient-to-b from-white to-secondary-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+    <section className="pt-6 md:pt-8 pb-0 bg-gradient-to-b from-white to-secondary-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
       <div className="container-custom">
         <motion.div
           className="text-center mb-6 md:mb-8"
