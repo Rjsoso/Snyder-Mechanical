@@ -57,6 +57,7 @@ const QuickServiceSelector = () => {
           marqueeTextColor="#00002e"
           borderColor="#000056"
           showMarqueeImage={false}
+          showMarquee={false}
         />
       </div>
     </section>

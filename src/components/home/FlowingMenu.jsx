@@ -12,7 +12,8 @@ function FlowingMenu({
   marqueeBgColor = '#fff',
   marqueeTextColor = '#060010',
   borderColor = '#fff',
-  showMarqueeImage = true
+  showMarqueeImage = true,
+  showMarquee = true
 }) {
   return (
     <div className="menu-wrap" style={{ backgroundColor: bgColor }}>
@@ -27,6 +28,7 @@ function FlowingMenu({
             marqueeTextColor={marqueeTextColor}
             borderColor={borderColor}
             showMarqueeImage={showMarqueeImage}
+            showMarquee={showMarquee}
           />
         ))}
       </nav>
@@ -34,7 +36,7 @@ function FlowingMenu({
   );
 }
 
-function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor, showMarqueeImage }) {
+function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor, showMarqueeImage, showMarquee }) {
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
@@ -136,8 +138,7 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
   const isInternalLink = link && link.startsWith('/');
   const linkProps = {
     className: 'menu__item-link',
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
+    ...(showMarquee && { onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave }),
     style: { color: textColor }
   };
 
@@ -152,20 +153,22 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
           {text}
         </a>
       )}
-      <div className="marquee" ref={marqueeRef} style={{ backgroundColor: marqueeBgColor }}>
-        <div className="marquee__inner-wrap">
-          <div className="marquee__inner" ref={marqueeInnerRef} aria-hidden="true">
-            {[...Array(repetitions)].map((_, idx) => (
-              <div className="marquee__part" key={idx} style={{ color: marqueeTextColor }}>
-                <span>{text}</span>
-                {showMarqueeImage && (
-                  <div className="marquee__img" style={{ backgroundImage: `url(${image})` }} />
-                )}
-              </div>
-            ))}
+      {showMarquee && (
+        <div className="marquee" ref={marqueeRef} style={{ backgroundColor: marqueeBgColor }}>
+          <div className="marquee__inner-wrap">
+            <div className="marquee__inner" ref={marqueeInnerRef} aria-hidden="true">
+              {[...Array(repetitions)].map((_, idx) => (
+                <div className="marquee__part" key={idx} style={{ color: marqueeTextColor }}>
+                  <span>{text}</span>
+                  {showMarqueeImage && (
+                    <div className="marquee__img" style={{ backgroundImage: `url(${image})` }} />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
