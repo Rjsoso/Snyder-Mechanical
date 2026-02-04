@@ -14,14 +14,14 @@ const TrustBadges = ({ className = '' }) => {
   const badges = certificationsData?.badges || [];
   
   return (
-    <div className={`flex flex-wrap gap-4 justify-center ${className}`}>
+    <div className={`grid grid-cols-1 sm:grid-cols-3 gap-4 ${className}`}>
       {badges.map((badge, index) => {
         const Icon = iconMap[badge.icon] || ShieldCheck;
         
         return (
           <motion.div
             key={badge.id}
-            className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg"
+            className={`flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-lg ${index === 3 ? 'sm:col-start-1' : ''}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
