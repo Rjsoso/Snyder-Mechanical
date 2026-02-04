@@ -129,15 +129,6 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
-      
-      {/* Decorative element */}
-      <div className="absolute bottom-0 right-0 opacity-10 z-20">
-        <svg width="400" height="400" viewBox="0 0 400 400" fill="none">
-          <circle cx="200" cy="200" r="160" stroke="currentColor" strokeWidth="2" />
-          <circle cx="200" cy="200" r="120" stroke="currentColor" strokeWidth="2" />
-          <circle cx="200" cy="200" r="80" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </div>
     </section>
   );
 };
