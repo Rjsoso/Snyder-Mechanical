@@ -71,39 +71,42 @@ const AboutPage = () => {
       {/* Company Background */}
       {section === 'company' && (
         <>
-          <section className="section-padding bg-white">
-            <div className="container-custom max-w-4xl">
-              {pageData.story.map((paragraph, index) => (
-                <p key={index} className="text-lg text-secondary-700 mb-4">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </section>
-
           <section className="section-padding bg-secondary-50">
             <div className="container-custom">
-              <h2 className="text-3xl font-bold text-secondary-900 text-center mb-12">
-                Our Journey
-              </h2>
-              <div className="space-y-6 max-w-3xl mx-auto">
-                {pageData.timeline.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="flex items-start space-x-4"
-                  >
-                    <div className="flex-shrink-0 w-20 h-20 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold">
-                      {item.year}
-                    </div>
-                    <div className="flex-1 bg-white rounded-lg p-6 shadow-md">
-                      <p className="text-lg text-secondary-900">{item.event}</p>
-                    </div>
-                  </motion.div>
-                ))}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+                {/* Left: description */}
+                <div>
+                  {pageData.story.map((paragraph, index) => (
+                    <p key={index} className="text-lg text-secondary-700 mb-4">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+                {/* Right: Our Journey timeline */}
+                <div>
+                  <h2 className="text-3xl font-bold text-secondary-900 mb-8">
+                    Our Journey
+                  </h2>
+                  <div className="space-y-6">
+                    {pageData.timeline.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        className="flex items-start space-x-4"
+                      >
+                        <div className="flex-shrink-0 w-20 h-20 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold">
+                          {item.year}
+                        </div>
+                        <div className="flex-1 bg-white rounded-lg p-6 shadow-md">
+                          <p className="text-lg text-secondary-900">{item.event}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </section>
