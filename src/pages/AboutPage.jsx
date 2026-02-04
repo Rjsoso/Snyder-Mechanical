@@ -75,18 +75,42 @@ const AboutPage = () => {
             <div className="container-custom">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
                 {/* Left: description */}
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5 }}
+                  className="space-y-4"
+                >
                   {pageData.story.map((paragraph, index) => (
-                    <p key={index} className="text-lg text-secondary-700 mb-4">
+                    <motion.p
+                      key={index}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-30px' }}
+                      transition={{ duration: 0.4, delay: index * 0.08 }}
+                      className="text-lg text-secondary-700"
+                    >
                       {paragraph}
-                    </p>
+                    </motion.p>
                   ))}
-                </div>
+                </motion.div>
                 {/* Right: Our Journey timeline */}
-                <div>
-                  <h2 className="text-3xl font-bold text-secondary-900 mb-8">
+                <motion.div
+                  initial={{ opacity: 0, x: 24 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <motion.h2
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4 }}
+                    className="text-3xl font-bold text-secondary-900 mb-8"
+                  >
                     Our Journey
-                  </h2>
+                  </motion.h2>
                   <div className="space-y-6">
                     {pageData.timeline.map((item, index) => (
                       <motion.div
@@ -106,38 +130,72 @@ const AboutPage = () => {
                       </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </section>
 
-          {pageData.licenses?.length > 0 && (
+          {(pageData.licenses?.length > 0 || pageData.abc) && (
             <section className="section-padding bg-white">
-              <div className="container-custom max-w-4xl">
-                <h2 className="text-3xl font-bold text-secondary-900 text-center mb-8">
-                  Fully Licensed, Bonded & Insured
-                </h2>
-                <ul className="space-y-2 text-lg text-secondary-700">
-                  {pageData.licenses.map((license, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <CheckCircle className="w-5 h-5 text-primary-600 flex-shrink-0" />
-                      {license}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </section>
-          )}
-
-          {pageData.abc && (
-            <section className="section-padding bg-secondary-50">
-              <div className="container-custom max-w-4xl">
-                <h2 className="text-3xl font-bold text-secondary-900 text-center mb-8">
-                  Associated Builders and Contractors, Inc. (ABC)
-                </h2>
-                <p className="text-lg text-secondary-700">
-                  {pageData.abc}
-                </p>
+              <div className="container-custom max-w-6xl">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                  {pageData.licenses?.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 24 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px' }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <h2 className="text-3xl font-bold text-secondary-900 text-center mb-8">
+                        Fully Licensed, Bonded & Insured
+                      </h2>
+                      <ul className="space-y-2 text-lg text-secondary-700">
+                        {pageData.licenses.map((license, index) => (
+                          <motion.li
+                            key={index}
+                            initial={{ opacity: 0, x: -12 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.35, delay: index * 0.05 }}
+                            className="flex items-center gap-2"
+                          >
+                            <CheckCircle className="w-5 h-5 text-primary-600 flex-shrink-0" />
+                            {license}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  )}
+                  {pageData.abc && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 24 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px' }}
+                      transition={{ duration: 0.5, delay: 0.1 }}
+                      className="bg-secondary-50 rounded-lg p-8"
+                    >
+                      <h2 className="text-3xl font-bold text-secondary-900 text-center mb-6">
+                        Associated Builders and Contractors, Inc. (ABC)
+                      </h2>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                        className="flex justify-center mb-6"
+                      >
+                        <img
+                          src="/abc-logo.png"
+                          alt="Associated Builders and Contractors, Inc."
+                          className="max-h-24 w-auto object-contain"
+                        />
+                      </motion.div>
+                      <p className="text-lg text-secondary-700">
+                        {pageData.abc}
+                      </p>
+                    </motion.div>
+                  )}
+                </div>
               </div>
             </section>
           )}
