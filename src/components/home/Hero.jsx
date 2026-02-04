@@ -41,7 +41,7 @@ const Hero = () => {
             >
               <Link 
                 to="/commercial"
-                className="inline-flex items-center text-primary-100 hover:text-white transition-colors text-sm"
+                className="inline-flex items-center text-white hover:text-primary-50 transition-all text-base font-medium px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 shimmer-text"
               >
                 <span>{hero.commercialLinkText}</span>
                 <ArrowRight className="w-4 h-4 ml-1" />
