@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import ScrollToTop from './components/layout/ScrollToTop';
 import Home from './pages/Home';
 import ServicePage from './pages/ServicePage';
 import AboutPage from './pages/AboutPage';
@@ -15,6 +16,7 @@ import InvoiceSyncDashboard from './pages/admin/InvoiceSyncDashboard';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
