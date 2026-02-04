@@ -18,8 +18,14 @@ const CommercialLanding = () => {
   const { data: servicesData } = useServiceCategories();
   const { data: commercialPageData } = useCommercialPageData();
 
-  const commercialService = servicesData?.commercial;
-  const pumpsService = servicesData?.pumpsEquipment;
+  const commercialService = servicesData?.commercial || {
+    title: 'Commercial Services',
+    description: 'Design/build projects and commercial mechanical contracting for businesses and industrial facilities.'
+  };
+  const pumpsService = servicesData?.pumpsEquipment || {
+    title: 'Pumps & Equipment',
+    description: 'Professional pump installation, maintenance, and equipment supply for all applications.'
+  };
   const phone = companyData?.phone || '(775) 738-5616';
 
   // Fallback content if Sanity data is not available
