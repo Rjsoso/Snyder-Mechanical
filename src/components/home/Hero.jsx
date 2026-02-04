@@ -34,7 +34,7 @@ const Hero = () => {
       
       {/* Content */}
       <div className="container-custom relative z-20 section-padding h-full flex flex-col justify-center">
-        <div className="max-w-4xl mt-[60px]">
+        <div className="max-w-4xl translate-y-[60px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
