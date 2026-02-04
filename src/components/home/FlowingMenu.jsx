@@ -11,7 +11,8 @@ function FlowingMenu({
   bgColor = '#060010',
   marqueeBgColor = '#fff',
   marqueeTextColor = '#060010',
-  borderColor = '#fff'
+  borderColor = '#fff',
+  showMarqueeImage = true
 }) {
   return (
     <div className="menu-wrap" style={{ backgroundColor: bgColor }}>
@@ -25,6 +26,7 @@ function FlowingMenu({
             marqueeBgColor={marqueeBgColor}
             marqueeTextColor={marqueeTextColor}
             borderColor={borderColor}
+            showMarqueeImage={showMarqueeImage}
           />
         ))}
       </nav>
@@ -32,7 +34,7 @@ function FlowingMenu({
   );
 }
 
-function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor }) {
+function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marqueeTextColor, borderColor, showMarqueeImage }) {
   const itemRef = useRef(null);
   const marqueeRef = useRef(null);
   const marqueeInnerRef = useRef(null);
@@ -156,7 +158,9 @@ function MenuItem({ link, text, image, speed, textColor, marqueeBgColor, marquee
             {[...Array(repetitions)].map((_, idx) => (
               <div className="marquee__part" key={idx} style={{ color: marqueeTextColor }}>
                 <span>{text}</span>
-                <div className="marquee__img" style={{ backgroundImage: `url(${image})` }} />
+                {showMarqueeImage && (
+                  <div className="marquee__img" style={{ backgroundImage: `url(${image})` }} />
+                )}
               </div>
             ))}
           </div>

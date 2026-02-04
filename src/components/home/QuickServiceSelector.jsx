@@ -47,7 +47,7 @@ const QuickServiceSelector = () => {
         </motion.div>
       </div>
 
-      <div className="w-full relative rounded-b-2xl shadow-lg overflow-hidden" style={{ height: '400px' }}>
+      <div className="w-full relative rounded-b-2xl overflow-hidden" style={{ height: '400px' }}>
         <FlowingMenu
           items={flowingMenuItems}
           speed={15}
@@ -56,6 +56,7 @@ const QuickServiceSelector = () => {
           marqueeBgColor="#f5f5ff"
           marqueeTextColor="#00002e"
           borderColor="#000056"
+          showMarqueeImage={false}
         />
       </div>
     </section>
