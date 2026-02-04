@@ -31,11 +31,11 @@
   height: 100%;
   position: relative;
   cursor: pointer;
-  text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
   font-weight: 600;
   font-size: 4vh;
+  font-family: Inter, system-ui, sans-serif;
 }
 
 .menu__item-link:hover {
@@ -80,11 +80,11 @@
 
 .marquee span {
   white-space: nowrap;
-  text-transform: uppercase;
   font-weight: 400;
   font-size: 4vh;
   line-height: 1;
   padding: 0 1vw;
+  font-family: Inter, system-ui, sans-serif;
 }
 
 .marquee__img {
@@ -92,7 +92,7 @@
   height: 7vh;
   margin: 2em 2vw;
   padding: 1em 0;
-  border-radius: 50px;
+  border-radius: 0.5rem;
   background-size: cover;
   background-position: 50% 50%;
 }
