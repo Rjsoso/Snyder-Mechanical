@@ -64,7 +64,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-lg border-b-4 border-secondary-500 sticky top-0 z-50">
+    <header className="bg-white shadow-lg border-b-4 border-secondary-500 fixed top-0 left-0 right-0 z-50">
       <nav className="container-custom py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
