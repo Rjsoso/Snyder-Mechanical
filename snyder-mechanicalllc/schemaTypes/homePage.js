@@ -9,6 +9,29 @@ export default {
       type: 'object',
       fields: [
         {
+          name: 'backgroundImages',
+          title: 'Background Images',
+          type: 'array',
+          description: 'Images will auto-rotate in the background. Leave empty to use the default gradient.',
+          of: [
+            {
+              type: 'image',
+              options: {
+                hotspot: true
+              },
+              fields: [
+                {
+                  name: 'alt',
+                  title: 'Alt Text',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }
+              ]
+            }
+          ],
+          validation: Rule => Rule.max(5).warning('Consider keeping the carousel to 5 images or less for better performance')
+        },
+        {
           name: 'title',
           title: 'Main Heading',
           type: 'string',

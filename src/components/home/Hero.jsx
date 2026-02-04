@@ -3,6 +3,7 @@ import { Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../shared/Button';
 import TrustBadges from '../shared/TrustBadges';
+import HeroCarousel from './HeroCarousel';
 import { useCompanyData } from '../../hooks/useSanityData';
 import { useHomePageData } from '../../hooks/useSanityData';
 
@@ -24,8 +25,15 @@ const Hero = () => {
   const phone = companyData?.phone || '(775) 738-5616';
 
   return (
-    <section className="relative bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white section-padding overflow-hidden">
-      <div className="container-custom">
+    <section className="relative text-white section-padding overflow-hidden">
+      {/* Background Carousel */}
+      <HeroCarousel images={hero.backgroundImages} />
+      
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/50 z-10" />
+      
+      {/* Content */}
+      <div className="container-custom relative z-20">
         <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -123,7 +131,7 @@ const Hero = () => {
       </div>
       
       {/* Decorative element */}
-      <div className="absolute bottom-0 right-0 opacity-10">
+      <div className="absolute bottom-0 right-0 opacity-10 z-20">
         <svg width="400" height="400" viewBox="0 0 400 400" fill="none">
           <circle cx="200" cy="200" r="160" stroke="currentColor" strokeWidth="2" />
           <circle cx="200" cy="200" r="120" stroke="currentColor" strokeWidth="2" />

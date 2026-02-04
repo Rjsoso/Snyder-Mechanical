@@ -350,7 +350,17 @@ export function useHomePageData() {
   useEffect(() => {
     client
       .fetch(`*[_type == "homePage"][0]{
-        hero,
+        hero {
+          ...,
+          backgroundImages[] {
+            asset->{
+              _id,
+              url
+            },
+            alt,
+            hotspot
+          }
+        },
         quickServiceSelector,
         servicesGridSection,
         safetySection
