@@ -13,8 +13,7 @@ const services = [
     icon: Home,
     link: '/services/residential',
     color: 'primary',
-    featured: true,
-    badge: 'Most Popular'
+    featured: false
   },
   {
     id: 'commercial',
