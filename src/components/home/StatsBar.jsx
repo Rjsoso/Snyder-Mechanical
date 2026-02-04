@@ -9,7 +9,7 @@ const StatsBar = () => {
   const stats = [
     {
       icon: Briefcase,
-      value: companyData?.stats?.yearsInBusiness || '40+',
+      value: companyData?.stats?.yearsInBusiness || `${new Date().getFullYear() - 1981}+`,
       label: 'Years in Business'
     },
     {

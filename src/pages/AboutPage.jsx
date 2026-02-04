@@ -107,6 +107,37 @@ const AboutPage = () => {
               </div>
             </div>
           </section>
+
+          {pageData.licenses?.length > 0 && (
+            <section className="section-padding bg-white">
+              <div className="container-custom max-w-4xl">
+                <h2 className="text-3xl font-bold text-secondary-900 text-center mb-8">
+                  Fully Licensed, Bonded & Insured
+                </h2>
+                <ul className="space-y-2 text-lg text-secondary-700">
+                  {pageData.licenses.map((license, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-primary-600 flex-shrink-0" />
+                      {license}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )}
+
+          {pageData.abc && (
+            <section className="section-padding bg-secondary-50">
+              <div className="container-custom max-w-4xl">
+                <h2 className="text-3xl font-bold text-secondary-900 text-center mb-8">
+                  Associated Builders and Contractors, Inc. (ABC)
+                </h2>
+                <p className="text-lg text-secondary-700">
+                  {pageData.abc}
+                </p>
+              </div>
+            </section>
+          )}
         </>
       )}
 

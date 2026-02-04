@@ -31,7 +31,7 @@ const CommercialLanding = () => {
   // Fallback content if Sanity data is not available
   const hero = commercialPageData?.hero || {
     title: 'Commercial Mechanical Contracting Excellence',
-    description: 'Trusted by businesses across Northeastern Nevada for over 40 years. From design/build projects to ongoing maintenance, we deliver professional commercial mechanical solutions.',
+    description: 'Trusted by businesses across Northeastern Nevada for over 45 years. From design/build projects to ongoing maintenance, we deliver professional commercial mechanical solutions.',
     backLinkText: '← Back to Home',
     primaryButtonText: 'Call Now',
     secondaryButtonText: 'Request Project Bid'
@@ -69,7 +69,7 @@ const CommercialLanding = () => {
     description: 'We understand the unique challenges of commercial mechanical systems. Our team brings decades of experience, professional certifications, and a commitment to minimizing downtime for your business.',
     buttonText: 'View Our Projects',
     advantages: [
-      'Over 40 years of commercial experience',
+      'Over 45 years of commercial experience',
       'Licensed for large-scale projects',
       'Fully insured with commercial liability coverage',
       'In-house design and engineering team',

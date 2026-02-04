@@ -3,21 +3,30 @@
     "id": "company",
     "title": "Company Background",
     "hero": {
-      "title": "40+ Years of Excellence",
+      "title": "Company Background",
       "subtitle": "Serving Northeastern Nevada Since 1981"
     },
     "story": [
-      "Snyder Mechanical was founded in 1981 with a simple mission: provide exceptional mechanical contracting and service to the Elko and Spring Creek communities.",
-      "Over four decades later, we continue to uphold that commitment with a team of skilled professionals dedicated to safety, quality, and customer satisfaction.",
-      "Today, Snyder Mechanical is northeastern Nevada's most trusted name in HVAC, plumbing, and mechanical contracting services."
+      "Snyder Mechanical's foundation was laid in 1981 with the organization of Snyder Plumbing. The business started with commercial, mining, residential plumbing and piping. In 1989, Snyder Plumbing added sheet metal installation, making the business a \"complete\" mechanical contractor. In 1992, Snyder Mechanical began using its current name. Due to area growth and demands of the local mining industry, Snyder Mechanical opened a service department in 1995. The service department has continued to serve the plumbing and HVAC needs of the community. It has been recognized as \"the best\" of northeastern Nevada.",
+      "Snyder Mechanical maintains licenses in the state of Nevada to perform plumbing, HVAC, refrigeration, industrial piping, and propane systems. Snyder Mechanical is also licensed in California in classifications of plumbing and HVAC. Snyder Mechanical pursues projects in northern Nevada and surrounding areas via hard bid, design build, CMAR, and cost plus. We employ journeyman and apprentice plumbers, journeyman and apprentice sheet metal installers, pipefitters, welders, service technicians and administrative staff. We are confident that our employee pool is second to none, and that we can provide employees with experience and abilities that match the needs of your projects.",
+      "In 2019, Snyder Mechanical commenced an industrial pump and parts sales division. Snyder Mechanical has created strategic alliances with several industrial pump leaders. This will allow Snyder Mechanical to continue to provide excellent service to its valued customers.",
+      "Snyder Mechanical currently maintains an office in Elko, NV. Snyder Mechanical is affiliated with U.S. Mechanical. This allows strategic operations to serve the needs of our client base throughout the western United States, collectively holding licenses in Nevada, Utah, Arizona, California and Wyoming. With 45 years of project experience, we have built an undeniable reputation. We have been fortunate to work on some very successful projects. This has enabled us to build a reputation and history with our many business associates. In turn, Snyder Mechanical's current bonding capacity for a single project is $25,000,000, while its aggregate limit has reached $55,000,000."
     ],
     "timeline": [
-      { "year": "1981", "event": "Company Founded in Elko, NV" },
-      { "year": "1990", "event": "Expanded Commercial Division" },
-      { "year": "2000", "event": "Added Design/Build Capabilities" },
-      { "year": "2010", "event": "Expanded Residential Service Division" },
-      { "year": "2021", "event": "Celebrated 40 Years of Service" }
-    ]
+      { "year": "1981", "event": "Snyder Plumbing founded—commercial, mining, residential plumbing and piping" },
+      { "year": "1989", "event": "Added sheet metal installation (complete mechanical contractor)" },
+      { "year": "1992", "event": "Began using the name Snyder Mechanical" },
+      { "year": "1995", "event": "Opened service department" },
+      { "year": "2019", "event": "Industrial pump and parts sales division" }
+    ],
+    "licenses": [
+      "Nevada Plumbing C-1 52869",
+      "Nevada Industrial Piping A-20 583215",
+      "Nevada HVAC/Mechanical C-21 52871",
+      "California HVAC C20 970355",
+      "California Plumbing C36 970355"
+    ],
+    "abc": "Associated Builders and Contractors is a national construction industry trade association representing nearly 21,000 chapter members. Founded on the merit shop philosophy, ABC and its 70 chapters help members develop people, win work and deliver that work safely, ethically, profitably and for the betterment of the communities in which ABC and its members work."
   },
   "safety": {
     "id": "safety",
