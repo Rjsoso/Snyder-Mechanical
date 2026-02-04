@@ -29,10 +29,10 @@ const QuickServiceSelector = () => {
   };
 
   return (
-    <section className="section-padding bg-gradient-to-b from-white to-secondary-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+    <section className="py-6 md:py-8 bg-gradient-to-b from-white to-secondary-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
       <div className="container-custom">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-6 md:mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -45,18 +45,18 @@ const QuickServiceSelector = () => {
             {section.description}
           </p>
         </motion.div>
+      </div>
 
-        <div className="relative" style={{ height: '500px', minHeight: '60vh' }}>
-          <FlowingMenu
-            items={flowingMenuItems}
-            speed={15}
-            textColor="#ffffff"
-            bgColor="#00002e"
-            marqueeBgColor="#ffffff"
-            marqueeTextColor="#00002e"
-            borderColor="#ffffff"
-          />
-        </div>
+      <div className="w-full relative" style={{ height: '400px' }}>
+        <FlowingMenu
+          items={flowingMenuItems}
+          speed={15}
+          textColor="#ffffff"
+          bgColor="#00002e"
+          marqueeBgColor="#ffffff"
+          marqueeTextColor="#00002e"
+          borderColor="#ffffff"
+        />
       </div>
     </section>
   );
