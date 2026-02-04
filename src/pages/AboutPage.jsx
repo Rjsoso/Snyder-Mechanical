@@ -98,7 +98,7 @@ const AboutPage = () => {
                         className="flex items-start space-x-4"
                       >
                         <div className="flex-shrink-0 w-20 h-20 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold">
-                          {item.year}
+                          {item.year === 'current' ? new Date().getFullYear() : item.year}
                         </div>
                         <div className="flex-1 bg-white rounded-lg p-6 shadow-md">
                           <p className="text-lg text-secondary-900">{item.event}</p>
