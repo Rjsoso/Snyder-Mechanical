@@ -9,11 +9,15 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <QuickServiceSelector />
-      <ServicesGrid />
-      <ReviewsSection />
-      <StatsBar />
-      <SafetySection />
+      {/* Spacer matches hero height so scroll length is correct; content scrolls over fixed hero */}
+      <div className="h-screen" aria-hidden="true" />
+      <div className="relative z-10">
+        <QuickServiceSelector />
+        <ServicesGrid />
+        <ReviewsSection />
+        <StatsBar />
+        <SafetySection />
+      </div>
     </>
   );
 };

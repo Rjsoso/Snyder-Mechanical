@@ -40,7 +40,7 @@ const QuickServiceSelector = () => {
   };
 
   return (
-    <section className="section-padding bg-gradient-to-b from-white to-secondary-50">
+    <section className="section-padding bg-gradient-to-b from-white to-secondary-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
       <div className="container-custom">
         <motion.div
           className="text-center mb-12"

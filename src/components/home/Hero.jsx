@@ -25,7 +25,7 @@ const Hero = () => {
   const phone = companyData?.phone || '(775) 738-5616';
 
   return (
-    <section className="relative text-white section-padding overflow-hidden">
+    <section className="fixed inset-x-0 top-0 h-screen z-0 text-white overflow-hidden">
       {/* Background Carousel */}
       <HeroCarousel images={hero.backgroundImages} />
       
@@ -33,7 +33,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black/50 z-10" />
       
       {/* Content */}
-      <div className="container-custom relative z-20">
+      <div className="container-custom relative z-20 section-padding h-full flex flex-col justify-center">
         <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
