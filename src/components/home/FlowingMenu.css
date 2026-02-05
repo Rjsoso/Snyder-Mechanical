@@ -22,6 +22,8 @@
 
 .menu__item:first-child {
   border-top: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
 .menu__item-link {
