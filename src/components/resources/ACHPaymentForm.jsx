@@ -4,6 +4,8 @@ import { Building2, Loader2, AlertCircle } from 'lucide-react';
 import Button from '../shared/Button';
 import FeeBreakdown from './FeeBreakdown';
 import { calculateTotal } from '../../utils/paymentFees';
+import StripeLogo from '../shared/StripeLogo';
+import SecurityBadge from '../shared/SecurityBadge';
 
 const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
   const [accountNumber, setAccountNumber] = useState('');
@@ -210,6 +212,23 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
           </>
         )}
       </Button>
+
+      {/* Stripe Branding & Trust Indicators */}
+      <div className="border-t border-secondary-200 pt-6 space-y-4">
+        {/* Powered by Stripe with Logo */}
+        <div className="flex items-center justify-center space-x-2">
+          <span className="text-sm text-secondary-600">Powered by</span>
+          <StripeLogo className="h-5" />
+        </div>
+        
+        {/* ACH Payment Info */}
+        <div className="flex flex-col items-center space-y-2">
+          <span className="text-xs text-secondary-500 text-center">Secure bank account payments via ACH</span>
+        </div>
+        
+        {/* Security Badges */}
+        <SecurityBadge />
+      </div>
     </form>
   );
 };
