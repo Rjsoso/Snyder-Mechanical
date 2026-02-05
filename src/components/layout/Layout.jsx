@@ -7,7 +7,7 @@ import ModalManager from '../shared/ModalManager';
 
 const Layout = ({ children }) => {
   return (
-    <div className="h-full flex flex-col min-h-0 overflow-y-auto overflow-x-hidden">
+    <div className="h-screen flex flex-col min-h-0 overflow-y-auto overflow-x-hidden">
       <div className="flex-shrink-0 h-24 md:h-28">
         <Header />
       </div>
