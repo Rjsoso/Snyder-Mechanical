@@ -47,7 +47,7 @@ const QuickServiceSelector = () => {
         </motion.div>
       </div>
 
-      <div className="w-full relative rounded-b-2xl overflow-hidden" style={{ height: '400px' }}>
+      <div className="w-full relative rounded-t-2xl rounded-b-2xl overflow-hidden" style={{ height: '400px' }}>
         <FlowingMenu
           items={flowingMenuItems}
           speed={15}
