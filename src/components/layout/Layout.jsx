@@ -8,11 +8,15 @@ import ModalManager from '../shared/ModalManager';
 const Layout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <div className="flex-shrink-0">
+        <Header />
+      </div>
       <main className="flex-grow pb-20 lg:pb-0 pt-24 md:pt-28 bg-white">
         {children}
       </main>
-      <Footer />
+      <div className="flex-shrink-0">
+        <Footer />
+      </div>
       <ChatbotPlaceholder />
       <FloatingCallButton />
       <QuickActionBar />

@@ -11,7 +11,7 @@ const Home = () => {
       <Hero />
       {/* Spacer matches hero height so scroll length is correct; content scrolls over fixed hero */}
       <div className="h-screen" aria-hidden="true" />
-      <div className="relative z-10 bg-white min-h-screen">
+      <div className="relative z-10 bg-white">
         <QuickServiceSelector />
         <ServicesGrid />
         <ReviewsSection />
