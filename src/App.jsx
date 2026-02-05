@@ -16,10 +16,9 @@ import InvoiceSyncDashboard from './pages/admin/InvoiceSyncDashboard';
 function App() {
   return (
     <Router>
-      <div className="h-full">
-        <ScrollToTop />
-        <Layout>
-          <Routes>
+      <ScrollToTop />
+      <Layout>
+        <Routes>
           <Route path="/" element={<Home />} />
           
           {/* Specific Service Routes */}
@@ -56,9 +55,8 @@ function App() {
               </div>
             </div>
           } />
-          </Routes>
-        </Layout>
-      </div>
+        </Routes>
+      </Layout>
     </Router>
   );
 }
