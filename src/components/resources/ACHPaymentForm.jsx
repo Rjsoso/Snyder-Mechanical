@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Building2, Loader2, AlertCircle, Lock, Eye, EyeOff, CheckCircle, XCircle } from 'lucide-react';
 import Button from '../shared/Button';
@@ -17,6 +17,16 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
   const [showRoutingNumber, setShowRoutingNumber] = useState(false);
   const [showAccountNumber, setShowAccountNumber] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  
+  // Ref for auto-focus
+  const accountHolderRef = useRef(null);
+  
+  // Auto-focus the first field when component mounts
+  useEffect(() => {
+    if (accountHolderRef.current) {
+      accountHolderRef.current.focus();
+    }
+  }, []);
   
   // Validation helpers
   const isRoutingNumberValid = routingNumber.length === 9;
@@ -115,8 +125,11 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         </label>
         <div className="relative">
           <input
+            ref={accountHolderRef}
             type="text"
             id="accountHolder"
+            name="accountHolder"
+            autoComplete="name"
             value={accountHolder}
             onChange={(e) => setAccountHolder(e.target.value)}
             required
@@ -155,6 +168,8 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
             type={showRoutingNumber ? "text" : "password"}
             inputMode="numeric"
             id="routingNumber"
+            name="routingNumber"
+            autoComplete="off"
             value={routingNumber}
             onChange={(e) => setRoutingNumber(e.target.value.replace(/\D/g, '').slice(0, 9))}
             required
@@ -209,6 +224,8 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
             type={showAccountNumber ? "text" : "password"}
             inputMode="numeric"
             id="accountNumber"
+            name="accountNumber"
+            autoComplete="off"
             value={accountNumber}
             onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))}
             required
@@ -342,32 +359,57 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
 
       {/* Confirmation Dialog */}
       {showConfirmDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
-            <div className="flex items-start space-x-4 mb-4">
+        <div 
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowConfirmDialog(false);
+            }
+          }}
+        >
+          <div 
+            className="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start space-x-4 mb-6">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                 <AlertCircle className="w-6 h-6 text-blue-600" />
               </div>
-              <div>
+              <div className="flex-1">
                 <h3 className="text-xl font-bold text-secondary-900 mb-2">
                   Confirm ACH Payment
                 </h3>
                 <p className="text-secondary-700 mb-4">
-                  You're about to authorize a payment of <strong>{formatCurrency(total)}</strong> from your bank account.
+                  You're about to authorize a payment of <strong className="text-primary-600">{formatCurrency(total)}</strong> from your bank account.
                 </p>
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-                  <p className="text-sm text-yellow-800">
-                    <strong>Important:</strong> This payment cannot be cancelled once submitted. Your bank account will be charged in 3-5 business days.
-                  </p>
-                </div>
-                <div className="space-y-2 text-sm text-secondary-600">
-                  <p><strong>Account Holder:</strong> {accountHolder}</p>
-                  <p><strong>Routing Number:</strong> ••••••{routingNumber.slice(-3)}</p>
-                  <p><strong>Account Number:</strong> ••••••{accountNumber.slice(-4)}</p>
-                  <p><strong>Account Type:</strong> {accountType.charAt(0).toUpperCase() + accountType.slice(1)}</p>
-                </div>
               </div>
             </div>
+            
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg p-4 mb-4">
+              <p className="text-sm text-yellow-800">
+                <strong>Important:</strong> This payment cannot be cancelled once submitted. Your bank account will be charged in 3-5 business days.
+              </p>
+            </div>
+            
+            <div className="bg-secondary-50 rounded-lg p-4 mb-6 space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-secondary-600">Account Holder:</span>
+                <span className="font-medium text-secondary-900">{accountHolder}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary-600">Routing Number:</span>
+                <span className="font-mono text-secondary-900">••••••{routingNumber.slice(-3)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary-600">Account Number:</span>
+                <span className="font-mono text-secondary-900">••••••{accountNumber.slice(-4)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary-600">Account Type:</span>
+                <span className="font-medium text-secondary-900">{accountType.charAt(0).toUpperCase() + accountType.slice(1)}</span>
+              </div>
+            </div>
+            
             <div className="flex space-x-3">
               <Button
                 onClick={() => setShowConfirmDialog(false)}
