@@ -379,36 +379,36 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
               <h3 className="text-2xl font-bold text-secondary-900 mb-2">
                 Review Your Payment
               </h3>
-              <p className="text-secondary-600">
+              <p className="text-secondary-700">
                 Please confirm the details below before processing
               </p>
             </div>
 
             {/* Payment Amount - Highlighted */}
             <div className="bg-gradient-to-br from-primary-50 to-primary-100 border-2 border-primary-400 rounded-xl p-6 mb-6 text-center">
-              <p className="text-sm text-secondary-700 mb-2">Payment Amount</p>
+              <p className="text-sm text-secondary-800 mb-2 font-medium">Payment Amount</p>
               <p className="text-4xl font-bold text-primary-800 mb-2">{formatCurrency(total)}</p>
-              <p className="text-sm text-secondary-700">Processing via secure ACH transfer</p>
+              <p className="text-sm text-secondary-800">Processing via secure ACH transfer</p>
             </div>
             
             {/* Account Details */}
             <div className="bg-secondary-50 rounded-xl p-5 mb-6 space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-secondary-600">Account Holder</span>
+                <span className="text-sm text-secondary-700 font-medium">Account Holder</span>
                 <span className="font-semibold text-secondary-900">{accountHolder}</span>
               </div>
               <div className="border-t border-secondary-200"></div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-secondary-600">Bank Account</span>
-                <span className="font-mono text-secondary-700">••••••{accountNumber.slice(-4)}</span>
+                <span className="text-sm text-secondary-700 font-medium">Bank Account</span>
+                <span className="font-mono text-secondary-900">••••••{accountNumber.slice(-4)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-secondary-600">Routing Number</span>
-                <span className="font-mono text-secondary-700">••••••{routingNumber.slice(-3)}</span>
+                <span className="text-sm text-secondary-700 font-medium">Routing Number</span>
+                <span className="font-mono text-secondary-900">••••••{routingNumber.slice(-3)}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-secondary-600">Account Type</span>
-                <span className="text-secondary-700">{accountType.charAt(0).toUpperCase() + accountType.slice(1)}</span>
+                <span className="text-sm text-secondary-700 font-medium">Account Type</span>
+                <span className="text-secondary-900">{accountType.charAt(0).toUpperCase() + accountType.slice(1)}</span>
               </div>
             </div>
 
@@ -419,8 +419,8 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
                   <CheckCircle className="w-5 h-5 text-primary-700 mt-0.5" />
                 </div>
                 <div className="text-sm text-secondary-900">
-                  <p className="font-medium mb-1">Secure Payment Processing</p>
-                  <p className="text-secondary-700">Your payment will be processed in 3-5 business days. You'll receive a confirmation email once complete.</p>
+                  <p className="font-semibold mb-1">Secure Payment Processing</p>
+                  <p className="text-secondary-800">Your payment will be processed in 3-5 business days. You'll receive a confirmation email once complete.</p>
                 </div>
               </div>
             </div>
@@ -431,7 +431,7 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
                 onClick={() => setShowConfirmDialog(false)}
                 variant="outline"
                 size="lg"
-                className="flex-1 border-2 border-secondary-400 text-secondary-700 hover:bg-secondary-100 hover:border-secondary-600"
+                className="flex-1 border-2 border-secondary-400 text-secondary-800 hover:bg-secondary-100 hover:border-secondary-700 font-semibold"
                 disabled={processing}
               >
                 Go Back
@@ -440,7 +440,7 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
                 onClick={handleConfirmPayment}
                 variant="primary"
                 size="lg"
-                className="flex-1 bg-gradient-to-r from-primary-700 to-primary-900 hover:from-primary-800 hover:to-primary-900"
+                className="flex-1 bg-gradient-to-r from-primary-700 to-primary-900 hover:from-primary-800 hover:to-primary-900 font-semibold"
                 disabled={processing}
               >
                 <Lock className="w-4 h-4 mr-2" />
