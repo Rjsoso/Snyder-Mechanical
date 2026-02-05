@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Building2, Loader2, AlertCircle } from 'lucide-react';
+import { Building2, Loader2, AlertCircle, Lock } from 'lucide-react';
 import Button from '../shared/Button';
 import FeeBreakdown from './FeeBreakdown';
 import { calculateTotal } from '../../utils/paymentFees';
@@ -63,6 +63,13 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
   };
   
   const { total } = calculateTotal(invoice.amount, 'ach');
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -144,6 +151,10 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         <p className="text-xs text-secondary-500 mt-1">
           Account number found on your check
         </p>
+        <div className="mt-2 flex items-center space-x-1 text-xs text-secondary-500">
+          <Lock className="w-3 h-3" />
+          <span>Your bank information is secure and encrypted. We never store your account details.</span>
+        </div>
       </div>
       
       {/* Account Type */}
@@ -208,7 +219,7 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         ) : (
           <>
             <Building2 className="w-5 h-5 mr-2" />
-            Authorize Payment
+            Authorize Payment - {formatCurrency(total)}
           </>
         )}
       </Button>
