@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Building2, Loader2, AlertCircle, Lock } from 'lucide-react';
+import { Building2, Loader2, AlertCircle, Lock, Eye, EyeOff } from 'lucide-react';
 import Button from '../shared/Button';
 import FeeBreakdown from './FeeBreakdown';
 import { calculateTotal } from '../../utils/paymentFees';
@@ -14,6 +14,8 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
   const [accountHolder, setAccountHolder] = useState('');
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
+  const [showRoutingNumber, setShowRoutingNumber] = useState(false);
+  const [showAccountNumber, setShowAccountNumber] = useState(false);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,17 +119,32 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         <label htmlFor="routingNumber" className="block text-sm font-medium text-secondary-700 mb-2">
           Routing Number *
         </label>
-        <input
-          type="text"
-          id="routingNumber"
-          value={routingNumber}
-          onChange={(e) => setRoutingNumber(e.target.value.replace(/\D/g, '').slice(0, 9))}
-          required
-          maxLength="9"
-          disabled={processing}
-          className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed"
-          placeholder="110000000"
-        />
+        <div className="relative">
+          <input
+            type={showRoutingNumber ? "text" : "password"}
+            id="routingNumber"
+            value={routingNumber}
+            onChange={(e) => setRoutingNumber(e.target.value.replace(/\D/g, '').slice(0, 9))}
+            required
+            maxLength="9"
+            disabled={processing}
+            className="w-full px-4 py-3 pr-12 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed"
+            placeholder="110000000"
+          />
+          <button
+            type="button"
+            onClick={() => setShowRoutingNumber(!showRoutingNumber)}
+            disabled={processing}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-500 hover:text-secondary-700 transition-colors disabled:cursor-not-allowed"
+            aria-label={showRoutingNumber ? "Hide routing number" : "Show routing number"}
+          >
+            {showRoutingNumber ? (
+              <EyeOff className="w-5 h-5" />
+            ) : (
+              <Eye className="w-5 h-5" />
+            )}
+          </button>
+        </div>
         <p className="text-xs text-secondary-500 mt-1">
           9-digit number found on your check (bottom left)
         </p>
@@ -138,16 +155,31 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         <label htmlFor="accountNumber" className="block text-sm font-medium text-secondary-700 mb-2">
           Account Number *
         </label>
-        <input
-          type="text"
-          id="accountNumber"
-          value={accountNumber}
-          onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))}
-          required
-          disabled={processing}
-          className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed"
-          placeholder="000123456789"
-        />
+        <div className="relative">
+          <input
+            type={showAccountNumber ? "text" : "password"}
+            id="accountNumber"
+            value={accountNumber}
+            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))}
+            required
+            disabled={processing}
+            className="w-full px-4 py-3 pr-12 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed"
+            placeholder="000123456789"
+          />
+          <button
+            type="button"
+            onClick={() => setShowAccountNumber(!showAccountNumber)}
+            disabled={processing}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-500 hover:text-secondary-700 transition-colors disabled:cursor-not-allowed"
+            aria-label={showAccountNumber ? "Hide account number" : "Show account number"}
+          >
+            {showAccountNumber ? (
+              <EyeOff className="w-5 h-5" />
+            ) : (
+              <Eye className="w-5 h-5" />
+            )}
+          </button>
+        </div>
         <p className="text-xs text-secondary-500 mt-1">
           Account number found on your check
         </p>
