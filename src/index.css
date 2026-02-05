@@ -1,38 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #e6f2ff;
-  --color-primary-100: #b3d9ff;
-  --color-primary-200: #80c0ff;
-  --color-primary-300: #4da7ff;
-  --color-primary-400: #2d75cd;
-  --color-primary-500: #2d75cd;
-  --color-primary-600: #2563b0;
-  --color-primary-700: #1e4f8f;
-  --color-primary-800: #163c6f;
-  --color-primary-900: #0f2a4f;
+  /* Dark Blue Primary Colors - Professional Navy/Slate Blue */
+  --color-primary-50: #f0f4f8;
+  --color-primary-100: #d9e2ec;
+  --color-primary-200: #bcccdc;
+  --color-primary-300: #9fb3c8;
+  --color-primary-400: #829ab1;
+  --color-primary-500: #627d98;
+  --color-primary-600: #486581;
+  --color-primary-700: #334e68;
+  --color-primary-800: #243b53;
+  --color-primary-900: #102a43;
   
-  --color-secondary-50: #f5f5ff;
-  --color-secondary-100: #e6e6ff;
-  --color-secondary-200: #ccccff;
-  --color-secondary-300: #b3b3ff;
-  --color-secondary-400: #4d4dff;
-  --color-secondary-500: #00007f;
-  --color-secondary-600: #00006b;
-  --color-secondary-700: #000056;
-  --color-secondary-800: #000042;
-  --color-secondary-900: #00002e;
+  /* Grey Secondary Colors - Neutral Greys */
+  --color-secondary-50: #f8f9fa;
+  --color-secondary-100: #f1f3f5;
+  --color-secondary-200: #e9ecef;
+  --color-secondary-300: #dee2e6;
+  --color-secondary-400: #ced4da;
+  --color-secondary-500: #adb5bd;
+  --color-secondary-600: #868e96;
+  --color-secondary-700: #495057;
+  --color-secondary-800: #343a40;
+  --color-secondary-900: #212529;
   
-  --color-accent-50: #fff7ed;
-  --color-accent-100: #ffedd5;
-  --color-accent-200: #fed7aa;
-  --color-accent-300: #fdba74;
-  --color-accent-400: #fb923c;
-  --color-accent-500: #f97316;
-  --color-accent-600: #ea580c;
-  --color-accent-700: #c2410c;
-  --color-accent-800: #9a3412;
-  --color-accent-900: #7c2d12;
+  /* Accent Colors - Lighter Blue for highlights */
+  --color-accent-50: #e3f2fd;
+  --color-accent-100: #bbdefb;
+  --color-accent-200: #90caf9;
+  --color-accent-300: #64b5f6;
+  --color-accent-400: #42a5f5;
+  --color-accent-500: #2196f3;
+  --color-accent-600: #1e88e5;
+  --color-accent-700: #1976d2;
+  --color-accent-800: #1565c0;
+  --color-accent-900: #0d47a1;
   
   --font-family-sans: Inter, system-ui, sans-serif;
   
@@ -49,8 +52,8 @@
 
   body {
     font-family: Inter, system-ui, sans-serif;
-    color: #0f172a;
-    background-color: white;
+    color: #212529;
+    background-color: #f8f9fa;
     min-height: 100vh;
   }
 
@@ -65,7 +68,7 @@
 
 @layer components {
   .btn-primary {
-    background-color: #2d75cd;
+    background-color: #334e68;
     color: white;
     font-weight: 500;
     padding: 0.75rem 1.5rem;
@@ -74,11 +77,11 @@
   }
   
   .btn-primary:hover {
-    background-color: #2563b0;
+    background-color: #243b53;
   }
   
   .btn-secondary {
-    background-color: #00007f;
+    background-color: #495057;
     color: white;
     font-weight: 500;
     padding: 0.75rem 1.5rem;
@@ -87,12 +90,12 @@
   }
   
   .btn-secondary:hover {
-    background-color: #00006b;
+    background-color: #343a40;
   }
   
   .btn-outline {
-    border: 2px solid #2d75cd;
-    color: #2d75cd;
+    border: 2px solid #334e68;
+    color: #334e68;
     font-weight: 500;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -100,8 +103,8 @@
   }
   
   .btn-outline:hover {
-    background-color: #e6f2ff;
-    border-color: #2563b0;
+    background-color: #f0f4f8;
+    border-color: #243b53;
   }
   
   .section-padding {

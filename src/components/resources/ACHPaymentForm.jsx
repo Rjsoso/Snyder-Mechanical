@@ -373,8 +373,8 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
           >
             {/* Header with friendly icon */}
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-100 to-blue-100 rounded-full mb-4">
-                <Shield className="w-8 h-8 text-green-600" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full mb-4">
+                <Shield className="w-8 h-8 text-primary-700" />
               </div>
               <h3 className="text-2xl font-bold text-secondary-900 mb-2">
                 Review Your Payment
@@ -385,10 +385,10 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
             </div>
 
             {/* Payment Amount - Highlighted */}
-            <div className="bg-gradient-to-br from-primary-50 to-blue-50 border-2 border-primary-200 rounded-xl p-6 mb-6 text-center">
+            <div className="bg-gradient-to-br from-primary-50 to-primary-100 border-2 border-primary-300 rounded-xl p-6 mb-6 text-center">
               <p className="text-sm text-secondary-600 mb-2">Payment Amount</p>
-              <p className="text-4xl font-bold text-primary-600 mb-2">{formatCurrency(total)}</p>
-              <p className="text-sm text-secondary-500">Processing via secure ACH transfer</p>
+              <p className="text-4xl font-bold text-primary-700 mb-2">{formatCurrency(total)}</p>
+              <p className="text-sm text-secondary-600">Processing via secure ACH transfer</p>
             </div>
             
             {/* Account Details */}
@@ -413,14 +413,14 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
             </div>
 
             {/* Info message - Softer tone */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="bg-primary-50 border border-primary-200 rounded-lg p-4 mb-6">
               <div className="flex items-start space-x-3">
                 <div className="flex-shrink-0">
-                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-primary-600 mt-0.5" />
                 </div>
-                <div className="text-sm text-blue-900">
+                <div className="text-sm text-secondary-900">
                   <p className="font-medium mb-1">Secure Payment Processing</p>
-                  <p className="text-blue-700">Your payment will be processed in 3-5 business days. You'll receive a confirmation email once complete.</p>
+                  <p className="text-secondary-700">Your payment will be processed in 3-5 business days. You'll receive a confirmation email once complete.</p>
                 </div>
               </div>
             </div>
@@ -440,7 +440,7 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
                 onClick={handleConfirmPayment}
                 variant="primary"
                 size="lg"
-                className="flex-1 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700"
+                className="flex-1 bg-gradient-to-r from-primary-700 to-primary-800 hover:from-primary-800 hover:to-primary-900"
                 disabled={processing}
               >
                 <Lock className="w-4 h-4 mr-2" />
