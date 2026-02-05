@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { createClient } from '@sanity/client';
+import { sendACHInitiatedEmail } from '../utils/sendEmail.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -95,7 +96,6 @@ export default async function handler(req, res) {
           email: invoice.customerEmail,
         },
       },
-      receipt_email: invoice.customerEmail,
       description: `Payment for Invoice ${invoice.invoiceNumber}`,
       metadata: {
         invoiceId: invoice._id,
@@ -129,6 +129,20 @@ export default async function handler(req, res) {
       .commit();
     
     console.log(`ACH payment initiated for invoice ${invoice.invoiceNumber}`);
+
+    // Send ACH initiated email (non-blocking)
+    try {
+      await sendACHInitiatedEmail({
+        customerEmail: invoice.customerEmail,
+        customerName: invoice.customerName || accountHolder,
+        invoiceNumber: invoice.invoiceNumber,
+        amount: invoice.amount,
+        estimatedClearanceDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+      });
+    } catch (emailError) {
+      // Log but don't fail payment if email fails
+      console.error('Failed to send ACH initiated email:', emailError);
+    }
     
     return res.status(200).json({
       success: true,

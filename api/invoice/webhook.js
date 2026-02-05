@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client';
 import Stripe from 'stripe';
+import { sendACHCompletedEmail } from '../utils/sendEmail.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -105,6 +106,32 @@ export default async function handler(req, res) {
             .commit();
           
           console.log(`Invoice ${invoiceId} marked as paid (${isACH ? 'ACH' : 'Card'})`);
+
+          // Send ACH completed email (only for ACH payments, card emails are sent in confirm-payment)
+          if (isACH) {
+            try {
+              const invoice = await sanityClient.fetch(
+                `*[_type == "invoice" && _id == $invoiceId][0]{
+                  customerEmail,
+                  customerName,
+                  invoiceNumber,
+                  amount
+                }`,
+                { invoiceId }
+              );
+              
+              if (invoice) {
+                await sendACHCompletedEmail({
+                  customerEmail: invoice.customerEmail,
+                  customerName: invoice.customerName,
+                  invoiceNumber: invoice.invoiceNumber,
+                  amount: invoice.amount,
+                });
+              }
+            } catch (emailError) {
+              console.error('Failed to send ACH completed email:', emailError);
+            }
+          }
 
           // Sync payment back to ComputerEase (non-blocking)
           try {

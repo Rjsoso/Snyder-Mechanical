@@ -93,7 +93,6 @@ export default async function handler(req, res) {
         originalAmount: Math.round(invoice.amount * 100),
         totalAmount: chargeAmount
       },
-      receipt_email: invoice.customerEmail,
       description: `Payment for Invoice ${invoice.invoiceNumber}`
     });
 

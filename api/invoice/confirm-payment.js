@@ -1,5 +1,6 @@
 import { createClient } from '@sanity/client';
 import Stripe from 'stripe';
+import { sendPaymentConfirmationEmail } from '../utils/sendEmail.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -52,6 +53,21 @@ export default async function handler(req, res) {
         stripePaymentIntentId: paymentIntentId
       })
       .commit();
+
+    // Send confirmation email (non-blocking)
+    try {
+      await sendPaymentConfirmationEmail({
+        customerEmail: updatedInvoice.customerEmail,
+        customerName: updatedInvoice.customerName,
+        invoiceNumber: updatedInvoice.invoiceNumber,
+        amount: updatedInvoice.amount,
+        paidAt: updatedInvoice.paidAt,
+        paymentIntentId: paymentIntentId,
+      });
+    } catch (emailError) {
+      // Log but don't fail payment confirmation if email fails
+      console.error('Failed to send confirmation email:', emailError);
+    }
 
     // Return success
     return res.status(200).json({
