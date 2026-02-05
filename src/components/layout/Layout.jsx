@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import ChatbotPlaceholder from './ChatbotPlaceholder';
@@ -6,6 +7,8 @@ import QuickActionBar from '../mobile/QuickActionBar';
 import ModalManager from '../shared/ModalManager';
 
 const Layout = ({ children }) => {
+  const location = useLocation();
+
   return (
     <div className="flex flex-col">
       <div className="flex-shrink-0">
@@ -14,9 +17,11 @@ const Layout = ({ children }) => {
       <main className="flex-shrink-0 pb-20 lg:pb-0 pt-24 md:pt-28 bg-white">
         {children}
       </main>
-      <div className="flex-shrink-0" id="site-footer">
-        <Footer />
-      </div>
+      {location.pathname !== '/' && (
+        <div className="flex-shrink-0 relative z-10 bg-transparent" id="site-footer">
+          <Footer />
+        </div>
+      )}
       <ChatbotPlaceholder />
       <FloatingCallButton />
       <QuickActionBar />

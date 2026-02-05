@@ -4,6 +4,7 @@ import ServicesGrid from '../components/home/ServicesGrid';
 import ReviewsSection from '../components/home/ReviewsSection';
 import StatsBar from '../components/home/StatsBar';
 import SafetySection from '../components/home/SafetySection';
+import Footer from '../components/layout/Footer';
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
         <ReviewsSection />
         <StatsBar />
         <SafetySection />
+        <Footer />
       </div>
     </>
   );
