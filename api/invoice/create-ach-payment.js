@@ -95,6 +95,8 @@ export default async function handler(req, res) {
           email: invoice.customerEmail,
         },
       },
+      receipt_email: invoice.customerEmail,
+      description: `Payment for Invoice ${invoice.invoiceNumber}`,
       metadata: {
         invoiceId: invoice._id,
         invoiceNumber: invoice.invoiceNumber,
