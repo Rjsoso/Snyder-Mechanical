@@ -34,6 +34,7 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
+  const [processingMessage, setProcessingMessage] = useState('Processing payment...');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +45,7 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
 
     setProcessing(true);
     setError('');
+    setProcessingMessage('Contacting your bank...');
 
     try {
       // Confirm the payment with Stripe
@@ -68,6 +70,7 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
       }
 
       if (paymentIntent.status === 'succeeded') {
+        setProcessingMessage('Confirming payment...');
         // Confirm payment with backend
         const response = await fetch('/api/invoice/confirm-payment', {
           method: 'POST',
@@ -176,7 +179,7 @@ const StripePaymentForm = ({ invoice, clientSecret, onSuccess, onError }) => {
         {processing ? (
           <>
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-            Processing Payment...
+            {processingMessage}
           </>
         ) : (
           <>

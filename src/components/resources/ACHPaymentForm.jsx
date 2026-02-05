@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Building2, Loader2, AlertCircle, Lock, Eye, EyeOff } from 'lucide-react';
+import { Building2, Loader2, AlertCircle, Lock, Eye, EyeOff, CheckCircle, XCircle } from 'lucide-react';
 import Button from '../shared/Button';
 import FeeBreakdown from './FeeBreakdown';
 import { calculateTotal } from '../../utils/paymentFees';
@@ -16,20 +16,34 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
   const [error, setError] = useState('');
   const [showRoutingNumber, setShowRoutingNumber] = useState(false);
   const [showAccountNumber, setShowAccountNumber] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  
+  // Validation helpers
+  const isRoutingNumberValid = routingNumber.length === 9;
+  const isAccountNumberValid = accountNumber.length >= 4 && accountNumber.length <= 17;
+  const isAccountHolderValid = accountHolder.trim().length >= 2;
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // Show confirmation dialog instead of processing immediately
+    setShowConfirmDialog(true);
+  };
+  
+  const handleConfirmPayment = async () => {
+    setShowConfirmDialog(false);
     setProcessing(true);
+    setError('');
     
     try {
       // Validate routing number
-      if (routingNumber.length !== 9) {
+      if (!isRoutingNumberValid) {
         throw new Error('Routing number must be 9 digits');
       }
       
       // Validate account number
-      if (accountNumber.length < 4 || accountNumber.length > 17) {
+      if (!isAccountNumberValid) {
         throw new Error('Account number must be between 4 and 17 digits');
       }
       
@@ -99,16 +113,33 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         <label htmlFor="accountHolder" className="block text-sm font-medium text-secondary-700 mb-2">
           Account Holder Name *
         </label>
-        <input
-          type="text"
-          id="accountHolder"
-          value={accountHolder}
-          onChange={(e) => setAccountHolder(e.target.value)}
-          required
-          disabled={processing}
-          className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-secondary-100 disabled:cursor-not-allowed"
-          placeholder="John Doe"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            id="accountHolder"
+            value={accountHolder}
+            onChange={(e) => setAccountHolder(e.target.value)}
+            required
+            disabled={processing}
+            className={`w-full px-4 py-3 pr-12 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:bg-secondary-100 disabled:cursor-not-allowed ${
+              accountHolder.length > 0
+                ? isAccountHolderValid
+                  ? 'border-green-300'
+                  : 'border-red-300'
+                : 'border-secondary-300'
+            }`}
+            placeholder="John Doe"
+          />
+          {accountHolder.length > 0 && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              {isAccountHolderValid ? (
+                <CheckCircle className="w-5 h-5 text-green-600" />
+              ) : (
+                <XCircle className="w-5 h-5 text-red-400" />
+              )}
+            </div>
+          )}
+        </div>
         <p className="text-xs text-secondary-500 mt-1">
           Name on the bank account
         </p>
@@ -122,28 +153,46 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         <div className="relative">
           <input
             type={showRoutingNumber ? "text" : "password"}
+            inputMode="numeric"
             id="routingNumber"
             value={routingNumber}
             onChange={(e) => setRoutingNumber(e.target.value.replace(/\D/g, '').slice(0, 9))}
             required
             maxLength="9"
             disabled={processing}
-            className="w-full px-4 py-3 pr-12 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed"
+            className={`w-full px-4 py-3 pr-24 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed ${
+              routingNumber.length > 0
+                ? isRoutingNumberValid
+                  ? 'border-green-300'
+                  : 'border-red-300'
+                : 'border-secondary-300'
+            }`}
             placeholder="110000000"
           />
-          <button
-            type="button"
-            onClick={() => setShowRoutingNumber(!showRoutingNumber)}
-            disabled={processing}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-500 hover:text-secondary-700 transition-colors disabled:cursor-not-allowed"
-            aria-label={showRoutingNumber ? "Hide routing number" : "Show routing number"}
-          >
-            {showRoutingNumber ? (
-              <EyeOff className="w-5 h-5" />
-            ) : (
-              <Eye className="w-5 h-5" />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+            {routingNumber.length > 0 && (
+              <div>
+                {isRoutingNumberValid ? (
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                ) : (
+                  <XCircle className="w-5 h-5 text-red-400" />
+                )}
+              </div>
             )}
-          </button>
+            <button
+              type="button"
+              onClick={() => setShowRoutingNumber(!showRoutingNumber)}
+              disabled={processing}
+              className="text-secondary-500 hover:text-secondary-700 transition-colors disabled:cursor-not-allowed"
+              aria-label={showRoutingNumber ? "Hide routing number" : "Show routing number"}
+            >
+              {showRoutingNumber ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </button>
+          </div>
         </div>
         <p className="text-xs text-secondary-500 mt-1">
           9-digit number found on your check (bottom left)
@@ -158,27 +207,45 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         <div className="relative">
           <input
             type={showAccountNumber ? "text" : "password"}
+            inputMode="numeric"
             id="accountNumber"
             value={accountNumber}
             onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ''))}
             required
             disabled={processing}
-            className="w-full px-4 py-3 pr-12 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed"
+            className={`w-full px-4 py-3 pr-24 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent font-mono disabled:bg-secondary-100 disabled:cursor-not-allowed ${
+              accountNumber.length > 0
+                ? isAccountNumberValid
+                  ? 'border-green-300'
+                  : 'border-red-300'
+                : 'border-secondary-300'
+            }`}
             placeholder="000123456789"
           />
-          <button
-            type="button"
-            onClick={() => setShowAccountNumber(!showAccountNumber)}
-            disabled={processing}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-secondary-500 hover:text-secondary-700 transition-colors disabled:cursor-not-allowed"
-            aria-label={showAccountNumber ? "Hide account number" : "Show account number"}
-          >
-            {showAccountNumber ? (
-              <EyeOff className="w-5 h-5" />
-            ) : (
-              <Eye className="w-5 h-5" />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+            {accountNumber.length > 0 && (
+              <div>
+                {isAccountNumberValid ? (
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                ) : (
+                  <XCircle className="w-5 h-5 text-red-400" />
+                )}
+              </div>
             )}
-          </button>
+            <button
+              type="button"
+              onClick={() => setShowAccountNumber(!showAccountNumber)}
+              disabled={processing}
+              className="text-secondary-500 hover:text-secondary-700 transition-colors disabled:cursor-not-allowed"
+              aria-label={showAccountNumber ? "Hide account number" : "Show account number"}
+            >
+              {showAccountNumber ? (
+                <EyeOff className="w-5 h-5" />
+              ) : (
+                <Eye className="w-5 h-5" />
+              )}
+            </button>
+          </div>
         </div>
         <p className="text-xs text-secondary-500 mt-1">
           Account number found on your check
@@ -241,12 +308,12 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         variant="primary"
         size="lg"
         className="w-full flex items-center justify-center"
-        disabled={processing}
+        disabled={processing || !isRoutingNumberValid || !isAccountNumberValid || !isAccountHolderValid}
       >
         {processing ? (
           <>
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-            Processing...
+            Verifying bank account...
           </>
         ) : (
           <>
@@ -272,6 +339,56 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
         {/* Security Badges */}
         <SecurityBadge />
       </div>
+
+      {/* Confirmation Dialog */}
+      {showConfirmDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
+            <div className="flex items-start space-x-4 mb-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <AlertCircle className="w-6 h-6 text-blue-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-secondary-900 mb-2">
+                  Confirm ACH Payment
+                </h3>
+                <p className="text-secondary-700 mb-4">
+                  You're about to authorize a payment of <strong>{formatCurrency(total)}</strong> from your bank account.
+                </p>
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                  <p className="text-sm text-yellow-800">
+                    <strong>Important:</strong> This payment cannot be cancelled once submitted. Your bank account will be charged in 3-5 business days.
+                  </p>
+                </div>
+                <div className="space-y-2 text-sm text-secondary-600">
+                  <p><strong>Account Holder:</strong> {accountHolder}</p>
+                  <p><strong>Routing Number:</strong> ••••••{routingNumber.slice(-3)}</p>
+                  <p><strong>Account Number:</strong> ••••••{accountNumber.slice(-4)}</p>
+                  <p><strong>Account Type:</strong> {accountType.charAt(0).toUpperCase() + accountType.slice(1)}</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex space-x-3">
+              <Button
+                onClick={() => setShowConfirmDialog(false)}
+                variant="outline"
+                className="flex-1"
+                disabled={processing}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleConfirmPayment}
+                variant="primary"
+                className="flex-1"
+                disabled={processing}
+              >
+                Confirm & Authorize
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 };
