@@ -11,10 +11,10 @@ const Layout = ({ children }) => {
       <div className="flex-shrink-0">
         <Header />
       </div>
-      <main className="flex-grow pb-20 lg:pb-0 pt-24 md:pt-28 bg-white">
+      <main className="pb-20 lg:pb-0 pt-24 md:pt-28 bg-white">
         {children}
       </main>
-      <div className="flex-shrink-0">
+      <div className="flex-shrink-0 mt-auto">
         <Footer />
       </div>
       <ChatbotPlaceholder />
