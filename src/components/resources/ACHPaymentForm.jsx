@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Building2, Loader2, AlertCircle, Lock, Eye, EyeOff, CheckCircle, XCircle } from 'lucide-react';
+import { Building2, Loader2, AlertCircle, Lock, Eye, EyeOff, CheckCircle, XCircle, Shield } from 'lucide-react';
 import Button from '../shared/Button';
 import FeeBreakdown from './FeeBreakdown';
 import { calculateTotal } from '../../utils/paymentFees';
@@ -368,64 +368,83 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
           }}
         >
           <div 
-            className="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+            className="bg-white rounded-2xl max-w-lg w-full p-8 shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-start space-x-4 mb-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <AlertCircle className="w-6 h-6 text-blue-600" />
+            {/* Header with friendly icon */}
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-100 to-blue-100 rounded-full mb-4">
+                <Shield className="w-8 h-8 text-green-600" />
               </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-secondary-900 mb-2">
-                  Confirm ACH Payment
-                </h3>
-                <p className="text-secondary-700 mb-4">
-                  You're about to authorize a payment of <strong className="text-primary-600">{formatCurrency(total)}</strong> from your bank account.
-                </p>
-              </div>
-            </div>
-            
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-lg p-4 mb-4">
-              <p className="text-sm text-yellow-800">
-                <strong>Important:</strong> This payment cannot be cancelled once submitted. Your bank account will be charged in 3-5 business days.
+              <h3 className="text-2xl font-bold text-secondary-900 mb-2">
+                Review Your Payment
+              </h3>
+              <p className="text-secondary-600">
+                Please confirm the details below before processing
               </p>
             </div>
+
+            {/* Payment Amount - Highlighted */}
+            <div className="bg-gradient-to-br from-primary-50 to-blue-50 border-2 border-primary-200 rounded-xl p-6 mb-6 text-center">
+              <p className="text-sm text-secondary-600 mb-2">Payment Amount</p>
+              <p className="text-4xl font-bold text-primary-600 mb-2">{formatCurrency(total)}</p>
+              <p className="text-sm text-secondary-500">Processing via secure ACH transfer</p>
+            </div>
             
-            <div className="bg-secondary-50 rounded-lg p-4 mb-6 space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-secondary-600">Account Holder:</span>
-                <span className="font-medium text-secondary-900">{accountHolder}</span>
+            {/* Account Details */}
+            <div className="bg-secondary-50 rounded-xl p-5 mb-6 space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-secondary-600">Account Holder</span>
+                <span className="font-semibold text-secondary-900">{accountHolder}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-secondary-600">Routing Number:</span>
-                <span className="font-mono text-secondary-900">••••••{routingNumber.slice(-3)}</span>
+              <div className="border-t border-secondary-200"></div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-secondary-600">Bank Account</span>
+                <span className="font-mono text-secondary-700">••••••{accountNumber.slice(-4)}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-secondary-600">Account Number:</span>
-                <span className="font-mono text-secondary-900">••••••{accountNumber.slice(-4)}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-secondary-600">Routing Number</span>
+                <span className="font-mono text-secondary-700">••••••{routingNumber.slice(-3)}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-secondary-600">Account Type:</span>
-                <span className="font-medium text-secondary-900">{accountType.charAt(0).toUpperCase() + accountType.slice(1)}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-secondary-600">Account Type</span>
+                <span className="text-secondary-700">{accountType.charAt(0).toUpperCase() + accountType.slice(1)}</span>
+              </div>
+            </div>
+
+            {/* Info message - Softer tone */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <CheckCircle className="w-5 h-5 text-blue-600 mt-0.5" />
+                </div>
+                <div className="text-sm text-blue-900">
+                  <p className="font-medium mb-1">Secure Payment Processing</p>
+                  <p className="text-blue-700">Your payment will be processed in 3-5 business days. You'll receive a confirmation email once complete.</p>
+                </div>
               </div>
             </div>
             
+            {/* Action Buttons */}
             <div className="flex space-x-3">
               <Button
                 onClick={() => setShowConfirmDialog(false)}
                 variant="outline"
+                size="lg"
                 className="flex-1"
                 disabled={processing}
               >
-                Cancel
+                Go Back
               </Button>
               <Button
                 onClick={handleConfirmPayment}
                 variant="primary"
-                className="flex-1"
+                size="lg"
+                className="flex-1 bg-gradient-to-r from-primary-600 to-blue-600 hover:from-primary-700 hover:to-blue-700"
                 disabled={processing}
               >
-                Confirm & Authorize
+                <Lock className="w-4 h-4 mr-2" />
+                Authorize Payment
               </Button>
             </div>
           </div>
