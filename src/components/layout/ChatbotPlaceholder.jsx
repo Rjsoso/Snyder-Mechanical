@@ -79,7 +79,7 @@ const ChatbotPlaceholder = () => {
         }
       }
       
-      const data = { reply: fullContent || "Sorry, I didn"t get a response." };
+      const data = { reply: fullContent || "Sorry, I didn't get a response." };
 
       if (!res.ok) {
         throw new Error(data?.message || "Something went wrong");
