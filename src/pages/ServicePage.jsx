@@ -56,7 +56,7 @@ const ServicePage = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {service.hero.title}
             </h1>
-            <p className="text-xl text-primary-100 max-w-2xl mx-auto">
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
               {service.hero.subtitle}
             </p>
           </motion.div>
@@ -101,7 +101,7 @@ const ServicePage = () => {
                             {item.title}
                           </h3>
                           {item.badge && (
-                            <span className="px-2 py-1 bg-accent-600 text-white text-xs font-semibold rounded">
+                            <span className="px-2 py-1 bg-primary-600 text-white text-xs font-semibold rounded">
                               {item.badge}
                             </span>
                           )}
@@ -125,7 +125,7 @@ const ServicePage = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Contact Snyder Mechanical today for expert {service.title.toLowerCase()}.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

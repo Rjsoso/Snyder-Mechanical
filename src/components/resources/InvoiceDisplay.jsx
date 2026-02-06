@@ -59,7 +59,7 @@ const InvoiceDisplay = ({ invoice }) => {
         <div className="flex items-start justify-between">
           <div>
             <h3 className="text-2xl font-bold mb-2">Invoice {invoice.invoiceNumber}</h3>
-            <p className="text-primary-100">{invoice.customerName}</p>
+            <p className="text-white/90">{invoice.customerName}</p>
           </div>
           <Badge 
             variant={statusConfig.variant} 

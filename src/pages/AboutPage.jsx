@@ -61,7 +61,7 @@ const AboutPage = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {pageData.hero.title}
             </h1>
-            <p className="text-xl text-primary-100 max-w-2xl mx-auto">
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
               {pageData.hero.subtitle}
             </p>
           </motion.div>
@@ -232,8 +232,8 @@ const AboutPage = () => {
                     >
                       <Card>
                         <div className="flex items-start space-x-4">
-                          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-accent-100 flex items-center justify-center">
-                            <Icon className="w-6 h-6 text-accent-600" />
+                          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                            <Icon className="w-6 h-6 text-primary-600" />
                           </div>
                           <div>
                             <h3 className="text-xl font-bold text-secondary-900 mb-2">
@@ -265,8 +265,8 @@ const AboutPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                 {pageData.awards.map((award, index) => (
                   <Card key={index} className="text-center">
-                    <div className="w-16 h-16 rounded-full bg-accent-100 flex items-center justify-center mx-auto mb-4">
-                      <Award className="w-8 h-8 text-accent-600" />
+                    <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
+                      <Award className="w-8 h-8 text-primary-600" />
                     </div>
                     <p className="text-secondary-900 font-medium">{award}</p>
                   </Card>

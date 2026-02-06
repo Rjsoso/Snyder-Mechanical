@@ -18,7 +18,7 @@ const CoolingServices = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-blue-400 via-cyan-500 to-blue-600 text-white py-20">
+      <section className="bg-gradient-to-br from-primary-600 to-primary-800 text-white py-20">
         <div className="container-custom">
           <motion.div
             className="max-w-3xl"
@@ -29,13 +29,13 @@ const CoolingServices = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {service.hero.title}
             </h1>
-            <p className="text-xl text-blue-100 mb-6">
+            <p className="text-xl text-white/90 mb-6">
               {service.hero.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href={`tel:${companyData.phone}`}
-                className="flex items-center justify-center space-x-2 px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+                className="flex items-center justify-center space-x-2 px-6 py-3 bg-white text-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
               >
                 <Phone className="w-5 h-5" />
                 <span>Call {companyData.phone}</span>
@@ -44,7 +44,7 @@ const CoolingServices = () => {
                 to="/?modal=schedule"
                 variant="outline"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-600"
+                className="border-2 border-white text-white hover:bg-white hover:text-primary-600"
               >
                 Schedule Service
               </Button>
@@ -82,8 +82,8 @@ const CoolingServices = () => {
                 >
                   <Card className="h-full">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-blue-600" />
+                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                        <Icon className="w-6 h-6 text-primary-600" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-2">
@@ -123,10 +123,10 @@ const CoolingServices = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 border border-blue-200"
+                className="bg-gradient-to-br from-primary-50 to-secondary-50 rounded-lg p-6 border border-secondary-200"
               >
                 <h3 className="font-bold text-lg text-secondary-900 mb-2 flex items-start">
-                  <CheckCircle className="w-5 h-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-primary-600 mr-2 flex-shrink-0 mt-0.5" />
                   {item.problem}
                 </h3>
                 <p className="text-secondary-600 ml-7">{item.solution}</p>
@@ -164,18 +164,18 @@ const CoolingServices = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-blue-500 to-cyan-600 text-white">
+      <section className="section-padding bg-gradient-to-br from-primary-600 to-primary-800 text-white">
         <div className="container-custom text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Stay Cool This Summer
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Schedule your AC tune-up before the heat arrives. Our experts will ensure your system is ready.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href={`tel:${companyData.phone}`}
-              className="flex items-center justify-center space-x-2 px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-lg"
+              className="flex items-center justify-center space-x-2 px-8 py-4 bg-white text-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-colors text-lg"
             >
               <Phone className="w-5 h-5" />
               <span>{companyData.phone}</span>
@@ -184,7 +184,7 @@ const CoolingServices = () => {
               to="/?modal=schedule"
               variant="outline"
               size="lg"
-              className="border-2 border-white text-white hover:bg-white hover:text-blue-600"
+              className="border-2 border-white text-white hover:bg-white hover:text-primary-600"
             >
               Schedule Service Online
             </Button>

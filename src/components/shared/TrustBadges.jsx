@@ -26,10 +26,10 @@ const TrustBadges = ({ className = '' }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
           >
-            <Icon className="w-5 h-5 text-accent-300" />
+            <Icon className="w-5 h-5 text-white" />
             <div>
-              <div className="font-semibold text-sm">{badge.title}</div>
-              <div className="text-xs text-primary-200">{badge.description}</div>
+              <div className="font-semibold text-sm text-white">{badge.title}</div>
+              <div className="text-xs text-white/90">{badge.description}</div>
             </div>
           </motion.div>
         );

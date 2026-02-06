@@ -4,7 +4,7 @@ const Badge = ({ children, variant = 'primary', size = 'md', className = '' }) =
   const variants = {
     primary: 'bg-primary-600 text-white',
     secondary: 'bg-secondary-600 text-white',
-    accent: 'bg-accent-600 text-white',
+    accent: 'bg-primary-600 text-white',
     success: 'bg-green-600 text-white',
     warning: 'bg-yellow-500 text-white',
     danger: 'bg-red-600 text-white',

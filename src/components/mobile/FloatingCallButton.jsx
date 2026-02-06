@@ -32,10 +32,10 @@ const FloatingCallButton = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <div className="bg-accent-600 text-white rounded-full p-4 shadow-2xl hover:bg-accent-700 transition-colors flex items-center justify-center">
+          <div className="bg-primary-600 text-white rounded-full p-4 shadow-2xl hover:bg-primary-700 transition-colors flex items-center justify-center">
             <Phone className="w-6 h-6" />
             <motion.div
-              className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"
+              className="absolute -top-1 -right-1 w-3 h-3 bg-white rounded-full"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ repeat: Infinity, duration: 2 }}
             />

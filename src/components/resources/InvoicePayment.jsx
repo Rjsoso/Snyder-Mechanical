@@ -318,16 +318,16 @@ const InvoicePayment = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="bg-blue-50 border-2 border-blue-200">
+            <Card className="bg-secondary-50 border-2 border-secondary-200">
               <div className="flex items-start space-x-4">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-8 h-8 text-blue-600" />
+                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-8 h-8 text-primary-600" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-2xl font-bold text-blue-900 mb-3">
+                  <h4 className="text-2xl font-bold text-secondary-900 mb-3">
                     ACH Payment Initiated
                   </h4>
-                  <p className="text-blue-800 mb-4">
+                  <p className="text-secondary-800 mb-4">
                     Your bank account will be charged {formatCurrency(invoice.amount)} in 3-5 business days.
                   </p>
                   <div className="bg-white rounded-lg p-4 mb-4">
@@ -339,29 +339,29 @@ const InvoicePayment = () => {
                       <li>Your invoice will be automatically marked as paid</li>
                     </ol>
                   </div>
-                  <div className="bg-blue-100 rounded-lg p-4 mb-4">
+                  <div className="bg-primary-100 rounded-lg p-4 mb-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                       <div>
-                        <p className="text-blue-700 mb-1">Invoice Number</p>
-                        <p className="font-semibold text-blue-900">{invoice.invoiceNumber}</p>
+                        <p className="text-secondary-700 mb-1">Invoice Number</p>
+                        <p className="font-semibold text-secondary-900">{invoice.invoiceNumber}</p>
                       </div>
                       <div>
-                        <p className="text-blue-700 mb-1">Amount</p>
-                        <p className="font-semibold text-blue-900">{formatCurrency(invoice.amount)}</p>
+                        <p className="text-secondary-700 mb-1">Amount</p>
+                        <p className="font-semibold text-secondary-900">{formatCurrency(invoice.amount)}</p>
                       </div>
                       <div>
-                        <p className="text-blue-700 mb-1">Expected Clearance</p>
-                        <p className="font-semibold text-blue-900">
+                        <p className="text-secondary-700 mb-1">Expected Clearance</p>
+                        <p className="font-semibold text-secondary-900">
                           {new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()}
                         </p>
                       </div>
                       <div>
-                        <p className="text-blue-700 mb-1">Status</p>
-                        <p className="font-semibold text-blue-900">Processing</p>
+                        <p className="text-secondary-700 mb-1">Status</p>
+                        <p className="font-semibold text-secondary-900">Processing</p>
                       </div>
                     </div>
                   </div>
-                  <p className="text-sm text-blue-700 mb-6">
+                  <p className="text-sm text-secondary-700 mb-6">
                     If you have any questions, please contact us at (775) 738-5616
                   </p>
                   <Button

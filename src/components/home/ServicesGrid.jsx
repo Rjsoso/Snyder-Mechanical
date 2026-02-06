@@ -30,7 +30,7 @@ const services = [
     description: 'Professional pump installation, maintenance, and equipment supply for all applications.',
     icon: Droplets,
     link: '/services/pumps-equipment',
-    color: 'accent',
+    color: 'primary',
     featured: false
   }
 ];

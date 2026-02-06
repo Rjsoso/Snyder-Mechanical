@@ -116,7 +116,7 @@ const CommercialLanding = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href={`tel:${phone}`}
-                className="flex items-center justify-center space-x-2 px-8 py-4 bg-accent-600 hover:bg-accent-700 rounded-lg font-semibold transition-colors text-lg"
+                className="flex items-center justify-center space-x-2 px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors text-lg"
               >
                 <Phone className="w-5 h-5" />
                 <span>{phone}</span>
@@ -295,7 +295,7 @@ const CommercialLanding = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href={`tel:${phone}`}
-              className="flex items-center justify-center space-x-2 px-8 py-4 bg-accent-600 hover:bg-accent-700 rounded-lg font-semibold transition-colors text-lg"
+              className="flex items-center justify-center space-x-2 px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors text-lg"
             >
               <Phone className="w-5 h-5" />
               <span>{phone}</span>

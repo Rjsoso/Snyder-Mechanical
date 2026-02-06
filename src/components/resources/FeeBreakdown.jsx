@@ -14,7 +14,7 @@ const FeeBreakdown = ({ invoiceAmount, paymentMethod, invoiceNumber, customerNam
   };
 
   return (
-    <div className="bg-gradient-to-r from-primary-50 to-blue-50 border-2 border-primary-200 rounded-xl p-6 shadow-sm">
+    <div className="bg-gradient-to-r from-primary-50 to-secondary-50 border-2 border-secondary-200 rounded-xl p-6 shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-3">

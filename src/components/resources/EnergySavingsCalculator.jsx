@@ -37,10 +37,10 @@ const EnergySavingsCalculator = () => {
   };
 
   return (
-    <Card className="bg-gradient-to-br from-green-50 to-blue-50">
+    <Card className="bg-gradient-to-br from-primary-50 to-secondary-50">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-          <DollarSign className="w-6 h-6 text-green-600" />
+        <div className="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center">
+          <DollarSign className="w-6 h-6 text-primary-600" />
         </div>
         <div>
           <h3 className="text-xl font-bold text-secondary-900">
@@ -100,37 +100,37 @@ const EnergySavingsCalculator = () => {
           />
         </div>
 
-        <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white">
+        <Button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 text-white">
           Calculate Savings
         </Button>
       </form>
 
       {results && (
-        <div className="mt-6 p-6 bg-white rounded-lg border-2 border-green-200">
+        <div className="mt-6 p-6 bg-white rounded-lg border-2 border-secondary-200">
           <div className="flex items-center space-x-2 mb-4">
-            <TrendingDown className="w-5 h-5 text-green-600" />
+            <TrendingDown className="w-5 h-5 text-primary-600" />
             <h4 className="font-bold text-secondary-900">
               Potential Savings with New High-Efficiency System
             </h4>
           </div>
           
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="text-center p-3 bg-green-50 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">
+            <div className="text-center p-3 bg-primary-50 rounded-lg">
+              <div className="text-2xl font-bold text-primary-600">
                 ${results.monthly}
               </div>
               <div className="text-sm text-secondary-600">per month</div>
             </div>
-            <div className="text-center p-3 bg-green-50 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">
+            <div className="text-center p-3 bg-primary-50 rounded-lg">
+              <div className="text-2xl font-bold text-primary-600">
                 ${results.annual}
               </div>
               <div className="text-sm text-secondary-600">per year</div>
             </div>
           </div>
           
-          <div className="text-center p-4 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg">
-            <div className="text-3xl font-bold text-green-700 mb-1">
+          <div className="text-center p-4 bg-gradient-to-r from-primary-100 to-secondary-100 rounded-lg">
+            <div className="text-3xl font-bold text-primary-700 mb-1">
               ${results.fiveYear}
             </div>
             <div className="text-sm font-medium text-secondary-700">

@@ -29,7 +29,7 @@ const Resources = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               {resourcesData.hero.title}
             </h1>
-            <p className="text-xl text-primary-100">
+            <p className="text-xl text-white/90">
               {resourcesData.hero.subtitle}
             </p>
           </motion.div>
@@ -46,8 +46,8 @@ const Resources = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="w-12 h-12 bg-accent-100 rounded-lg flex items-center justify-center">
-              <Receipt className="w-6 h-6 text-accent-600" />
+            <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+              <Receipt className="w-6 h-6 text-primary-600" />
             </div>
             <div>
               <h2 className="text-3xl font-bold text-secondary-900">
@@ -136,7 +136,7 @@ const Resources = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Have More Questions?
           </h2>
-          <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Our experts are here to help. Contact us for personalized advice for your home.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -108,10 +108,10 @@ const ACHPaymentForm = ({ invoice, onSuccess, onError }) => {
       />
 
       {/* Info Banner */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="bg-secondary-50 border border-secondary-200 rounded-lg p-4">
         <div className="flex items-start space-x-3">
-          <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-          <div className="text-sm text-blue-800">
+          <AlertCircle className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+          <div className="text-sm text-secondary-800">
             <p className="font-semibold mb-1">ACH Bank Transfer</p>
             <p>Your bank account will be charged in 3-5 business days. You'll receive confirmation once the payment clears.</p>
           </div>

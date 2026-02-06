@@ -24,7 +24,7 @@ const StatsBar = () => {
     }
   ];
   return (
-    <section className="section-padding bg-secondary-100">
+    <section className="section-padding bg-primary-800 text-white">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stats.map((stat, index) => {
@@ -38,14 +38,14 @@ const StatsBar = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 text-primary-600 mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 text-white mb-4">
                   <Icon className="w-8 h-8" />
                 </div>
-                <div className="text-4xl font-bold text-secondary-900 mb-2">
+                <div className="text-4xl font-bold text-white mb-2">
                   {stat.value}
                 </div>
                 {stat.label && (
-                  <div className="text-lg text-secondary-600">
+                  <div className="text-lg text-white/80">
                     {stat.label}
                   </div>
                 )}

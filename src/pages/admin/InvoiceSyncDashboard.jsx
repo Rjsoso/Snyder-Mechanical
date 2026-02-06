@@ -257,10 +257,10 @@ const InvoiceSyncDashboard = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-secondary-600 mb-1">From ComputerEase</p>
-                  <p className="text-3xl font-bold text-blue-600">{stats.syncedFromCE}</p>
+                  <p className="text-3xl font-bold text-primary-600">{stats.syncedFromCE}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <RefreshCw className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+                  <RefreshCw className="w-6 h-6 text-primary-600" />
                 </div>
               </div>
             </Card>
@@ -359,8 +359,8 @@ const InvoiceSyncDashboard = () => {
                           <p className="text-2xl font-bold text-green-700">{syncStatus.created || 0}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-blue-600">Updated</p>
-                          <p className="text-2xl font-bold text-blue-700">{syncStatus.updated || 0}</p>
+                          <p className="text-sm text-primary-600">Updated</p>
+                          <p className="text-2xl font-bold text-primary-700">{syncStatus.updated || 0}</p>
                         </div>
                         <div>
                           <p className="text-sm text-amber-600">Skipped</p>
@@ -398,12 +398,12 @@ const InvoiceSyncDashboard = () => {
           )}
 
           {/* Setup Instructions */}
-          <Card className="mt-8 bg-blue-50 border-2 border-blue-200">
+          <Card className="mt-8 bg-secondary-50 border-2 border-secondary-200">
             <div className="flex items-start space-x-4">
-              <AlertCircle className="w-8 h-8 text-blue-600 flex-shrink-0" />
+              <AlertCircle className="w-8 h-8 text-primary-600 flex-shrink-0" />
               <div>
-                <h4 className="text-lg font-bold text-blue-900 mb-2">Setup Required</h4>
-                <p className="text-blue-800 mb-4">
+                <h4 className="text-lg font-bold text-secondary-900 mb-2">Setup Required</h4>
+                <p className="text-secondary-800 mb-4">
                   To enable automatic syncing, you need to configure ComputerEase credentials in your environment variables.
                 </p>
                 <div className="bg-white rounded p-4 text-sm font-mono text-secondary-700">
@@ -412,7 +412,7 @@ const InvoiceSyncDashboard = () => {
                   <p>COMPUTEREASE_API_PASSWORD=your_password</p>
                   <p>COMPUTEREASE_SYNC_ENABLED=true</p>
                 </div>
-                <p className="text-sm text-blue-700 mt-4">
+                <p className="text-sm text-secondary-700 mt-4">
                   See <strong>COMPUTEREASE_INTEGRATION_GUIDE.md</strong> for detailed setup instructions.
                 </p>
               </div>
@@ -453,8 +453,8 @@ const InvoiceSyncDashboard = () => {
 
             <Card hover className="text-center">
               <div className="block">
-                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <Download className="w-8 h-8 text-blue-600" />
+                <div className="w-16 h-16 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Download className="w-8 h-8 text-primary-600" />
                 </div>
                 <h4 className="font-bold text-secondary-900 mb-2">ComputerEase</h4>
                 <p className="text-sm text-secondary-600">Export invoices for import</p>

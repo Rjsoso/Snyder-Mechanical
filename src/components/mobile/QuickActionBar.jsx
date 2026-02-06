@@ -10,21 +10,21 @@ const QuickActionBar = () => {
       label: 'Call',
       icon: Phone,
       href: `tel:${companyData.phone}`,
-      color: 'bg-green-600 hover:bg-green-700'
+      color: 'bg-primary-600 hover:bg-primary-700'
     },
     {
       id: 'text',
       label: 'Text',
       icon: MessageSquare,
       href: `sms:${companyData.phone}`,
-      color: 'bg-blue-600 hover:bg-blue-700'
+      color: 'bg-primary-600 hover:bg-primary-700'
     },
     {
       id: 'email',
       label: 'Email',
       icon: Mail,
       href: `mailto:${companyData.email}`,
-      color: 'bg-purple-600 hover:bg-purple-700'
+      color: 'bg-primary-600 hover:bg-primary-700'
     }
   ];
 
