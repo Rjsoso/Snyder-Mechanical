@@ -205,12 +205,9 @@ function FloatingBubble() {
         repeat: Infinity,
         ease: "easeInOut"
       }}
-      className="relative"
     >
       <div className="bg-white shadow-lg rounded-full px-4 py-2 text-sm font-medium text-secondary-700 whitespace-nowrap flex items-center gap-2">
-        Have a question?
-        {/* Arrow pointing right */}
-        <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-l-8 border-l-white drop-shadow-md"></div>
+        Have a question? →
       </div>
     </motion.div>
   );
