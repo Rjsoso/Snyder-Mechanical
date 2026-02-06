@@ -57,10 +57,29 @@ const ChatbotPlaceholder = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           message: trimmed,
-          sessionId 
+          sessionId,
+          session_id: sessionId // Send both formats for n8n compatibility
         }),
       });
-      const data = await res.json();
+      
+      // Handle streaming response from n8n
+      const text = await res.text();
+      const lines = text.trim().split('\n').filter(line => line);
+      
+      // Collect all content chunks from streaming response
+      let fullContent = '';
+      for (const line of lines) {
+        try {
+          const parsed = JSON.parse(line);
+          if (parsed.type === 'item' && parsed.content) {
+            fullContent += parsed.content;
+          }
+        } catch (e) {
+          // Skip invalid JSON lines
+        }
+      }
+      
+      const data = { reply: fullContent || 'Sorry, I didn't get a response.' };
 
       if (!res.ok) {
         throw new Error(data?.message || 'Something went wrong');
