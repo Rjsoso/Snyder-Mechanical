@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const webhookUrl = import.meta.env.VITE_N8N_CHATBOT_WEBHOOK;
 
@@ -73,120 +74,147 @@ const ChatbotPlaceholder = () => {
   // No webhook configured: keep "Coming Soon" behavior
   if (!webhookUrl) {
     return (
-      <div className="fixed bottom-20 right-6 z-50 lg:bottom-6">
-        <ChatButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
-        {isOpen && (
-          <div className="mb-4 w-80 md:w-96 bg-white rounded-lg shadow-2xl overflow-hidden">
-            <ChatHeader onClose={() => setIsOpen(false)} />
-            <div className="p-6 h-96 flex items-center justify-center bg-secondary-50">
-              <div className="text-center text-secondary-600">
-                <MessageCircle className="w-16 h-16 mx-auto mb-4 text-secondary-400" />
-                <p className="mb-2">AI Chatbot Coming Soon!</p>
-                <p className="text-sm">For now, please call us or use our contact form.</p>
+      <div className="fixed bottom-20 right-6 z-50 lg:bottom-6 flex items-center gap-3">
+        {!isOpen && <FloatingBubble />}
+        <div className="flex flex-col items-end">
+          {isOpen && (
+            <div className="mb-4 w-80 md:w-96 bg-white rounded-lg shadow-2xl overflow-hidden">
+              <ChatHeader onClose={() => setIsOpen(false)} />
+              <div className="p-6 h-96 flex items-center justify-center bg-secondary-50">
+                <div className="text-center text-secondary-600">
+                  <MessageCircle className="w-16 h-16 mx-auto mb-4 text-secondary-400" />
+                  <p className="mb-2">AI Chatbot Coming Soon!</p>
+                  <p className="text-sm">For now, please call us or use our contact form.</p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+          <ChatButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="fixed bottom-20 right-6 z-50 lg:bottom-6">
-      {isOpen && (
-        <div className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:w-96 bg-white rounded-xl shadow-2xl overflow-hidden border border-secondary-200 flex flex-col max-h-[32rem]">
-          <div className="bg-primary-600 text-white p-4 flex items-center justify-between flex-shrink-0">
-            <h3 className="font-semibold">Chat with us</h3>
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="hover:bg-primary-700 p-1 rounded transition-colors"
-              aria-label="Close chat"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-          <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50 p-4 space-y-4">
-            {messages.length === 0 && (
-              <div className="text-center text-secondary-500 text-sm py-4">
-                Ask about our services, hours, or how we can help.
-              </div>
-            )}
-            {messages.map((msg, i) => (
-              <div
-                key={i}
-                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm ${
-                    msg.role === 'user'
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-white text-secondary-900 border border-secondary-200 shadow-sm'
-                  }`}
-                >
-                  {msg.role === 'assistant' ? (
-                    <div className="whitespace-pre-wrap">
-                      <BoldText text={msg.content} />
-                    </div>
-                  ) : (
-                    msg.content
-                  )}
-                </div>
-              </div>
-            ))}
-            {loading && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-secondary-200 rounded-2xl px-4 py-2 shadow-sm">
-                  <Loader2 className="w-5 h-5 text-primary-600 animate-spin" />
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-          <div className="p-3 border-t border-secondary-200 bg-white flex-shrink-0">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Type a message..."
-                className="flex-1 rounded-lg border border-secondary-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                disabled={loading}
-              />
+    <div className="fixed bottom-20 right-6 z-50 lg:bottom-6 flex items-center gap-3">
+      {!isOpen && <FloatingBubble />}
+      <div className="flex flex-col items-end">
+        {isOpen && (
+          <div className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:w-96 bg-white rounded-xl shadow-2xl overflow-hidden border border-secondary-200 flex flex-col max-h-[32rem]">
+            <div className="bg-primary-600 text-white p-4 flex items-center justify-between flex-shrink-0">
+              <h3 className="font-semibold">Chat with us</h3>
               <button
                 type="button"
-                onClick={sendMessage}
-                disabled={loading || !input.trim()}
-                className="bg-primary-600 text-white rounded-lg p-2 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                aria-label="Send"
+                onClick={() => setIsOpen(false)}
+                className="hover:bg-primary-700 p-1 rounded transition-colors"
+                aria-label="Close chat"
               >
-                {loading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                ) : (
-                  <Send className="w-5 h-5" />
-                )}
+                <X className="w-5 h-5" />
               </button>
             </div>
-            {error && (
-              <p className="text-red-600 text-xs mt-2" role="alert">
-                {error}
-              </p>
-            )}
+            <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50 p-4 space-y-4">
+              {messages.length === 0 && (
+                <div className="text-center text-secondary-500 text-sm py-4">
+                  Ask about our services, hours, or how we can help.
+                </div>
+              )}
+              {messages.map((msg, i) => (
+                <div
+                  key={i}
+                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div
+                    className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm ${
+                      msg.role === 'user'
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-white text-secondary-900 border border-secondary-200 shadow-sm'
+                    }`}
+                  >
+                    {msg.role === 'assistant' ? (
+                      <div className="whitespace-pre-wrap">
+                        <BoldText text={msg.content} />
+                      </div>
+                    ) : (
+                      msg.content
+                    )}
+                  </div>
+                </div>
+              ))}
+              {loading && (
+                <div className="flex justify-start">
+                  <div className="bg-white border border-secondary-200 rounded-2xl px-4 py-2 shadow-sm">
+                    <Loader2 className="w-5 h-5 text-primary-600 animate-spin" />
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+            <div className="p-3 border-t border-secondary-200 bg-white flex-shrink-0">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Type a message..."
+                  className="flex-1 rounded-lg border border-secondary-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={sendMessage}
+                  disabled={loading || !input.trim()}
+                  className="bg-primary-600 text-white rounded-lg p-2 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  aria-label="Send"
+                >
+                  {loading ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Send className="w-5 h-5" />
+                  )}
+                </button>
+              </div>
+              {error && (
+                <p className="text-red-600 text-xs mt-2" role="alert">
+                  {error}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
-        aria-label={isOpen ? 'Close chat' : 'Open chat'}
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </button>
+        )}
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
+          aria-label={isOpen ? 'Close chat' : 'Open chat'}
+        >
+          {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        </button>
+      </div>
     </div>
   );
 };
+
+// Floating bubble component
+function FloatingBubble() {
+  return (
+    <motion.div
+      animate={{ y: [0, -8, 0] }}
+      transition={{
+        duration: 2.5,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+      className="relative"
+    >
+      <div className="bg-white shadow-lg rounded-full px-4 py-2 text-sm font-medium text-secondary-700 whitespace-nowrap flex items-center gap-2">
+        Have a question?
+        {/* Arrow pointing right */}
+        <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-l-8 border-l-white drop-shadow-md"></div>
+      </div>
+    </motion.div>
+  );
+}
 
 // Reusable pieces for "no webhook" branch
 function ChatHeader({ onClose }) {
