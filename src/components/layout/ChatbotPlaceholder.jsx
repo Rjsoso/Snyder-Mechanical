@@ -23,6 +23,16 @@ const ChatbotPlaceholder = () => {
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
 
+  // Get or create session ID
+  const sessionId = useRef(
+    localStorage.getItem("chat_session") ??
+      (() => {
+        const id = crypto.randomUUID();
+        localStorage.setItem("chat_session", id);
+        return id;
+      })()
+  ).current;
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -45,7 +55,10 @@ const ChatbotPlaceholder = () => {
       const res = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: trimmed }),
+        body: JSON.stringify({ 
+          message: trimmed,
+          sessionId 
+        }),
       });
       const data = await res.json();
 
