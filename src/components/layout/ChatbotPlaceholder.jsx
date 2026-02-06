@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState, useRef, useEffect } from "react";
+import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const webhookUrl = import.meta.env.VITE_N8N_CHATBOT_WEBHOOK;
 
@@ -18,7 +18,7 @@ const BoldText = ({ text }) => {
 const ChatbotPlaceholder = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
@@ -34,7 +34,7 @@ const ChatbotPlaceholder = () => {
   ).current;
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -45,16 +45,16 @@ const ChatbotPlaceholder = () => {
     const trimmed = input.trim();
     if (!trimmed || loading || !webhookUrl) return;
 
-    const userMessage = { role: 'user', content: trimmed };
+    const userMessage = { role: "user", content: trimmed };
     setMessages((prev) => [...prev, userMessage]);
-    setInput('');
+    setInput("");
     setError(null);
     setLoading(true);
 
     try {
       const res = await fetch(webhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           message: trimmed,
           sessionId,
@@ -64,14 +64,14 @@ const ChatbotPlaceholder = () => {
       
       // Handle streaming response from n8n
       const text = await res.text();
-      const lines = text.trim().split('\n').filter(line => line);
+      const lines = text.trim().split("\n").filter(line => line);
       
       // Collect all content chunks from streaming response
-      let fullContent = '';
+      let fullContent = "";
       for (const line of lines) {
         try {
           const parsed = JSON.parse(line);
-          if (parsed.type === 'item' && parsed.content) {
+          if (parsed.type === "item" && parsed.content) {
             fullContent += parsed.content;
           }
         } catch (e) {
@@ -79,25 +79,25 @@ const ChatbotPlaceholder = () => {
         }
       }
       
-      const data = { reply: fullContent || 'Sorry, I didn't get a response.' };
+      const data = { reply: fullContent || "Sorry, I didn"t get a response." };
 
       if (!res.ok) {
-        throw new Error(data?.message || 'Something went wrong');
+        throw new Error(data?.message || "Something went wrong");
       }
 
-      const reply = data.reply ?? data.message ?? 'Sorry, I didn’t get a response.';
-      setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
+      const reply = data.reply ?? data.message ?? "Sorry, I didn’t get a response.";
+      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (err) {
-      const fallback = err.message || 'Connection error. Please try again or call us.';
+      const fallback = err.message || "Connection error. Please try again or call us.";
       setError(fallback);
-      setMessages((prev) => [...prev, { role: 'assistant', content: fallback }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: fallback }]);
     } finally {
       setLoading(false);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
@@ -153,16 +153,16 @@ const ChatbotPlaceholder = () => {
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm ${
-                      msg.role === 'user'
-                        ? 'bg-primary-600 text-white'
-                        : 'bg-white text-secondary-900 border border-secondary-200 shadow-sm'
+                      msg.role === "user"
+                        ? "bg-primary-600 text-white"
+                        : "bg-white text-secondary-900 border border-secondary-200 shadow-sm"
                     }`}
                   >
-                    {msg.role === 'assistant' ? (
+                    {msg.role === "assistant" ? (
                       <div className="whitespace-pre-wrap">
                         <BoldText text={msg.content} />
                       </div>
@@ -218,7 +218,7 @@ const ChatbotPlaceholder = () => {
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
-          aria-label={isOpen ? 'Close chat' : 'Open chat'}
+          aria-label={isOpen ? "Close chat" : "Open chat"}
         >
           {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
         </button>
@@ -263,7 +263,7 @@ function ChatButton({ isOpen, onToggle }) {
       type="button"
       onClick={onToggle}
       className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
-      aria-label={isOpen ? 'Close chat' : 'Open chat'}
+      aria-label={isOpen ? "Close chat" : "Open chat"}
     >
       {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
     </button>
