@@ -10,7 +10,7 @@ const MAX_HISTORY_MESSAGES = 30;
 const CHAT_MESSAGES_KEY = (sessionId) => `chat_messages_${sessionId}`;
 
 const WELCOME_MESSAGE =
-  "Hi! I'm here to help with plumbing and HVAC services.\n\nBefore we get started, can you tell me:\n• Is this for a home or a commercial project?";
+  "Hi! I'm here to help, to get started:\n\nAsk about our services, hours, or how we can assist you with a project!";
 
 // Simple **bold** rendering for bot messages (no full markdown dependency)
 const BoldText = ({ text }) => {
