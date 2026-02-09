@@ -140,10 +140,6 @@ This project is configured for deployment on Vercel:
 - **Reviews** - Customer testimonials
 - **Certifications** - Trust badges and certifications
 
-### Detailed Guide
-
-See [SANITY_CONTENT_GUIDE.md](./SANITY_CONTENT_GUIDE.md) for complete content management instructions.
-
 ### Fallback Content
 
 JSON files in `src/data/` serve as fallback content during migration. Once all content is in Sanity, these can be removed.
