@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const webhookUrl = import.meta.env.VITE_N8N_CHATBOT_WEBHOOK;
 
@@ -12,6 +12,8 @@ const CHAT_MESSAGES_KEY = (sessionId) => `chat_messages_${sessionId}`;
 const WELCOME_MESSAGE =
   "Hi! I'm here to help, to get started:\n\nAsk about our services, hours, or how we can assist you with a project!";
 
+const QUICK_REPLIES = ["Plumbing", "HVAC", "Get a quote"];
+
 // Simple **bold** rendering for bot messages (no full markdown dependency)
 const BoldText = ({ text }) => {
   if (!text) return null;
@@ -22,6 +24,31 @@ const BoldText = ({ text }) => {
     </span>
   );
 };
+
+// Typing indicator: three bouncing dots in assistant-style bubble
+function TypingIndicator() {
+  return (
+    <div className="flex justify-start">
+      <div className="bg-white border border-secondary-200 rounded-2xl px-4 py-2.5 shadow-sm">
+        <div className="flex gap-1 items-center">
+          {[0, 1, 2].map((i) => (
+            <motion.span
+              key={i}
+              className="w-2 h-2 rounded-full bg-secondary-400"
+              animate={{ y: [0, -4, 0] }}
+              transition={{
+                duration: 0.6,
+                repeat: Infinity,
+                delay: i * 0.15,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const ChatbotPlaceholder = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,13 +105,13 @@ const ChatbotPlaceholder = () => {
     scrollToBottom();
   }, [messages]);
 
-  const sendMessage = async () => {
-    const trimmed = input.trim();
+  const sendMessage = async (optionalText) => {
+    const trimmed = (optionalText ?? input.trim()).trim();
     if (!trimmed || loading || !webhookUrl) return;
 
     const userMessage = { role: "user", content: trimmed };
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
+    if (optionalText == null) setInput("");
     setError(null);
     setLoading(true);
 
@@ -167,53 +194,113 @@ const ChatbotPlaceholder = () => {
     );
   }
 
+  const showQuickReplies =
+    messages.length === 1 &&
+    messages[0].role === "assistant" &&
+    !loading;
+
   return (
     <div className="fixed bottom-20 right-6 z-50 lg:bottom-6 flex items-center gap-3">
       {!isOpen && <FloatingBubble />}
       <div className="flex flex-col items-end">
-        {isOpen && (
-          <div className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:w-96 bg-white rounded-xl shadow-2xl overflow-hidden border border-secondary-200 flex flex-col max-h-[32rem]">
-            <div className="bg-primary-600 text-white p-4 flex items-center justify-between flex-shrink-0">
-              <h3 className="font-semibold">Chat with us</h3>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              key="chat-panel"
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:max-w-md bg-white rounded-2xl shadow-xl ring-1 ring-black/5 overflow-hidden border border-secondary-200 flex flex-col max-h-[36rem]"
+            >
+            <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-4 flex items-center justify-between flex-shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <MessageCircle className="w-6 h-6 flex-shrink-0" aria-hidden />
+                <div className="min-w-0">
+                  <h3 className="font-semibold">Chat with us</h3>
+                  <p className="text-primary-100 text-xs font-medium mt-0.5 flex items-center gap-1.5">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                    </span>
+                    Online · We&apos;re here to help
+                  </p>
+                </div>
+              </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="hover:bg-primary-700 p-1 rounded transition-colors"
+                className="hover:bg-white/10 p-1.5 rounded-lg transition-colors flex-shrink-0"
                 aria-label="Close chat"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50 p-4 space-y-4">
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-2 text-sm ${
-                      msg.role === "user"
-                        ? "bg-primary-600 text-white"
-                        : "bg-white text-secondary-900 border border-secondary-200 shadow-sm"
-                    }`}
+            <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50 p-5 space-y-4">
+              {messages.map((msg, i) => {
+                const isLast = i === messages.length - 1;
+                const wrapper = isLast ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
-                    {msg.role === "assistant" ? (
-                      <div className="whitespace-pre-wrap">
-                        <BoldText text={msg.content} />
-                      </div>
-                    ) : (
-                      msg.content
-                    )}
+                    <div
+                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
+                        msg.role === "user"
+                          ? "bg-primary-600 text-white"
+                          : "bg-white text-secondary-900 border border-secondary-200 shadow-sm"
+                      }`}
+                    >
+                      {msg.role === "assistant" ? (
+                        <div className="whitespace-pre-wrap">
+                          <BoldText text={msg.content} />
+                        </div>
+                      ) : (
+                        msg.content
+                      )}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <div
+                    key={i}
+                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    <div
+                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
+                        msg.role === "user"
+                          ? "bg-primary-600 text-white"
+                          : "bg-white text-secondary-900 border border-secondary-200 shadow-sm"
+                      }`}
+                    >
+                      {msg.role === "assistant" ? (
+                        <div className="whitespace-pre-wrap">
+                          <BoldText text={msg.content} />
+                        </div>
+                      ) : (
+                        msg.content
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-              {loading && (
-                <div className="flex justify-start">
-                  <div className="bg-white border border-secondary-200 rounded-2xl px-4 py-2 shadow-sm">
-                    <Loader2 className="w-5 h-5 text-primary-600 animate-spin" />
-                  </div>
+                );
+                return <div key={i}>{wrapper}</div>;
+              })}
+              {showQuickReplies && (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {QUICK_REPLIES.map((label) => (
+                    <button
+                      key={label}
+                      type="button"
+                      onClick={() => sendMessage(label)}
+                      className="rounded-full bg-white border border-secondary-200 shadow-sm px-4 py-2 text-sm font-medium text-secondary-700 hover:bg-secondary-50 hover:border-primary-300 transition-colors"
+                    >
+                      {label}
+                    </button>
+                  ))}
                 </div>
               )}
+              {loading && <TypingIndicator />}
               <div ref={messagesEndRef} />
             </div>
             <div className="p-3 border-t border-secondary-200 bg-white flex-shrink-0">
@@ -229,7 +316,7 @@ const ChatbotPlaceholder = () => {
                 />
                 <button
                   type="button"
-                  onClick={sendMessage}
+                  onClick={() => sendMessage()}
                   disabled={loading || !input.trim()}
                   className="bg-primary-600 text-white rounded-lg p-2 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="Send"
@@ -247,16 +334,19 @@ const ChatbotPlaceholder = () => {
                 </p>
               )}
             </div>
-          </div>
-        )}
-        <button
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <motion.button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
+          className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg ring-2 ring-primary-200 focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 flex items-center justify-center transition-colors hover:shadow-xl"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
           aria-label={isOpen ? "Close chat" : "Open chat"}
         >
           {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-        </button>
+        </motion.button>
       </div>
     </div>
   );
@@ -274,7 +364,7 @@ function FloatingBubble() {
       }}
     >
       <div className="bg-white shadow-lg rounded-full px-4 py-2 text-sm font-medium text-secondary-700 whitespace-nowrap flex items-center gap-2">
-        Have a question? →
+        Ask us anything →
       </div>
     </motion.div>
   );
