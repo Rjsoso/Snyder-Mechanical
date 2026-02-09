@@ -4,6 +4,11 @@ import { motion } from "framer-motion";
 
 const webhookUrl = import.meta.env.VITE_N8N_CHATBOT_WEBHOOK;
 
+// Max messages to keep in memory and send as history (last N for context, avoid huge payloads)
+const MAX_HISTORY_MESSAGES = 30;
+
+const CHAT_MESSAGES_KEY = (sessionId) => `chat_messages_${sessionId}`;
+
 // Simple **bold** rendering for bot messages (no full markdown dependency)
 const BoldText = ({ text }) => {
   if (!text) return null;
@@ -33,6 +38,33 @@ const ChatbotPlaceholder = () => {
       })()
   ).current;
 
+  // Rehydrate thread from localStorage on mount
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(CHAT_MESSAGES_KEY(sessionId));
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+    } catch (_) {
+      // Ignore invalid or missing stored data
+    }
+  }, [sessionId]);
+
+  // Persist last N messages to localStorage when messages change
+  useEffect(() => {
+    if (messages.length > 0) {
+      try {
+        const toStore = messages.slice(-MAX_HISTORY_MESSAGES);
+        localStorage.setItem(CHAT_MESSAGES_KEY(sessionId), JSON.stringify(toStore));
+      } catch (_) {
+        // Ignore quota or other storage errors
+      }
+    }
+  }, [messages, sessionId]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -52,13 +84,16 @@ const ChatbotPlaceholder = () => {
     setLoading(true);
 
     try {
+      const history = [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES);
       const res = await fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           message: trimmed,
           sessionId,
-          session_id: sessionId // Send both formats for n8n compatibility
+          session_id: sessionId, // Send both formats for n8n compatibility
+          messages: history,
+          history: history, // Some n8n nodes expect "history"
         }),
       });
       
