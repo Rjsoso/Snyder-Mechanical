@@ -9,6 +9,9 @@ const MAX_HISTORY_MESSAGES = 30;
 
 const CHAT_MESSAGES_KEY = (sessionId) => `chat_messages_${sessionId}`;
 
+const WELCOME_MESSAGE =
+  "Hi! I'm here to help with plumbing and HVAC services.\n\nBefore we get started, can you tell me:\n• Is this for a home or a commercial project?";
+
 // Simple **bold** rendering for bot messages (no full markdown dependency)
 const BoldText = ({ text }) => {
   if (!text) return null;
@@ -38,7 +41,7 @@ const ChatbotPlaceholder = () => {
       })()
   ).current;
 
-  // Rehydrate thread from localStorage on mount
+  // Rehydrate thread from localStorage on mount; show welcome when no history
   useEffect(() => {
     try {
       const stored = localStorage.getItem(CHAT_MESSAGES_KEY(sessionId));
@@ -46,10 +49,12 @@ const ChatbotPlaceholder = () => {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
           setMessages(parsed);
+          return;
         }
       }
+      setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
     } catch (_) {
-      // Ignore invalid or missing stored data
+      setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
     }
   }, [sessionId]);
 
@@ -180,11 +185,6 @@ const ChatbotPlaceholder = () => {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50 p-4 space-y-4">
-              {messages.length === 0 && (
-                <div className="text-center text-secondary-500 text-sm py-4">
-                  Ask about our services, hours, or how we can help.
-                </div>
-              )}
               {messages.map((msg, i) => (
                 <div
                   key={i}
