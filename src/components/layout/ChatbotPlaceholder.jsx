@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const webhookUrl = import.meta.env.VITE_N8N_CHATBOT_WEBHOOK;
+// Use internal API proxy to avoid CORS issues with n8n
+const webhookUrl = '/api/chatbot/chat';
 
 // Max messages to keep in memory and send as history (last N for context, avoid huge payloads)
 const MAX_HISTORY_MESSAGES = 30;
