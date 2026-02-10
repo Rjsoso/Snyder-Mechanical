@@ -104,6 +104,7 @@ Copy `.env.example` to `.env` or `.env.local` and fill in values. Required for C
 - **Sanity:** `VITE_SANITY_PROJECT_ID`, `VITE_SANITY_DATASET` (frontend); `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` (API routes).
 - **Stripe:** `VITE_STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` for invoice payments.
 - **Admin/Sync:** `DASHBOARD_PASSWORD` for the invoice sync dashboard; `CRON_SECRET` (Vercel) and/or `SYNC_API_KEY` for sync endpoints.
+- **Chatbot (optional):** `VITE_N8N_CHATBOT_WEBHOOK` – full n8n webhook URL (e.g. `https://your-n8n.com/webhook/.../chat`). If unset, the site shows "Chatbot Coming Soon" and does not call n8n.
 
 See `.env.example` for the full list and optional vars (ComputerEase, `APP_URL`).
 
@@ -113,7 +114,10 @@ This project is configured for deployment on Vercel:
 
 1. Push code to GitHub
 2. Connect repository to Vercel
-3. Deploy automatically on push to main
+3. Add environment variables in Vercel (Project → Settings → Environment Variables). Use the same names as in `.env.example`. For **Production** (and optionally Preview), set `VITE_N8N_CHATBOT_WEBHOOK` to your n8n webhook URL so the chatbot works on the deployed site.
+4. Deploy: automatic on push to main, or trigger a redeploy after adding/changing env vars (needed for `VITE_*` vars, which are baked in at build time).
+
+**Chatbot on the live site:** If the live site still shows "Chatbot Coming Soon", ensure `VITE_N8N_CHATBOT_WEBHOOK` is set in Vercel for the Production environment and redeploy once. Then open the chat, send a message, and confirm the n8n workflow runs (e.g. check n8n execution history).
 
 ## Content Management
 
