@@ -205,9 +205,9 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-4 py-4 border-t border-secondary-200">
+          <div className="lg:hidden mt-4 py-4 pb-40 border-t border-secondary-200">
             <div className="flex flex-col space-y-4">
-              <Link to="/" className="font-medium text-secondary-700 hover:text-primary-600">
+              <Link to="/" className="font-medium text-secondary-700 hover:text-primary-600" onClick={() => setMobileMenuOpen(false)}>
                 Home
               </Link>
               
@@ -219,6 +219,7 @@ const Header = () => {
                     key={index}
                     to={item.path} 
                     className="block pl-4 text-secondary-700 hover:text-primary-600"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
@@ -234,6 +235,7 @@ const Header = () => {
                     key={index}
                     to={item.path} 
                     className="block pl-4 text-secondary-700 hover:text-primary-600"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
@@ -244,26 +246,28 @@ const Header = () => {
                     key={index}
                     to={item.path} 
                     className="block pl-4 text-secondary-700 hover:text-primary-600"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
                 ))}
               </div>
 
-              <Link to="/portfolio" className="font-medium text-secondary-700 hover:text-primary-600">
+              <Link to="/portfolio" className="font-medium text-secondary-700 hover:text-primary-600" onClick={() => setMobileMenuOpen(false)}>
                 Portfolio
               </Link>
-              <Link to="/contact" className="font-medium text-secondary-700 hover:text-primary-600">
+              <Link to="/contact" className="font-medium text-secondary-700 hover:text-primary-600" onClick={() => setMobileMenuOpen(false)}>
                 Contact
               </Link>
               
-              <Link to="/resources" className="font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 px-4 py-2 rounded-lg text-center transition-colors">
+              <Link to="/resources" className="font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 px-4 py-2 rounded-lg text-center transition-colors" onClick={() => setMobileMenuOpen(false)}>
                 {paymentsLabel}
               </Link>
 
               <a 
                 href={`tel:${phone}`} 
                 className="flex items-center space-x-2 text-primary-600 font-semibold text-lg justify-center py-2"
+                onClick={() => setMobileMenuOpen(false)}
               >
                 <Phone className="w-5 h-5" />
                 <span>{phone}</span>
