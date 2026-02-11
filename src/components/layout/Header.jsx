@@ -205,7 +205,7 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-4 py-4 pb-40 border-t border-secondary-200">
+          <div className="lg:hidden mt-4 py-4 pb-40 border-t border-secondary-200 max-h-[calc(100vh-7rem)] overflow-y-auto">
             <div className="flex flex-col space-y-4">
               <Link to="/" className="font-medium text-secondary-700 hover:text-primary-600" onClick={() => setMobileMenuOpen(false)}>
                 Home
