@@ -32,8 +32,8 @@ const BoldText = ({ text }) => {
 function TypingIndicator() {
   return (
     <div className="flex justify-start">
-      <div className="bg-white border border-secondary-200 rounded-2xl px-4 py-2.5 shadow-sm">
-        <div className="flex gap-1 items-center">
+      <div className="bg-white/90 border border-secondary-200/80 rounded-2xl px-4 py-3 shadow-sm">
+        <div className="flex gap-1.5 items-center">
           {[0, 1, 2].map((i) => (
             <motion.span
               key={i}
@@ -246,32 +246,28 @@ const ChatbotPlaceholder = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:max-w-md bg-white rounded-2xl shadow-xl ring-1 ring-black/5 overflow-hidden border border-secondary-200 flex flex-col max-h-[36rem]"
+              className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:max-w-md bg-white rounded-2xl shadow-2xl shadow-black/10 overflow-hidden border border-secondary-200/80 flex flex-col max-h-[36rem]"
             >
-            <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-4 flex items-center justify-between flex-shrink-0">
+            <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-5 py-4 flex items-center justify-between flex-shrink-0 border-b border-primary-500/30">
               <div className="flex items-center gap-3 min-w-0">
-                <MessageCircle className="w-6 h-6 flex-shrink-0" aria-hidden />
+                <MessageCircle className="w-6 h-6 flex-shrink-0 opacity-95" aria-hidden />
                 <div className="min-w-0">
-                  <h3 className="font-semibold">Chat with us</h3>
-                  <p className="text-primary-100 text-xs font-medium mt-0.5 flex items-center gap-1.5">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                    </span>
-                    Online · We&apos;re here to help
+                  <h3 className="font-semibold text-base tracking-tight">Chat with us</h3>
+                  <p className="text-primary-100 text-xs font-medium mt-0.5">
+                    We&apos;re here to help
                   </p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="hover:bg-white/10 p-1.5 rounded-lg transition-colors flex-shrink-0"
+                className="hover:bg-white/10 active:bg-white/15 p-2 rounded-lg transition-colors flex-shrink-0"
                 aria-label="Close chat"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50 p-5 space-y-4">
+            <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50/80 p-5 space-y-4 scroll-smooth">
               {messages.map((msg, i) => {
                 const isLast = i === messages.length - 1;
                 const wrapper = isLast ? (
@@ -282,10 +278,10 @@ const ChatbotPlaceholder = () => {
                     className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
+                      className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                         msg.role === "user"
-                          ? "bg-primary-600 text-white"
-                          : "bg-white text-secondary-900 border border-secondary-200 shadow-sm"
+                          ? "bg-primary-600 text-white shadow-sm"
+                          : "bg-white text-secondary-800 border border-secondary-200/80 shadow-sm"
                       }`}
                     >
                       {msg.role === "assistant" ? (
@@ -303,10 +299,10 @@ const ChatbotPlaceholder = () => {
                     className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                   >
                     <div
-                      className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
+                      className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                         msg.role === "user"
-                          ? "bg-primary-600 text-white"
-                          : "bg-white text-secondary-900 border border-secondary-200 shadow-sm"
+                          ? "bg-primary-600 text-white shadow-sm"
+                          : "bg-white text-secondary-800 border border-secondary-200/80 shadow-sm"
                       }`}
                     >
                       {msg.role === "assistant" ? (
@@ -328,7 +324,7 @@ const ChatbotPlaceholder = () => {
                       key={label}
                       type="button"
                       onClick={() => sendMessage(label)}
-                      className="rounded-full bg-white border border-secondary-200 shadow-sm px-4 py-2 text-sm font-medium text-secondary-700 hover:bg-secondary-50 hover:border-primary-300 transition-colors"
+                      className="rounded-full bg-white border border-secondary-200/80 px-4 py-2.5 text-sm font-medium text-secondary-700 hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-colors duration-150"
                     >
                       {label}
                     </button>
@@ -338,22 +334,22 @@ const ChatbotPlaceholder = () => {
               {loading && <TypingIndicator />}
               <div ref={messagesEndRef} />
             </div>
-            <div className="p-3 border-t border-secondary-200 bg-white flex-shrink-0">
-              <div className="flex gap-2">
+            <div className="p-4 border-t border-secondary-200/80 bg-white flex-shrink-0">
+              <div className="flex gap-2.5">
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type a message..."
-                  className="flex-1 rounded-lg border border-secondary-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="flex-1 rounded-xl border border-secondary-200 px-4 py-2.5 text-sm placeholder:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-400 transition-shadow disabled:opacity-60 disabled:cursor-not-allowed"
                   disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={() => sendMessage()}
                   disabled={loading || !input.trim()}
-                  className="bg-primary-600 text-white rounded-lg p-2 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="bg-primary-600 text-white rounded-xl p-2.5 hover:bg-primary-700 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 transition-all duration-150"
                   aria-label="Send"
                 >
                   {loading ? (
@@ -375,8 +371,8 @@ const ChatbotPlaceholder = () => {
         <motion.button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg ring-2 ring-primary-200 focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 flex items-center justify-center transition-colors hover:shadow-xl"
-          whileHover={{ scale: 1.1 }}
+          className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg shadow-primary-900/20 ring-2 ring-primary-200/50 focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 flex items-center justify-center transition-all duration-200 hover:shadow-xl"
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label={isOpen ? "Close chat" : "Open chat"}
         >
@@ -391,14 +387,14 @@ const ChatbotPlaceholder = () => {
 function FloatingBubble() {
   return (
     <motion.div
-      animate={{ y: [0, -8, 0] }}
+      animate={{ y: [0, -6, 0] }}
       transition={{
         duration: 2.5,
         repeat: Infinity,
         ease: "easeInOut"
       }}
     >
-      <div className="bg-white shadow-lg rounded-full px-4 py-2 text-sm font-medium text-secondary-700 whitespace-nowrap flex items-center gap-2">
+      <div className="bg-white shadow-lg shadow-black/5 rounded-full px-4 py-2.5 text-sm font-medium text-secondary-700 whitespace-nowrap border border-secondary-100">
         Ask us anything →
       </div>
     </motion.div>
