@@ -2,7 +2,6 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import ChatbotPlaceholder from './ChatbotPlaceholder';
-import FloatingCallButton from '../mobile/FloatingCallButton';
 import QuickActionBar from '../mobile/QuickActionBar';
 import ModalManager from '../shared/ModalManager';
 
@@ -23,7 +22,6 @@ const Layout = ({ children }) => {
         </div>
       )}
       <ChatbotPlaceholder />
-      <FloatingCallButton />
       <QuickActionBar />
       <ModalManager />
     </div>
