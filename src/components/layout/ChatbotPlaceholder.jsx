@@ -10,6 +10,8 @@ const MAX_HISTORY_MESSAGES = 30;
 
 const CHAT_MESSAGES_KEY = (sessionId) => `chat_messages_${sessionId}`;
 
+const RELOAD_RESET_THRESHOLD = 3;
+
 const WELCOME_MESSAGE =
   "Hi! I'm here to help, to get started:\n\nAsk about our services, hours, or how we can assist you with a project!";
 
@@ -58,6 +60,27 @@ const ChatbotPlaceholder = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
+  const hasRunReloadCheck = useRef(false);
+
+  // Reset chat after N reloads (runs once per page load; resets when tab closes)
+  if (!hasRunReloadCheck.current) {
+    hasRunReloadCheck.current = true;
+    const reloadCount =
+      parseInt(sessionStorage.getItem("chat_reload_count") || "0", 10) + 1;
+    sessionStorage.setItem("chat_reload_count", String(reloadCount));
+    if (reloadCount >= RELOAD_RESET_THRESHOLD) {
+      sessionStorage.setItem("chat_reload_count", "0");
+      localStorage.removeItem("chat_session");
+      try {
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key?.startsWith("chat_messages_")) keysToRemove.push(key);
+        }
+        keysToRemove.forEach((k) => localStorage.removeItem(k));
+      } catch (_) {}
+    }
+  }
 
   // Get or create session ID
   const sessionId = useRef(
