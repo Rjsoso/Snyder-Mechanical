@@ -130,23 +130,34 @@ const ChatbotPlaceholder = () => {
         }),
       });
       
-      // Handle streaming response from n8n
+      // Handle streaming or single-JSON response from n8n
       const text = await res.text();
       const lines = text.trim().split("\n").filter(line => line);
-      
-      // Collect all content chunks from streaming response
       let fullContent = "";
-      for (const line of lines) {
-        try {
-          const parsed = JSON.parse(line);
-          if (parsed.type === "item" && parsed.content) {
-            fullContent += parsed.content;
+
+      // Try single JSON response (e.g. {"reply":"..."} from n8n webhook)
+      try {
+        const single = JSON.parse(text.trim());
+        if (single.reply != null) fullContent = String(single.reply);
+        else if (single.message != null) fullContent = String(single.message);
+      } catch (_) {
+        // Not single JSON, fall through to streaming
+      }
+
+      // If no single-JSON reply, collect from streaming lines
+      if (!fullContent) {
+        for (const line of lines) {
+          try {
+            const parsed = JSON.parse(line);
+            if (parsed.type === "item" && parsed.content) {
+              fullContent += parsed.content;
+            }
+          } catch (e) {
+            // Skip invalid JSON lines
           }
-        } catch (e) {
-          // Skip invalid JSON lines
         }
       }
-      
+
       const data = { reply: fullContent || "Sorry, I didn't get a response." };
 
       if (!res.ok) {
