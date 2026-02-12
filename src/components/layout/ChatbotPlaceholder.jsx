@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, MessageSquarePlus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Use internal API proxy to avoid CORS issues with n8n
@@ -60,11 +60,18 @@ const ChatbotPlaceholder = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
-  const hasRunReloadCheck = useRef(false);
 
-  // Reset chat after N reloads (runs once per page load; resets when tab closes)
-  if (!hasRunReloadCheck.current) {
-    hasRunReloadCheck.current = true;
+  // Session ID as state so "New conversation" and reload reset can switch threads
+  const [sessionId, setSessionId] = useState(() => {
+    const stored = localStorage.getItem("chat_session");
+    if (stored) return stored;
+    const id = crypto.randomUUID();
+    localStorage.setItem("chat_session", id);
+    return id;
+  });
+
+  // After 3 reloads: clear storage and start a new conversation on this load
+  useEffect(() => {
     const reloadCount =
       parseInt(sessionStorage.getItem("chat_reload_count") || "0", 10) + 1;
     sessionStorage.setItem("chat_reload_count", String(reloadCount));
@@ -79,18 +86,13 @@ const ChatbotPlaceholder = () => {
         }
         keysToRemove.forEach((k) => localStorage.removeItem(k));
       } catch (_) {}
+      const newId = crypto.randomUUID();
+      localStorage.setItem("chat_session", newId);
+      setSessionId(newId);
+      setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
+      setError(null);
     }
-  }
-
-  // Get or create session ID
-  const sessionId = useRef(
-    localStorage.getItem("chat_session") ??
-      (() => {
-        const id = crypto.randomUUID();
-        localStorage.setItem("chat_session", id);
-        return id;
-      })()
-  ).current;
+  }, []);
 
   // Rehydrate thread from localStorage on mount; show welcome when no history
   useEffect(() => {
@@ -205,6 +207,18 @@ const ChatbotPlaceholder = () => {
     }
   };
 
+  const startNewConversation = () => {
+    const oldId = sessionId;
+    const newId = crypto.randomUUID();
+    localStorage.setItem("chat_session", newId);
+    try {
+      localStorage.removeItem(CHAT_MESSAGES_KEY(oldId));
+    } catch (_) {}
+    setSessionId(newId);
+    setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
+    setError(null);
+  };
+
   // No webhook configured: keep "Coming Soon" behavior
   if (!webhookUrl) {
     return (
@@ -258,14 +272,25 @@ const ChatbotPlaceholder = () => {
                   </p>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => setIsOpen(false)}
-                className="hover:bg-white/10 active:bg-white/15 p-2 rounded-lg transition-colors flex-shrink-0"
-                aria-label="Close chat"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={startNewConversation}
+                  className="hover:bg-white/10 active:bg-white/15 p-2 rounded-lg transition-colors"
+                  aria-label="Start new conversation"
+                  title="New conversation"
+                >
+                  <MessageSquarePlus className="w-5 h-5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="hover:bg-white/10 active:bg-white/15 p-2 rounded-lg transition-colors"
+                  aria-label="Close chat"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
             <div className="flex-1 overflow-y-auto min-h-0 bg-secondary-50/80 p-5 space-y-4 scroll-smooth">
               {messages.map((msg, i) => {
