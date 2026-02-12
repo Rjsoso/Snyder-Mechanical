@@ -143,6 +143,8 @@ const ChatbotPlaceholder = () => {
 
     try {
       const history = [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
       const res = await fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -153,7 +155,9 @@ const ChatbotPlaceholder = () => {
           messages: history,
           history: history, // Some n8n nodes expect "history"
         }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
       
       // Handle streaming or single-JSON response from n8n
       const text = await res.text();
@@ -183,16 +187,20 @@ const ChatbotPlaceholder = () => {
         }
       }
 
-      const data = { reply: fullContent || "Sorry, I didn't get a response." };
+      const emptyReplyMessage = "The response was empty. Please try again in a moment.";
+      const data = { reply: fullContent || emptyReplyMessage };
 
       if (!res.ok) {
         throw new Error(data?.message || "Something went wrong");
       }
 
-      const reply = data.reply ?? data.message ?? "Sorry, I didn’t get a response.";
+      const reply = data.reply ?? data.message ?? emptyReplyMessage;
       setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
     } catch (err) {
-      const fallback = err.message || "Connection error. Please try again or call us.";
+      const isTimeout = err.name === "AbortError";
+      const fallback = isTimeout
+        ? "The request took too long. Please try again."
+        : err.message || "Connection error. Please try again or call us.";
       setError(fallback);
       setMessages((prev) => [...prev, { role: "assistant", content: fallback }]);
     } finally {
