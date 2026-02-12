@@ -42,7 +42,9 @@ export default async function handler(req, res) {
     const contentType = response.headers.get('content-type');
     
     if (contentType?.includes('application/json')) {
-      const data = await response.json();
+      let text = await response.text();
+      if (text.startsWith('=')) text = text.slice(1);
+      const data = JSON.parse(text);
       return res.status(response.status).json(data);
     } else {
       // Handle streaming or plain text response
