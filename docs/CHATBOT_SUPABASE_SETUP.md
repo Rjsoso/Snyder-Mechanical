@@ -2,6 +2,22 @@
 
 This doc describes how to store each chatbot thread as its own conversation in Supabase, keyed by the `sessionId` the website sends to n8n.
 
+## Vercel env (copyable)
+
+In Vercel → Project → Settings → Environment Variables, add:
+
+**Name** (copy the line below):
+
+```
+N8N_CHATBOT_WEBHOOK
+```
+
+**Value** (copy the line below; use your production webhook URL, not `webhook-test`):
+
+```
+https://n8n.srv1328675.hstgr.cloud/webhook/729c8053-809b-487f-b8ef-9d7f9e8e6452
+```
+
 ## 1. Supabase schema
 
 Run the SQL migration in your Supabase project:
