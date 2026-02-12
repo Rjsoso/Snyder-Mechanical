@@ -405,3 +405,148 @@ export async function sendACHCompletedEmail({ customerEmail, customerName, invoi
     return null;
   }
 }
+
+/**
+ * Send quote request email with attachments from chatbot
+ */
+export async function sendQuoteRequestEmail({ recipientEmail, customerMessage, sessionId, attachments, timestamp }) {
+  const formattedDate = new Date(timestamp).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
+  const attachmentCount = attachments?.length || 0;
+
+  try {
+    const emailData = {
+      from: 'Snyder Mechanical <quotes@snydermechanical.com>',
+      to: [recipientEmail],
+      subject: `New Quote Request from Chatbot - ${formattedDate}`,
+      html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote Request</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #fafafa;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fafafa; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden;">
+          
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #303f9f 0%, #1a237e 100%); padding: 40px; text-align: center;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">New Quote Request</h1>
+              <p style="margin: 10px 0 0 0; color: #e8eaf6; font-size: 16px;">Received from chatbot</p>
+            </td>
+          </tr>
+
+          <!-- Icon -->
+          <tr>
+            <td style="padding: 30px 40px; text-align: center;">
+              <div style="display: inline-block; width: 80px; height: 80px; background-color: #303f9f; border-radius: 50%; text-align: center; line-height: 80px;">
+                <span style="color: white; font-size: 40px;">📋</span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Content -->
+          <tr>
+            <td style="padding: 0 40px 40px 40px;">
+              <p style="margin: 0 0 20px 0; color: #424242; font-size: 16px; line-height: 1.5; font-weight: 600;">
+                Customer Message:
+              </p>
+              
+              <!-- Message Box -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; border-radius: 8px; margin-bottom: 30px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="margin: 0; color: #212121; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${customerMessage}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Request Details Card -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; border-radius: 8px; margin-bottom: 30px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <table width="100%" cellpadding="8" cellspacing="0">
+                      <tr>
+                        <td style="color: #757575; font-size: 14px; padding: 8px 0;">Received</td>
+                        <td style="color: #212121; font-size: 14px; font-weight: 600; text-align: right; padding: 8px 0;">${formattedDate}</td>
+                      </tr>
+                      <tr>
+                        <td style="color: #757575; font-size: 14px; padding: 8px 0;">Session ID</td>
+                        <td style="color: #757575; font-size: 12px; font-family: monospace; text-align: right; padding: 8px 0;">${sessionId}</td>
+                      </tr>
+                      <tr>
+                        <td style="color: #757575; font-size: 14px; padding: 8px 0;">Attachments</td>
+                        <td style="color: #212121; font-size: 14px; font-weight: 600; text-align: right; padding: 8px 0;">${attachmentCount} file${attachmentCount !== 1 ? 's' : ''}</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              ${attachmentCount > 0 ? `
+              <!-- Info Box -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #e8eaf6; border-left: 4px solid #303f9f; border-radius: 4px; margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 16px 20px;">
+                    <p style="margin: 0; color: #1a237e; font-size: 14px; font-weight: 600;">📎 ${attachmentCount} file${attachmentCount !== 1 ? 's' : ''} attached to this email</p>
+                  </td>
+                </tr>
+              </table>
+              ` : ''}
+
+              <p style="margin: 0; color: #616161; font-size: 14px; line-height: 1.5;">
+                Please review this quote request and respond to the customer as soon as possible.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 30px 40px; background-color: #f5f5f5; border-top: 1px solid #e0e0e0;">
+              <p style="margin: 0 0 10px 0; color: #424242; font-size: 16px; font-weight: 600;">Snyder Mechanical LLC</p>
+              <p style="margin: 0 0 5px 0; color: #757575; font-size: 14px;">Quote Request System</p>
+              <p style="margin: 0; color: #9e9e9e; font-size: 12px;">
+                This quote request was submitted through the website chatbot.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+      `,
+    };
+
+    // Add attachments if present
+    if (attachments && attachments.length > 0) {
+      emailData.attachments = attachments;
+    }
+
+    const { data, error } = await resend.emails.send(emailData);
+
+    if (error) {
+      console.error('Failed to send quote request email:', error);
+      throw error;
+    }
+
+    console.log('Quote request email sent:', data?.id);
+    return data;
+  } catch (error) {
+    console.error('Email sending error:', error);
+    throw error;
+  }
+}

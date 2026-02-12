@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Loader2, MessageSquarePlus } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, MessageSquarePlus, Paperclip, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Use internal API proxy to avoid CORS issues with n8n
@@ -59,7 +59,9 @@ const ChatbotPlaceholder = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [attachedFiles, setAttachedFiles] = useState([]);
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   // Session ID as state so "New conversation" and reload reset can switch threads
   const [sessionId, setSessionId] = useState(() => {
@@ -135,13 +137,53 @@ const ChatbotPlaceholder = () => {
     const trimmed = (optionalText ?? input.trim()).trim();
     if (!trimmed || loading || !webhookUrl) return;
 
-    const userMessage = { role: "user", content: trimmed };
+    const hasAttachments = attachedFiles.length > 0;
+    const userMessage = { 
+      role: "user", 
+      content: trimmed,
+      hasAttachments,
+      attachmentCount: attachedFiles.length,
+    };
     setMessages((prev) => [...prev, userMessage]);
     if (optionalText == null) setInput("");
     setError(null);
     setLoading(true);
 
     try {
+      // If files are attached, submit as quote request
+      if (hasAttachments) {
+        await sendQuoteWithAttachments(trimmed, attachedFiles);
+        
+        // Clear attachments after successful submission
+        setAttachedFiles([]);
+        
+        // Show success message
+        const successMessage = {
+          role: "assistant",
+          content: `✓ Quote request submitted successfully! We've received your message and ${attachedFiles.length} attachment${attachedFiles.length > 1 ? 's' : ''}. Our team will review your request and get back to you shortly.`,
+        };
+        setMessages((prev) => [...prev, successMessage]);
+        
+        // Still send to n8n for AI response (non-blocking)
+        fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: `[Quote request with ${attachedFiles.length} file(s)] ${trimmed}`,
+            sessionId,
+            session_id: sessionId,
+            messages: [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES),
+            history: [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES),
+          }),
+        }).catch(() => {
+          // Ignore n8n errors when quote already submitted successfully
+        });
+        
+        setLoading(false);
+        return;
+      }
+
+      // Normal message flow (no attachments)
       const history = [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES);
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 45000);
@@ -224,7 +266,131 @@ const ChatbotPlaceholder = () => {
     } catch (_) {}
     setSessionId(newId);
     setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
+    setAttachedFiles([]);
     setError(null);
+  };
+
+  // File handling constants
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB per file
+  const MAX_FILES = 5;
+  const MAX_TOTAL_SIZE = 25 * 1024 * 1024; // 25MB total (Resend limit is 40MB)
+  const ALLOWED_FILE_TYPES = {
+    // Images
+    'image/jpeg': ['.jpg', '.jpeg'],
+    'image/png': ['.png'],
+    'image/gif': ['.gif'],
+    'image/webp': ['.webp'],
+    // Documents
+    'application/pdf': ['.pdf'],
+    'application/msword': ['.doc'],
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+    // Spreadsheets
+    'application/vnd.ms-excel': ['.xls'],
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+    // Text
+    'text/plain': ['.txt'],
+    'text/csv': ['.csv'],
+  };
+
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+  };
+
+  const validateFile = (file) => {
+    if (!ALLOWED_FILE_TYPES[file.type]) {
+      return `File type not allowed: ${file.name}. Please use images, PDFs, documents, or spreadsheets.`;
+    }
+    if (file.size > MAX_FILE_SIZE) {
+      return `File too large: ${file.name}. Maximum size is ${formatFileSize(MAX_FILE_SIZE)}.`;
+    }
+    return null;
+  };
+
+  const handleFileSelect = (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    // Check max files
+    if (attachedFiles.length + files.length > MAX_FILES) {
+      setError(`Maximum ${MAX_FILES} files allowed.`);
+      return;
+    }
+
+    // Validate each file
+    const validFiles = [];
+    for (const file of files) {
+      const error = validateFile(file);
+      if (error) {
+        setError(error);
+        return;
+      }
+      validFiles.push(file);
+    }
+
+    // Check total size
+    const currentSize = attachedFiles.reduce((sum, f) => sum + f.size, 0);
+    const newSize = validFiles.reduce((sum, f) => sum + f.size, 0);
+    if (currentSize + newSize > MAX_TOTAL_SIZE) {
+      setError(`Total file size exceeds ${formatFileSize(MAX_TOTAL_SIZE)}.`);
+      return;
+    }
+
+    setAttachedFiles([...attachedFiles, ...validFiles]);
+    setError(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const removeFile = (index) => {
+    setAttachedFiles(attachedFiles.filter((_, i) => i !== index));
+  };
+
+  const sendQuoteWithAttachments = async (message, files) => {
+    try {
+      // Convert files to base64
+      const filePromises = files.map(file => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const base64 = reader.result.split(',')[1];
+            resolve({
+              filename: file.name,
+              content: base64,
+              contentType: file.type,
+              size: file.size,
+            });
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      });
+
+      const attachments = await Promise.all(filePromises);
+
+      const response = await fetch('/api/quote/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message,
+          sessionId,
+          attachments,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit quote request');
+      }
+
+      return await response.json();
+    } catch (err) {
+      throw err;
+    }
   };
 
   // No webhook configured: keep "Coming Soon" behavior
@@ -322,7 +488,15 @@ const ChatbotPlaceholder = () => {
                           <BoldText text={msg.content} />
                         </div>
                       ) : (
-                        msg.content
+                        <>
+                          {msg.content}
+                          {msg.hasAttachments && (
+                            <div className="flex items-center gap-1 mt-2 text-xs opacity-90">
+                              <Paperclip className="w-3 h-3" />
+                              <span>{msg.attachmentCount} file{msg.attachmentCount > 1 ? 's' : ''}</span>
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </motion.div>
@@ -343,7 +517,15 @@ const ChatbotPlaceholder = () => {
                           <BoldText text={msg.content} />
                         </div>
                       ) : (
-                        msg.content
+                        <>
+                          {msg.content}
+                          {msg.hasAttachments && (
+                            <div className="flex items-center gap-1 mt-2 text-xs opacity-90">
+                              <Paperclip className="w-3 h-3" />
+                              <span>{msg.attachmentCount} file{msg.attachmentCount > 1 ? 's' : ''}</span>
+                            </div>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
@@ -368,7 +550,57 @@ const ChatbotPlaceholder = () => {
               <div ref={messagesEndRef} />
             </div>
             <div className="p-4 border-t border-secondary-200/80 bg-white flex-shrink-0">
+              {/* File Preview Area */}
+              {attachedFiles.length > 0 && (
+                <div className="mb-3 space-y-2">
+                  {attachedFiles.map((file, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 bg-secondary-50 border border-secondary-200 rounded-lg px-3 py-2 text-sm"
+                    >
+                      <FileText className="w-4 h-4 text-secondary-500 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-secondary-800 font-medium truncate">
+                          {file.name}
+                        </p>
+                        <p className="text-secondary-500 text-xs">
+                          {formatFileSize(file.size)}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeFile(index)}
+                        className="p-1 hover:bg-secondary-200 rounded transition-colors flex-shrink-0"
+                        aria-label={`Remove ${file.name}`}
+                      >
+                        <X className="w-4 h-4 text-secondary-600" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Input Area */}
               <div className="flex gap-2.5">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  multiple
+                  accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={loading || attachedFiles.length >= MAX_FILES}
+                  className="p-2.5 rounded-xl border border-secondary-200 text-secondary-600 hover:bg-secondary-50 hover:border-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  aria-label="Attach files"
+                  title="Attach files"
+                >
+                  <Paperclip className="w-5 h-5" />
+                </button>
                 <input
                   type="text"
                   value={input}
@@ -381,7 +613,7 @@ const ChatbotPlaceholder = () => {
                 <button
                   type="button"
                   onClick={() => sendMessage()}
-                  disabled={loading || !input.trim()}
+                  disabled={loading || (!input.trim() && attachedFiles.length === 0)}
                   className="bg-primary-600 text-white rounded-xl p-2.5 hover:bg-primary-700 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 transition-all duration-150"
                   aria-label="Send"
                 >
