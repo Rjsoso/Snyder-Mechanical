@@ -168,8 +168,8 @@ const ChatbotPlaceholder = () => {
         payload.hasAttachments = true;
         payload.attachmentCount = attachedFiles.length;
         
-        // Clear attachments after conversion
-        setAttachedFiles([]);
+        // Note: Files stay attached until user manually removes them
+        // This allows multi-turn conversations before submitting the quote
       }
 
       const controller = new AbortController();
