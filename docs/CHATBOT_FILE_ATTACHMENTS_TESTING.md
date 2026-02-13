@@ -1,33 +1,25 @@
-# Chatbot File Attachments - Testing Guide
+# Chatbot File Attachments - Testing Guide (n8n Version)
 
-This guide will help you test the newly implemented file attachment feature for quote requests in the chatbot.
+This guide will help you test the newly implemented file attachment feature that sends files through your n8n workflow.
 
 ## Prerequisites
 
-Before testing, ensure you have the following environment variables set:
+Before testing, ensure you have the following:
 
 ### Required Environment Variables
 
-Add these to your `.env.local` file or in Vercel's environment variables:
+You should already have this set (used for your chatbot):
 
 ```bash
-# Resend API key (for sending emails)
-RESEND_API_KEY=re_xxxxxxxxxxxxx
-
-# Company email to receive quote requests
-QUOTE_EMAIL_RECIPIENT=your-email@snydermechanical.com
-
-# n8n chatbot webhook (should already be set)
+# n8n chatbot webhook (should already be configured)
 N8N_CHATBOT_WEBHOOK=https://n8n.srv1328675.hstgr.cloud/webhook/...
 ```
 
-### Getting a Resend API Key
+**That's it!** No additional API keys or services needed.
 
-1. Go to [resend.com](https://resend.com)
-2. Sign up or log in
-3. Navigate to API Keys section
-4. Create a new API key
-5. Copy the key and add it to your environment variables
+### n8n Workflow Setup
+
+You'll need to configure your n8n workflow to handle attachments. See `CHATBOT_FILE_ATTACHMENTS_SETUP.md` for details on the payload structure.
 
 ## Testing Steps
 
@@ -82,31 +74,36 @@ Try these scenarios to verify validation:
    - Files are cleared from the preview
    - Attachment count shows in the sent message bubble
 
-### 2. Email Verification
+### 2. n8n Workflow Verification
 
-Check the inbox of the email address specified in `QUOTE_EMAIL_RECIPIENT`:
+Check your n8n workflow executions:
 
-**Expected email content:**
-- Subject: "New Quote Request from Chatbot - [date/time]"
-- From: Snyder Mechanical <quotes@snydermechanical.com>
-- Body includes:
-  - Customer message
-  - Timestamp
-  - Session ID
-  - Attachment count
-- All selected files attached to the email
+**What to verify:**
+1. Go to n8n dashboard → Executions
+2. Find the most recent execution
+3. Check the webhook payload includes:
+   - `message`: Your test message
+   - `sessionId`: UUID
+   - `attachments`: Array of files with base64 content
+   - `hasAttachments`: true
+   - `attachmentCount`: Number of files
+
+**If you configured email in n8n:**
+- Check your email inbox for the quote request
+- Verify all attachments are included
+- Files should be properly decoded and attached
 
 ### 3. Production Testing (Vercel)
 
 After deploying to Vercel:
 
-1. Add environment variables in Vercel dashboard:
-   - `RESEND_API_KEY`
-   - `QUOTE_EMAIL_RECIPIENT`
+1. Verify `N8N_CHATBOT_WEBHOOK` is set in Vercel environment variables
 
 2. Deploy and test on your live site
 
-3. Verify the same functionality works in production
+3. Check n8n executions to verify attachments are being received
+
+4. Verify the same functionality works in production
 
 ## Known Limitations
 
@@ -120,18 +117,18 @@ After deploying to Vercel:
 ### Files not sending
 
 **Check:**
-- `RESEND_API_KEY` is set correctly
-- API key has permission to send emails
-- Check browser console for JavaScript errors
-- Check Vercel function logs for server errors
+- Browser console for JavaScript errors
+- Vercel function logs for server errors
+- n8n webhook URL is correct
+- Network tab shows request to `/api/chatbot/chat`
 
-### Email not received
+### Attachments not in n8n
 
 **Check:**
-- `QUOTE_EMAIL_RECIPIENT` is set correctly
-- Check spam folder
-- Verify Resend dashboard for email status
-- Check Resend domain verification
+- n8n execution logs (should show `attachments` field)
+- Webhook payload includes `hasAttachments: true`
+- Base64 content is present in payload
+- n8n workflow is configured to handle attachments
 
 ### File size errors
 
@@ -139,22 +136,27 @@ After deploying to Vercel:
 - Individual files are under 10MB
 - Total of all files is under 25MB
 - Browser console shows the actual file sizes
+- Try with smaller test files first
 
 ### CORS errors
 
-If you see CORS errors when submitting quotes:
-- Make sure you're testing on the same domain (not mixing localhost and production)
-- Verify the API endpoint is accessible
+If you see CORS errors:
+- Make sure you're testing on the same domain
+- Verify `/api/chatbot/chat` endpoint is accessible
+- Check Vercel function logs
 
-## API Endpoint Details
+## n8n Webhook Payload
 
-### POST /api/quote/submit
+When attachments are sent, n8n receives:
 
 **Request body:**
 ```json
 {
   "message": "Customer's quote request message",
   "sessionId": "uuid-session-id",
+  "session_id": "uuid-session-id",
+  "messages": [...],
+  "history": [...],
   "attachments": [
     {
       "filename": "photo.jpg",
@@ -162,48 +164,35 @@ If you see CORS errors when submitting quotes:
       "contentType": "image/jpeg",
       "size": 1234567
     }
-  ]
-}
-```
-
-**Success response:**
-```json
-{
-  "success": true,
-  "message": "Quote request submitted successfully",
-  "emailId": "resend-email-id"
-}
-```
-
-**Error response:**
-```json
-{
-  "error": "Error message description"
+  ],
+  "hasAttachments": true,
+  "attachmentCount": 1
 }
 ```
 
 ## Security Notes
 
-1. File validation happens on both frontend and backend
+1. File validation happens on frontend (client-side)
 2. Files are converted to base64 for transmission
-3. Server validates file types and sizes
-4. No files are stored on the server (sent directly to email)
-5. Session IDs help track quote requests
+3. No files are stored on the server (sent directly to n8n)
+4. Session IDs help track requests
+5. **Recommendation:** Add server-side validation in n8n if needed
 
 ## Next Steps
 
 After successful testing:
 
-1. Monitor email delivery rates
-2. Consider adding customer contact info collection
-3. Consider storing attachments in Supabase Storage for records
-4. Add rate limiting to prevent abuse
-5. Create admin dashboard to view quote requests
+1. Configure your n8n workflow to handle attachments (email, storage, etc.)
+2. Test email delivery if configured in n8n
+3. Consider adding customer contact info collection
+4. Consider storing attachments in cloud storage via n8n
+5. Add rate limiting in n8n to prevent abuse
 
 ## Support
 
 If you encounter issues during testing:
 1. Check browser console for frontend errors
 2. Check Vercel function logs for backend errors
-3. Review Resend dashboard for email sending status
-4. Verify all environment variables are set correctly
+3. Check n8n execution logs to see if attachments are received
+4. Verify `N8N_CHATBOT_WEBHOOK` is set correctly
+5. Test with small files first (1-2MB)

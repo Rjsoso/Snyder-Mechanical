@@ -1,8 +1,8 @@
-# Chatbot File Attachments - Setup Guide
+# Chatbot File Attachments - Setup Guide (n8n Version)
 
 ## Overview
 
-This feature allows users to attach files (images, documents, etc.) when requesting quotes through the chatbot. Files are sent directly to the company email as attachments.
+This feature allows users to attach files (images, documents, etc.) when requesting quotes through the chatbot. Files are sent to your **existing n8n workflow** which can then handle email delivery or any other processing you configure.
 
 ## What Was Implemented
 
@@ -14,65 +14,37 @@ This feature allows users to attach files (images, documents, etc.) when request
 - File selection and preview UI
 - File validation (type, size, quantity)
 - Visual indicators for messages with attachments
-- Success confirmation after quote submission
+- Files are converted to base64 and sent with the message
 
 ### 2. Backend API
 
-**File:** `api/quote/submit.js`
+**File:** `api/chatbot/chat.js`
 
-- New endpoint to handle quote submissions with attachments
-- Accepts base64-encoded files from frontend
-- Validates file sizes and formats
-- Sends email with attachments using Resend
-
-### 3. Email Service
-
-**File:** `api/utils/sendEmail.js`
-
-- New `sendQuoteRequestEmail()` function
-- Professional email template for quote requests
-- Includes customer message, timestamp, and session ID
-- Supports multiple file attachments
+- Enhanced to accept and forward file attachments to n8n
+- Files are included in the webhook payload
+- No additional endpoints needed - uses your existing chatbot infrastructure
 
 ## Configuration
 
-### Environment Variables
+### No New Environment Variables Needed!
 
-Add these to your environment:
+This feature uses your **existing n8n webhook** that's already configured:
 
 ```bash
-# Resend API Key (required for sending emails)
-RESEND_API_KEY=re_xxxxxxxxxxxxx
-
-# Email address to receive quote requests (optional, defaults to office@snydermechanical.com)
-QUOTE_EMAIL_RECIPIENT=your-email@snydermechanical.com
+N8N_CHATBOT_WEBHOOK=https://n8n.srv1328675.hstgr.cloud/webhook/...
 ```
 
-### Resend Email Domain Setup
-
-The quote emails are sent from `quotes@snydermechanical.com`. You'll need to:
-
-1. **Option A:** Add and verify `quotes@snydermechanical.com` in Resend
-   - Go to Resend dashboard → Domains
-   - Add snydermechanical.com if not already added
-   - Verify DNS records
-   - Add `quotes@` as a sending address
-
-2. **Option B:** Use existing verified address (recommended for quick setup)
-   - Change the sender in `api/utils/sendEmail.js` line 23 to use `payments@snydermechanical.com` instead:
-   ```javascript
-   from: 'Snyder Mechanical <payments@snydermechanical.com>',
-   ```
+That's it! No additional services or API keys required.
 
 ## File Constraints
 
-The following constraints are enforced:
+The following constraints are enforced on the frontend:
 
 | Constraint | Value | Reason |
 |------------|-------|--------|
 | Max file size | 10 MB per file | Prevents abuse, reasonable for photos/documents |
-| Max files | 5 per message | Keeps email manageable |
-| Total max size | 25 MB | Resend has 40MB limit, leave buffer |
+| Max files | 5 per message | Keeps payload manageable |
+| Total max size | 25 MB | Reasonable limit for webhook payloads |
 
 ### Allowed File Types
 
@@ -92,11 +64,10 @@ The following constraints are enforced:
 7. System:
    - Validates files
    - Converts to base64
-   - Sends to `/api/quote/submit`
-   - Sends email with attachments
-   - Also forwards message to n8n for AI response
-8. User sees success confirmation
-9. Company receives email with attachments
+   - Sends to `/api/chatbot/chat`
+   - Forwards to n8n webhook with attachments
+8. n8n workflow receives message and files
+9. n8n can send email, save to database, or any other logic you configure
 
 ## Architecture
 
@@ -105,13 +76,70 @@ User Browser
     ↓ (Selects files)
 ChatbotPlaceholder.jsx
     ↓ (Converts to base64)
-POST /api/quote/submit
-    ↓ (Validates & processes)
-sendQuoteRequestEmail()
-    ↓ (Sends via Resend API)
-Company Email Inbox
-    ↓ (Email with attachments)
+POST /api/chatbot/chat
+    ↓ (Forwards to n8n)
+n8n Webhook
+    ↓ (Your workflow)
+Email / Database / etc
 ```
+
+## n8n Webhook Payload
+
+When a user sends a message with attachments, your n8n webhook will receive:
+
+```json
+{
+  "message": "Customer's message text",
+  "sessionId": "uuid-session-id",
+  "session_id": "uuid-session-id",
+  "messages": [...],
+  "history": [...],
+  "attachments": [
+    {
+      "filename": "photo.jpg",
+      "content": "base64-encoded-file-content",
+      "contentType": "image/jpeg",
+      "size": 1234567
+    }
+  ],
+  "hasAttachments": true,
+  "attachmentCount": 1
+}
+```
+
+### Setting Up n8n to Handle Attachments
+
+In your n8n workflow, you can:
+
+1. **Check for attachments:**
+   ```javascript
+   // Check if message has attachments
+   if ($json.hasAttachments) {
+     // Handle quote request with files
+   }
+   ```
+
+2. **Send email with attachments:**
+   - Use the Email node in n8n
+   - Convert base64 back to binary if needed
+   - Attach files to the email
+
+3. **Save to storage:**
+   - Use HTTP Request node to upload to cloud storage
+   - Or save metadata to a database
+
+4. **Example n8n flow:**
+   ```
+   Webhook → IF (hasAttachments) → Email/Send Grid/Gmail Node → Response
+   ```
+
+### Example n8n Email Configuration
+
+If using Gmail node in n8n:
+- **To:** `office@snydermechanical.com`
+- **Subject:** `New Quote Request - {{$json.sessionId}}`
+- **Message:** `{{$json.message}}`
+- **Attachments:** Use the `attachments` array from the webhook
 
 ## Testing
 
@@ -127,41 +155,62 @@ Quick test:
 
 ## Security Considerations
 
-- File type validation on frontend and backend
-- File size limits enforced
-- No files stored on server (sent directly to email)
+- File type validation on frontend (enforced in browser)
+- File size limits enforced on frontend
+- No files stored on server (sent directly to n8n)
 - Base64 encoding for safe transmission
-- Session tracking for abuse prevention
+- Session tracking included in payload
+- **Note:** You can add additional validation in your n8n workflow if needed
+
+## n8n Workflow Examples
+
+### Simple Email Forward
+
+The simplest n8n workflow:
+1. Webhook trigger (receives the message + attachments)
+2. IF node (check if `hasAttachments === true`)
+3. Gmail/Email node (send email with attachments)
+4. Respond node (send AI reply back to user)
+
+### Advanced Processing
+
+More complex n8n workflow:
+1. Webhook trigger
+2. IF node (check for attachments)
+3. **If attachments present:**
+   - Send email notification
+   - Save to Supabase/Database
+   - Upload files to cloud storage
+   - Create ticket in CRM
+4. AI node (generate response)
+5. Respond to user
 
 ## Future Enhancements
 
-Consider these improvements:
+Consider these improvements in your n8n workflow:
 
-1. **Store in Supabase Storage**
-   - Keep records of attachments
-   - Link to conversation history
-   - Allow staff to view attachments in dashboard
+1. **Store in Cloud Storage**
+   - Upload to AWS S3, Google Drive, or Dropbox
+   - Store URLs in database for reference
+   - Create download links for staff
 
 2. **Customer Contact Info**
-   - Collect email/phone if not already provided
-   - Include in email for easy follow-up
+   - Extract email/phone from chat history
+   - Include in notification emails
 
 3. **Rate Limiting**
+   - Track submissions by session ID in n8n
    - Prevent abuse of attachment feature
-   - Limit submissions per session/IP
 
-4. **Admin Dashboard**
-   - View all quote requests
-   - Download attachments
-   - Track response status
+4. **Automated Responses**
+   - Send auto-reply email to customer
+   - Create ticket number for tracking
+   - Schedule follow-up reminders
 
-5. **File Preview**
-   - Show image thumbnails in chat
-   - Preview documents before sending
-
-6. **OCR/Analysis**
-   - Extract text from images
+5. **File Analysis**
+   - Use OCR to extract text from images
    - Auto-categorize quote types
+   - Estimate project size from photos
 
 ## Maintenance
 
@@ -197,25 +246,38 @@ Edit the HTML in `sendQuoteRequestEmail()` function in `api/utils/sendEmail.js`.
 
 ### Files won't upload
 - Check browser console for errors
-- Verify file size and type
-- Check if max files reached
+- Verify file size and type (must be under 10MB each)
+- Check if max files reached (5 files max)
+- Ensure file type is allowed
 
-### Email not received
-- Verify `RESEND_API_KEY` is set
-- Check `QUOTE_EMAIL_RECIPIENT` is correct
-- Check Resend dashboard for send status
-- Look in spam folder
+### Attachments not reaching n8n
+- Check browser network tab for failed requests
+- Verify `/api/chatbot/chat` endpoint is working
+- Check Vercel function logs
+- Test regular messages first (without attachments)
+
+### n8n not processing attachments
+- Check n8n execution logs
+- Verify webhook is receiving `attachments` field
+- Ensure `hasAttachments` flag is true
+- Test with a simple n8n flow that logs the payload
+
+### Files too large
+- Reduce file size before uploading
+- Compress images/PDFs
+- Split into multiple messages if needed
+- Remember: 10MB per file, 25MB total
 
 ### Deployment issues
-- Ensure environment variables set in Vercel
+- Ensure `N8N_CHATBOT_WEBHOOK` is set in Vercel
 - Check function logs in Vercel dashboard
-- Verify Resend domain is verified
+- Test in development first (`npm run dev`)
 
 ## Support
 
 For issues or questions:
-1. Check browser console and Vercel logs
-2. Review Resend dashboard
-3. Verify environment variables
-4. Test with small files first
-5. Check email spam folder
+1. Check browser console for frontend errors
+2. Check Vercel function logs for backend errors
+3. Check n8n execution logs for workflow issues
+4. Test with small files first (1-2MB)
+5. Verify n8n webhook URL is correct

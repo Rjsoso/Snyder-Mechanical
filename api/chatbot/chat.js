@@ -21,7 +21,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message, sessionId, session_id, messages, history } = req.body;
+    const { message, sessionId, session_id, messages, history, attachments } = req.body;
+
+    // Prepare payload for n8n
+    const payload = {
+      message,
+      sessionId: sessionId || session_id,
+      session_id: sessionId || session_id,
+      messages,
+      history,
+    };
+
+    // Include attachments if present (for quote requests with files)
+    if (attachments && Array.isArray(attachments) && attachments.length > 0) {
+      payload.attachments = attachments;
+      payload.hasAttachments = true;
+      payload.attachmentCount = attachments.length;
+    }
 
     // Forward request to n8n
     const response = await fetch(N8N_WEBHOOK_URL, {
@@ -29,13 +45,7 @@ export default async function handler(req, res) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        message,
-        sessionId: sessionId || session_id,
-        session_id: sessionId || session_id,
-        messages,
-        history,
-      }),
+      body: JSON.stringify(payload),
     });
 
     // Forward the response

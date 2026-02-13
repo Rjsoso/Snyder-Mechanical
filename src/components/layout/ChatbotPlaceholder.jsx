@@ -150,53 +150,34 @@ const ChatbotPlaceholder = () => {
     setLoading(true);
 
     try {
-      // If files are attached, submit as quote request
+      const history = [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES);
+      
+      // Prepare payload for n8n
+      const payload = {
+        message: trimmed,
+        sessionId,
+        session_id: sessionId, // Send both formats for n8n compatibility
+        messages: history,
+        history: history, // Some n8n nodes expect "history"
+      };
+
+      // If files are attached, convert to base64 and include in payload
       if (hasAttachments) {
-        await sendQuoteWithAttachments(trimmed, attachedFiles);
+        const attachments = await convertFilesToBase64(attachedFiles);
+        payload.attachments = attachments;
+        payload.hasAttachments = true;
+        payload.attachmentCount = attachedFiles.length;
         
-        // Clear attachments after successful submission
+        // Clear attachments after conversion
         setAttachedFiles([]);
-        
-        // Show success message
-        const successMessage = {
-          role: "assistant",
-          content: `✓ Quote request submitted successfully! We've received your message and ${attachedFiles.length} attachment${attachedFiles.length > 1 ? 's' : ''}. Our team will review your request and get back to you shortly.`,
-        };
-        setMessages((prev) => [...prev, successMessage]);
-        
-        // Still send to n8n for AI response (non-blocking)
-        fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            message: `[Quote request with ${attachedFiles.length} file(s)] ${trimmed}`,
-            sessionId,
-            session_id: sessionId,
-            messages: [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES),
-            history: [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES),
-          }),
-        }).catch(() => {
-          // Ignore n8n errors when quote already submitted successfully
-        });
-        
-        setLoading(false);
-        return;
       }
 
-      // Normal message flow (no attachments)
-      const history = [...messages, userMessage].slice(-MAX_HISTORY_MESSAGES);
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 45000);
       const res = await fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: trimmed,
-          sessionId,
-          session_id: sessionId, // Send both formats for n8n compatibility
-          messages: history,
-          history: history, // Some n8n nodes expect "history"
-        }),
+        body: JSON.stringify(payload),
         signal: controller.signal,
       });
       clearTimeout(timeoutId);
@@ -350,47 +331,25 @@ const ChatbotPlaceholder = () => {
     setAttachedFiles(attachedFiles.filter((_, i) => i !== index));
   };
 
-  const sendQuoteWithAttachments = async (message, files) => {
-    try {
-      // Convert files to base64
-      const filePromises = files.map(file => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const base64 = reader.result.split(',')[1];
-            resolve({
-              filename: file.name,
-              content: base64,
-              contentType: file.type,
-              size: file.size,
-            });
-          };
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
+  const convertFilesToBase64 = async (files) => {
+    const filePromises = files.map(file => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64 = reader.result.split(',')[1];
+          resolve({
+            filename: file.name,
+            content: base64,
+            contentType: file.type,
+            size: file.size,
+          });
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
       });
+    });
 
-      const attachments = await Promise.all(filePromises);
-
-      const response = await fetch('/api/quote/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message,
-          sessionId,
-          attachments,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit quote request');
-      }
-
-      return await response.json();
-    } catch (err) {
-      throw err;
-    }
+    return await Promise.all(filePromises);
   };
 
   // No webhook configured: keep "Coming Soon" behavior
