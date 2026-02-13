@@ -9,14 +9,19 @@ function FlowingMenu({
   speed = 15,
   textColor = '#fff',
   bgColor = '#060010',
+  bgGradient,
   marqueeBgColor = '#fff',
   marqueeTextColor = '#060010',
   borderColor = '#fff',
   showMarqueeImage = true,
   showMarquee = true
 }) {
+  const wrapStyle = bgGradient
+    ? { background: bgGradient }
+    : { backgroundColor: bgColor };
+
   return (
-    <div className="menu-wrap" style={{ backgroundColor: bgColor }}>
+    <div className="menu-wrap" style={wrapStyle}>
       <nav className="menu">
         {items.map((item, idx) => (
           <MenuItem

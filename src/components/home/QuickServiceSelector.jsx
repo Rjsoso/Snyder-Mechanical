@@ -51,11 +51,11 @@ const QuickServiceSelector = () => {
         <FlowingMenu
           items={flowingMenuItems}
           speed={15}
-          textColor="#e6f2ff"
-          bgColor="#00002e"
+          textColor="#fff"
+          bgGradient="linear-gradient(to bottom right, #757575, #3f51b5, #616161)"
           marqueeBgColor="#f5f5ff"
           marqueeTextColor="#00002e"
-          borderColor="#000056"
+          borderColor="rgba(255,255,255,0.2)"
           showMarqueeImage={false}
           showMarquee={false}
         />
