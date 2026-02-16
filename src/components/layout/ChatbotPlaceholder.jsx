@@ -15,7 +15,7 @@ const RELOAD_RESET_THRESHOLD = 3;
 const WELCOME_MESSAGE =
   "Hi! I'm here to help, to get started:\n\nAsk about our services, hours, or how we can assist you with a project!";
 
-const QUICK_REPLIES = ["Plumbing", "HVAC", "Get a quote"];
+const QUICK_REPLIES = ["Residential", "Commercial", "Pumps & Equipment", "Request a quote"];
 
 // Simple **bold** rendering for bot messages (no full markdown dependency)
 const BoldText = ({ text }) => {
