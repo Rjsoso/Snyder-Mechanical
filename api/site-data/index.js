@@ -98,6 +98,17 @@ function buildContextText() {
     reviewsData.reviews.slice(0, 5).forEach(r => parts.push(`- ${r.text}`));
   }
 
+  parts.push(`\n## Pages (where to find things on the website)`);
+  parts.push(`- Home: https://snyder-mechanical.vercel.app/`);
+  parts.push(`- Heating Services: https://snyder-mechanical.vercel.app/services/heating`);
+  parts.push(`- Cooling Services: https://snyder-mechanical.vercel.app/services/cooling`);
+  parts.push(`- Plumbing Services: https://snyder-mechanical.vercel.app/services/plumbing`);
+  parts.push(`- Commercial Services: https://snyder-mechanical.vercel.app/commercial`);
+  parts.push(`- Portfolio / Past Projects: https://snyder-mechanical.vercel.app/portfolio`);
+  parts.push(`- Resources & Guides: https://snyder-mechanical.vercel.app/resources`);
+  parts.push(`- About Us: https://snyder-mechanical.vercel.app/about/story`);
+  parts.push(`- Contact Us / Service Requests: https://snyder-mechanical.vercel.app/contact`);
+
   return parts.join('\n');
 }
 
