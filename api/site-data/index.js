@@ -119,7 +119,7 @@ function buildContextText() {
   parts.push(`- "Portfolio" — view past projects and completed work: https://snyder-mechanical.vercel.app/portfolio`);
   parts.push(`- "Contact" — contact form, phone, email, and address: https://snyder-mechanical.vercel.app/contact`);
   parts.push(`- "Resources / Payments" — guides, tips, and invoice payments: https://snyder-mechanical.vercel.app/resources`);
-  parts.push(`\nWhen a user asks how to find something, always tell them which menu item to click and provide the direct link.`);
+  parts.push(`\nNavigation instructions for the AI: When a user asks where to find something on the website, always give step-by-step directions through the menu. For example: "In the top navigation bar, hover over Services, then under For Businesses click Pumps & Equipment. You can also go directly to https://snyder-mechanical.vercel.app/services/pumps-equipment". Never just give a link alone — always explain which menu item to click first, then which dropdown option to choose.`);
 
   return parts.join('\n');
 }
