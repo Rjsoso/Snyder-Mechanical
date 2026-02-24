@@ -98,16 +98,28 @@ function buildContextText() {
     reviewsData.reviews.slice(0, 5).forEach(r => parts.push(`- ${r.text}`));
   }
 
-  parts.push(`\n## Pages (where to find things on the website)`);
-  parts.push(`- Home: https://snyder-mechanical.vercel.app/`);
-  parts.push(`- Heating Services: https://snyder-mechanical.vercel.app/services/heating`);
-  parts.push(`- Cooling Services: https://snyder-mechanical.vercel.app/services/cooling`);
-  parts.push(`- Plumbing Services: https://snyder-mechanical.vercel.app/services/plumbing`);
-  parts.push(`- Commercial Services: https://snyder-mechanical.vercel.app/commercial`);
-  parts.push(`- Portfolio / Past Projects: https://snyder-mechanical.vercel.app/portfolio`);
-  parts.push(`- Resources & Guides: https://snyder-mechanical.vercel.app/resources`);
-  parts.push(`- About Us: https://snyder-mechanical.vercel.app/about/story`);
-  parts.push(`- Contact Us / Service Requests: https://snyder-mechanical.vercel.app/contact`);
+  parts.push(`\n## Website Navigation`);
+  parts.push(`The website has a navigation menu at the top of every page with the following items:`);
+  parts.push(`- "Home" — click to go to the homepage: https://snyder-mechanical.vercel.app/`);
+  parts.push(`- "About" (dropdown menu) — hover or click to expand:`);
+  parts.push(`  - "Company Background" — company history and story: https://snyder-mechanical.vercel.app/about/company`);
+  parts.push(`  - "Safety" — safety practices and policies: https://snyder-mechanical.vercel.app/about/safety`);
+  parts.push(`  - "Service Recognitions" — awards and recognitions: https://snyder-mechanical.vercel.app/about/recognitions`);
+  parts.push(`  - "Careers" — job openings: https://snyder-mechanical.vercel.app/about/careers`);
+  parts.push(`- "Services" (dropdown menu) — hover or click to expand:`);
+  parts.push(`  - For Homeowners:`);
+  parts.push(`    - "Heating Services": https://snyder-mechanical.vercel.app/services/heating`);
+  parts.push(`    - "Cooling Services": https://snyder-mechanical.vercel.app/services/cooling`);
+  parts.push(`    - "Plumbing Services": https://snyder-mechanical.vercel.app/services/plumbing`);
+  parts.push(`  - For Businesses:`);
+  parts.push(`    - "Commercial Overview": https://snyder-mechanical.vercel.app/commercial`);
+  parts.push(`    - "Commercial HVAC": https://snyder-mechanical.vercel.app/services/commercial`);
+  parts.push(`    - "Design/Build Projects": https://snyder-mechanical.vercel.app/services/commercial#design-build`);
+  parts.push(`    - "Pumps & Equipment": https://snyder-mechanical.vercel.app/services/pumps-equipment`);
+  parts.push(`- "Portfolio" — view past projects and completed work: https://snyder-mechanical.vercel.app/portfolio`);
+  parts.push(`- "Contact" — contact form, phone, email, and address: https://snyder-mechanical.vercel.app/contact`);
+  parts.push(`- "Resources / Payments" — guides, tips, and invoice payments: https://snyder-mechanical.vercel.app/resources`);
+  parts.push(`\nWhen a user asks how to find something, always tell them which menu item to click and provide the direct link.`);
 
   return parts.join('\n');
 }
