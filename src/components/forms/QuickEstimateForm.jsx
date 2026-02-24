@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { User, Phone, Mail, MapPin, Home, Calendar, CheckCircle } from 'lucide-react';
+import { User, Phone, Mail, MapPin, Home, Calendar, CheckCircle, AlertCircle } from 'lucide-react';
 import Button from '../shared/Button';
 
 const QuickEstimateForm = ({ onClose }) => {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [formData, setFormData] = useState({
     serviceType: '',
     name: '',
@@ -17,24 +18,33 @@ const QuickEstimateForm = ({ onClose }) => {
     details: ''
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Estimate request submitted:', formData);
-    setSubmitted(true);
-    
-    // Close modal after 3 seconds
-    setTimeout(() => {
-      onClose();
-    }, 3000);
+    setSubmitError('');
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/quick-estimate/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setSubmitError(data.error || 'Something went wrong. Please try again or call us.');
+        setSubmitting(false);
+        return;
+      }
+      setSubmitted(true);
+      setTimeout(() => onClose(), 3000);
+    } catch {
+      setSubmitError('Network error. Please try again or call us.');
+    }
+    setSubmitting(false);
   };
 
   if (submitted) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-8"
-      >
+      <div className="text-center py-8">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <CheckCircle className="w-12 h-12 text-green-600" />
         </div>
@@ -47,7 +57,7 @@ const QuickEstimateForm = ({ onClose }) => {
         <p className="text-secondary-500">
           Expect to hear from us within 24 hours with your detailed estimate.
         </p>
-      </motion.div>
+      </div>
     );
   }
 
@@ -60,6 +70,12 @@ const QuickEstimateForm = ({ onClose }) => {
         Tell us about your project and we'll provide a detailed, no-obligation estimate.
       </p>
 
+      {submitError && (
+        <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-2 text-red-800 text-sm">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          {submitError}
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-secondary-700 mb-2">
@@ -199,8 +215,8 @@ const QuickEstimateForm = ({ onClose }) => {
           />
         </div>
 
-        <Button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 text-white py-4">
-          Get Free Estimate
+        <Button type="submit" className="w-full bg-primary-600 hover:bg-primary-700 text-white py-4" disabled={submitting}>
+          {submitting ? 'Sending...' : 'Get Free Estimate'}
         </Button>
 
         <p className="text-xs text-secondary-500 text-center">

@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Thermometer, Droplet, AlertCircle, Wrench, Building, Wind, Factory, CircleDot, Settings, Package } from 'lucide-react';
-import servicesData from '../data/services.json';
+import { useServiceCategories } from '../hooks/useSanityData';
+import servicesDataFallback from '../data/services.json';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
 
@@ -19,19 +20,28 @@ const iconMap = {
   'package': Package,
 };
 
+const serviceMap = {
+  'residential': 'residential',
+  'commercial': 'commercial',
+  'pumps-equipment': 'pumpsEquipment'
+};
+
 const ServicePage = () => {
   const { slug } = useParams();
-  
-  // Map slugs to data keys
-  const serviceMap = {
-    'residential': 'residential',
-    'commercial': 'commercial',
-    'pumps-equipment': 'pumpsEquipment'
-  };
-  
-  const serviceKey = serviceMap[slug];
-  const service = servicesData[serviceKey];
-  
+  const { data: sanityCategories, loading } = useServiceCategories();
+  const service = sanityCategories?.[slug] || servicesDataFallback[serviceMap[slug]];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4" />
+          <p className="text-secondary-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!service) {
     return (
       <div className="min-h-screen flex items-center justify-center">

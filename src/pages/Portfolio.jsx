@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import portfolioData from '../data/portfolio.json';
+import { usePortfolioProjects } from '../hooks/useSanityData';
+import portfolioDataFallback from '../data/portfolio.json';
 import Card from '../components/shared/Card';
 
 const Portfolio = () => {
   const [filter, setFilter] = useState('all');
+  const { data: sanityProjects, loading } = usePortfolioProjects();
+  const portfolioData = sanityProjects?.length ? sanityProjects : portfolioDataFallback;
 
   const categories = [
     { id: 'all', label: 'All Projects' },
@@ -13,9 +16,20 @@ const Portfolio = () => {
     { id: 'pumps-equipment', label: 'Pumps & Equipment' }
   ];
 
-  const filteredProjects = filter === 'all' 
-    ? portfolioData 
-    : portfolioData.filter(project => project.category === filter);
+  const filteredProjects = filter === 'all'
+    ? portfolioData
+    : portfolioData.filter((project) => project.category === filter);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4" />
+          <p className="text-secondary-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">

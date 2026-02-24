@@ -4,8 +4,9 @@ import ResourceCard from '../components/resources/ResourceCard';
 import InvoicePayment from '../components/resources/InvoicePayment';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
-import companyData from '../data/company.json';
-import resourcesData from '../data/resources.json';
+import { useCompanyData, useResources } from '../hooks/useSanityData';
+import companyDataFallback from '../data/company.json';
+import resourcesDataFallback from '../data/resources.json';
 
 const iconMap = {
   'wrench': Wrench,
@@ -15,6 +16,28 @@ const iconMap = {
 };
 
 const Resources = () => {
+  const { data: companyDataSanity } = useCompanyData();
+  const { data: resourcesSanity, loading } = useResources();
+  const companyData = companyDataSanity || companyDataFallback;
+  const resourcesData = (!loading && resourcesSanity?.categories?.length)
+    ? {
+        hero: resourcesSanity.hero || resourcesDataFallback.hero,
+        categories: resourcesSanity.categories,
+        faqs: resourcesSanity.faqs || resourcesDataFallback.faqs || []
+      }
+    : resourcesDataFallback;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4" />
+          <p className="text-secondary-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero */}
@@ -27,10 +50,10 @@ const Resources = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              {resourcesData.hero.title}
+              {resourcesData.hero?.title || resourcesDataFallback.hero.title}
             </h1>
             <p className="text-xl text-white/90">
-              {resourcesData.hero.subtitle}
+              {resourcesData.hero?.subtitle || resourcesDataFallback.hero.subtitle}
             </p>
           </motion.div>
         </div>
@@ -69,7 +92,7 @@ const Resources = () => {
       </section>
 
       {/* Resource Categories */}
-      {resourcesData.categories.map((category, categoryIndex) => {
+      {(resourcesData.categories || []).map((category, categoryIndex) => {
         const Icon = iconMap[category.icon] || Wrench;
         
         return (
@@ -110,7 +133,7 @@ const Resources = () => {
             Frequently Asked Questions
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {resourcesData.faqs.map((faq, index) => (
+            {(resourcesData.faqs || []).map((faq, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -141,11 +164,11 @@ const Resources = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href={`tel:${companyData.phone}`}
+              href={`tel:${companyData?.phone || companyDataFallback.phone}`}
               className="flex items-center justify-center space-x-2 px-8 py-4 bg-white text-primary-600 rounded-lg font-semibold hover:bg-primary-50 transition-colors text-lg"
             >
               <Phone className="w-5 h-5" />
-              <span>Call {companyData.phone}</span>
+              <span>Call {companyData?.phone || companyDataFallback.phone}</span>
             </a>
             <Button
               to="/?modal=schedule"

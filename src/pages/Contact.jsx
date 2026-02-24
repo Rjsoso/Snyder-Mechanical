@@ -1,4 +1,5 @@
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { useState } from 'react';
+import { Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import Card from '../components/shared/Card';
 import Button from '../components/shared/Button';
 import { useCompanyData, useContactPageData } from '../hooks/useSanityData';
@@ -6,6 +7,9 @@ import { useCompanyData, useContactPageData } from '../hooks/useSanityData';
 const Contact = () => {
   const { data: companyData } = useCompanyData();
   const { data: contactPageData } = useContactPageData();
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [formStatus, setFormStatus] = useState('idle'); // idle | sending | success | error
+  const [formError, setFormError] = useState('');
 
   // Fallback content if Sanity data is not available
   const hero = contactPageData?.hero || {
@@ -43,6 +47,30 @@ const Contact = () => {
     sunday: 'Sunday: Closed'
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormError('');
+    setFormStatus('sending');
+    try {
+      const res = await fetch('/api/contact/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setFormError(data.error || 'Something went wrong. Please try again.');
+        setFormStatus('error');
+        return;
+      }
+      setFormStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    } catch {
+      setFormError('Network error. Please try again or call us.');
+      setFormStatus('error');
+    }
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero */}
@@ -64,7 +92,19 @@ const Contact = () => {
               <h2 className="text-3xl font-bold text-secondary-900 mb-6">
                 {formSection.heading}
               </h2>
-              <form className="space-y-4">
+              {formStatus === 'success' && (
+                <div className="mb-4 p-4 rounded-lg bg-green-50 border border-green-200 flex items-center gap-3 text-green-800">
+                  <CheckCircle className="w-5 h-5 flex-shrink-0" />
+                  <p>Thanks! Your message has been sent. We&apos;ll get back to you soon.</p>
+                </div>
+              )}
+              {formStatus === 'error' && formError && (
+                <div className="mb-4 p-4 rounded-lg bg-red-50 border border-red-200 flex items-center gap-3 text-red-800">
+                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                  <p>{formError}</p>
+                </div>
+              )}
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label className="block text-sm font-medium text-secondary-700 mb-2">
                     {formSection.nameLabel} *
@@ -72,6 +112,8 @@ const Contact = () => {
                   <input
                     type="text"
                     required
+                    value={formData.name}
+                    onChange={(e) => setFormData((d) => ({ ...d, name: e.target.value }))}
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.namePlaceholder}
                   />
@@ -83,6 +125,8 @@ const Contact = () => {
                   <input
                     type="email"
                     required
+                    value={formData.email}
+                    onChange={(e) => setFormData((d) => ({ ...d, email: e.target.value }))}
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.emailPlaceholder}
                   />
@@ -93,6 +137,8 @@ const Contact = () => {
                   </label>
                   <input
                     type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData((d) => ({ ...d, phone: e.target.value }))}
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.phonePlaceholder}
                   />
@@ -104,12 +150,20 @@ const Contact = () => {
                   <textarea
                     required
                     rows="5"
+                    value={formData.message}
+                    onChange={(e) => setFormData((d) => ({ ...d, message: e.target.value }))}
                     className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.messagePlaceholder}
                   />
                 </div>
-                <Button type="submit" variant="primary" size="lg" className="w-full">
-                  {formSection.submitButtonText}
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                  disabled={formStatus === 'sending'}
+                >
+                  {formStatus === 'sending' ? 'Sending...' : formSection.submitButtonText}
                 </Button>
               </form>
             </div>

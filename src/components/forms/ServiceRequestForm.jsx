@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Flame, Snowflake, Droplets, Wrench, Calendar, User, Phone, Mail, MapPin, MessageSquare, CheckCircle } from 'lucide-react';
+import { Flame, Snowflake, Droplets, Wrench, Calendar, User, Phone, Mail, MapPin, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
 import Button from '../shared/Button';
 
 const services = [
@@ -28,9 +28,11 @@ const ServiceRequestForm = ({ onClose }) => {
     address: '',
     details: ''
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const nextStep = () => setStep(step + 1);
-  const prevStep = () => setStep(step - 1);
+  const nextStep = () => setStep((s) => s + 1);
+  const prevStep = () => setStep((s) => s - 1);
 
   const handleServiceSelect = (serviceId) => {
     setFormData({ ...formData, service: serviceId });
@@ -42,16 +44,28 @@ const ServiceRequestForm = ({ onClose }) => {
     nextStep();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real app, this would send the data to a server
-    console.log('Form submitted:', formData);
-    nextStep();
-    
-    // Close modal after 3 seconds
-    setTimeout(() => {
-      onClose();
-    }, 3000);
+    setSubmitError('');
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/service-request/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setSubmitError(data.error || 'Something went wrong. Please try again or call us.');
+        setSubmitting(false);
+        return;
+      }
+      nextStep();
+      setTimeout(() => onClose(), 3000);
+    } catch {
+      setSubmitError('Network error. Please try again or call us.');
+    }
+    setSubmitting(false);
   };
 
   return (
@@ -226,16 +240,23 @@ const ServiceRequestForm = ({ onClose }) => {
                 />
               </div>
 
+              {submitError && (
+                <div className="p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-2 text-red-800 text-sm">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  {submitError}
+                </div>
+              )}
               <div className="flex items-center space-x-4 pt-4">
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="text-secondary-600 hover:text-secondary-900 font-medium"
+                  disabled={submitting}
+                  className="text-secondary-600 hover:text-secondary-900 font-medium disabled:opacity-50"
                 >
                   ← Back
                 </button>
-                <Button type="submit" className="flex-1 bg-primary-600 hover:bg-primary-700 text-white">
-                  Submit Request
+                <Button type="submit" className="flex-1 bg-primary-600 hover:bg-primary-700 text-white" disabled={submitting}>
+                  {submitting ? 'Sending...' : 'Submit Request'}
                 </Button>
               </div>
             </form>

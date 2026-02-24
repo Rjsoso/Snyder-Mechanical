@@ -4,12 +4,12 @@ Modern, responsive website for Snyder Mechanical - Northeastern Nevada's Premier
 
 ## Tech Stack
 
-- **Framework**: React 18 with Vite 5
+- **Framework**: React 19 with Vite 7
 - **CMS**: Sanity.io (Headless CMS)
-- **Routing**: React Router DOM 6
-- **Styling**: Tailwind CSS 3 with @tailwindcss/postcss
+- **Routing**: React Router DOM 7
+- **Styling**: Tailwind CSS 4 with @tailwindcss/postcss
 - **Animations**: Framer Motion & GSAP
-- **Icons**: Lucide React & React Icons
+- **Icons**: Lucide React
 - **Deployment**: Vercel
 
 ## Project Structure
@@ -104,7 +104,7 @@ Copy `.env.example` to `.env` or `.env.local` and fill in values. Required for C
 - **Sanity:** `VITE_SANITY_PROJECT_ID`, `VITE_SANITY_DATASET` (frontend); `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_API_TOKEN` (API routes).
 - **Stripe:** `VITE_STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` for invoice payments.
 - **Admin/Sync:** `DASHBOARD_PASSWORD` for the invoice sync dashboard; `CRON_SECRET` (Vercel) and/or `SYNC_API_KEY` for sync endpoints.
-- **Chatbot (optional):** `N8N_CHATBOT_WEBHOOK` – full n8n webhook URL (e.g. `https://your-n8n.com/webhook/.../chat`). Used by `/api/chatbot/chat` proxy. If unset, the chatbot is disabled.
+- **Chatbot (optional):** `N8N_CHATBOT_WEBHOOK` – full n8n webhook URL (e.g. `https://your-n8n.com/webhook/.../chat`). Used by `/api/chatbot/chat` proxy. If unset, the chatbot is disabled. The site also exposes **`GET /api/site-data`** so n8n can pull website content (hours, services, FAQs, etc.) as context when answering questions. See `docs/N8N_SITE_DATA_SETUP.md`.
 
 See `.env.example` for the full list and optional vars (ComputerEase, `APP_URL`).
 

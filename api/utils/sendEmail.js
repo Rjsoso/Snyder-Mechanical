@@ -550,3 +550,153 @@ export async function sendQuoteRequestEmail({ recipientEmail, customerMessage, s
     throw error;
   }
 }
+
+/**
+ * Send contact form submission to company and optional confirmation to customer
+ * Used by /api/contact/send (Contact page form)
+ */
+export async function sendContactFormEmail({ name, email, phone, message }) {
+  const safe = (s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const safeName = safe(name);
+  const safeEmail = safe(email);
+  const safePhone = safe(phone || '—');
+  const safeMessage = safe(message).replace(/\n/g, '<br>');
+
+  const recipientEmail = process.env.CONTACT_FORM_TO_EMAIL || 'info@snydermechanical.com';
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: 'Snyder Mechanical Website <noreply@snydermechanical.com>',
+      replyTo: email,
+      to: [recipientEmail],
+      subject: `Contact form: ${safeName}`,
+      html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #fafafa;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fafafa; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); overflow: hidden;">
+          <tr>
+            <td style="background: linear-gradient(135deg, #303f9f 0%, #1a237e 100%); padding: 40px; text-align: center;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">New Contact Form Message</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 30px 40px;">
+              <table width="100%" cellpadding="8" cellspacing="0" style="background-color: #f5f5f5; border-radius: 8px;">
+                <tr><td style="color: #757575; font-size: 14px;">Name</td><td style="color: #212121; font-weight: 600;">${safeName}</td></tr>
+                <tr><td style="color: #757575; font-size: 14px;">Email</td><td style="color: #212121; font-weight: 600;">${safeEmail}</td></tr>
+                <tr><td style="color: #757575; font-size: 14px;">Phone</td><td style="color: #212121;">${safePhone}</td></tr>
+              </table>
+              <p style="margin: 20px 0 0 0; color: #424242; font-size: 14px;">Message:</p>
+              <div style="margin-top: 8px; padding: 16px; background: #f5f5f5; border-radius: 8px; color: #212121; line-height: 1.6;">${safeMessage}</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px 40px 30px; background-color: #f5f5f5; border-top: 1px solid #e0e0e0;">
+              <p style="margin: 0; color: #9e9e9e; font-size: 12px;">Submitted from the website contact form. Reply directly to this email to respond to the customer.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+      `,
+    });
+
+    if (error) {
+      console.error('Failed to send contact form email:', error);
+      throw error;
+    }
+    console.log('Contact form email sent:', data?.id);
+    return data;
+  } catch (err) {
+    console.error('Contact form email error:', err);
+    throw err;
+  }
+}
+
+function escapeHtml(s) {
+  return (s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/**
+ * Send service request form submission (Schedule Service modal)
+ */
+export async function sendServiceRequestEmail(payload) {
+  const recipientEmail = process.env.CONTACT_FORM_TO_EMAIL || 'info@snydermechanical.com';
+  const rows = [
+    ['Service', payload.service || '—'],
+    ['Timeframe', payload.timeframe || '—'],
+    ['Name', escapeHtml(payload.name)],
+    ['Phone', escapeHtml(payload.phone)],
+    ['Email', escapeHtml(payload.email)],
+    ['Address', escapeHtml(payload.address)],
+    ['Details', (payload.details || '—').replace(/\n/g, '<br>')],
+  ]
+    .map(([k, v]) => `<tr><td style="color:#757575;font-size:14px;padding:8px 0;">${escapeHtml(k)}</td><td style="color:#212121;">${v}</td></tr>`)
+    .join('');
+
+  const { data, error } = await resend.emails.send({
+    from: 'Snyder Mechanical Website <noreply@snydermechanical.com>',
+    replyTo: payload.email,
+    to: [recipientEmail],
+    subject: `Service request: ${escapeHtml(payload.name)} – ${payload.service || 'Service'}`,
+    html: `
+<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;padding:20px;">
+  <h2 style="color:#1a237e;">New Service Request</h2>
+  <table style="border-collapse:collapse;">${rows}</table>
+  <p style="margin-top:20px;color:#757575;font-size:12px;">From the website Schedule Service form.</p>
+</body></html>`,
+  });
+  if (error) throw error;
+  return data;
+}
+
+/**
+ * Send quick estimate form submission (Get Free Quote modal)
+ */
+export async function sendQuickEstimateEmail(payload) {
+  const recipientEmail = process.env.CONTACT_FORM_TO_EMAIL || 'info@snydermechanical.com';
+  const rows = [
+    ['Service type', payload.serviceType || '—'],
+    ['Name', escapeHtml(payload.name)],
+    ['Phone', escapeHtml(payload.phone)],
+    ['Email', escapeHtml(payload.email)],
+    ['Address', escapeHtml(payload.address)],
+    ['Home size', escapeHtml(payload.homeSize) || '—'],
+    ['Home age', escapeHtml(payload.homeAge) || '—'],
+    ['Equipment age', escapeHtml(payload.equipmentAge) || '—'],
+    ['Details', (payload.details || '—').replace(/\n/g, '<br>')],
+  ]
+    .map(([k, v]) => `<tr><td style="color:#757575;font-size:14px;padding:8px 0;">${escapeHtml(k)}</td><td style="color:#212121;">${v}</td></tr>`)
+    .join('');
+
+  const { data, error } = await resend.emails.send({
+    from: 'Snyder Mechanical Website <noreply@snydermechanical.com>',
+    replyTo: payload.email,
+    to: [recipientEmail],
+    subject: `Estimate request: ${escapeHtml(payload.name)} – ${payload.serviceType || 'Estimate'}`,
+    html: `
+<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:sans-serif;padding:20px;">
+  <h2 style="color:#1a237e;">New Estimate Request</h2>
+  <table style="border-collapse:collapse;">${rows}</table>
+  <p style="margin-top:20px;color:#757575;font-size:12px;">From the website Get Free Quote form.</p>
+</body></html>`,
+  });
+  if (error) throw error;
+  return data;
+}
