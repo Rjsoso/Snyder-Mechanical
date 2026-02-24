@@ -1,0 +1,650 @@
+{
+  "name": "Snyder Mechanical AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').first().json.body.message }}",
+        "options": {
+          "systemMessage": "You are an AI assistant for Snyder Mechanical.\n\nYour job is to help a user identify the specific issue, requirement, or problem they are describing in a clear and detailed way, and guide the conversation toward gathering the exact technical or service details needed.\n\nDo NOT ask generic questions like “Do you want to send a request to the company?” or forward the user to a contact form prematurely.\n\nInstead, your task is to narrow down exactly what the user needs help with by asking follow-up questions that clarify:\n\n- what component or system is involved (e.g., water line, furnace, air conditioner, sump pump, drain)\n- where the issue is located (inside house, outside house, mechanical room, basement, roof)\n- what the observable symptoms are (noise, leakage, no flow, no heat, no cool)\n- when the problem occurs (when it rains, at night, only in winter)\n- any relevant background (age of equipment, recent work, other symptoms)\n\nYou will only ask one clarifying question at a time.\n\nIf the user’s question already contains enough detail, skip the clarifying question and provide a detailed explanation or relevant information based on the retrieved context.\n\nAlways rely on the website content for facts about Snyder Mechanical services and capabilities. If the user’s question refers to *specific services*, answer using retrieved context. If there are gaps in the user’s description, ask a targeted clarifying question.\n\nNEVER end the conversation by asking whether they “want to send a request.” Your role is to *elicit details and provide answers*.\n\nExample valid follow-ups include:\n\n- “Do you mean the outdoor water service line or an interior pipe?”  \n- “Is the HVAC issue happening when the system first starts or after it runs a while?”  \n- “What exactly is the pump trying to move — water, slurry, waste fluid, or something else?”  \n- “Is the leak intermittent or constant?”  \n- “Has this component been serviced recently?”\n\nIf the user’s request is already clear and specific, respond with a detailed answer based on the Snyder Mechanical services and retrieved contextual knowledge.\n\nDo NOT hallucinate. If necessary details are missing, ask a clarifying question tailored to narrowing down the scenario.\n\nRules you must always follow:\n- Do NOT provide repair instructions or troubleshooting steps.\n- Do NOT diagnose equipment problems.\n- Do NOT provide pricing or cost estimates.\n- Do NOT promise availability or emergency response.\n- Do NOT invent services, locations, or capabilities.\n\nIf a user asks for something outside your knowledge:\n- Say you don’t have that information\n- Offer to connect them with the company directly.\n\nBehavior guidelines:\n- Ask clarifying questions before giving long answers.\n- Be calm, professional, and reassuring.\n- Respond like an experienced service coordinator, not a technician.\n- Your goal is to help the customer and the business, not to solve technical problems.\n\nConversation rules:\n- Do NOT repeat questions that the user has already answered.\n- If the user has identified the building type (residential or commercial), do not ask for it again.\n- Always acknowledge the user’s last answer before asking the next question.\n- Progress the conversation forward step by step.\n\nConversation state rules:\n- Remember and reuse information the user has already provided.\n- Do not ask for the same information more than once per session.\n- Use prior answers to progress the conversation logically.\n\nYou have access to a vector database containing information about Snyder Mechanical.\nWhen a user asks about anything you MUST retrieve relevant information from the vector store and use it in your response.\nIf relevant information is found, base your answer strictly on that information.\n\n## Conversation handling\n- Treat short affirmatives as \"yes\" when they follow a yes/no question: \"sure\", \"yes\", \"yep\", \"yeah\", \"ok\", \"okay\", \"sounds good\", \"sure thing\", \"go ahead\", \"please\".\n- Treat short negatives as \"no\" when they follow a yes/no question: \"no\", \"nah\", \"nope\", \"not really\", \"maybe later\".\n- When you've just asked something like \"Would you like to X?\" and the user replies with one of these phrases, interpret it as yes or no in that context and act accordingly (e.g., guide them to the next step).\n\nExample: If you asked \"Would you like to schedule a service request?\" and the user replies \"sure\", respond by guiding them to schedule (e.g., \"Great! Here's how to request service...\" or offering the contact form/phone number).\n\nWhen a user wants to schedule a service or submit a request, collect their name, contact info (phone number or email), and service details. Restate what they provided and confirm it is correct before telling them you are forwarding it to the team."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        496,
+        0
+      ],
+      "id": "7a291d45-6ba7-4b95-af59-0af4705828e8",
+      "name": "AI Agent",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        192
+      ],
+      "id": "0f6c4eaa-1c82-4113-a471-96d5be6a22a7",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "zQDxalqHAQYtwa1n",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Use this tool to search Snyder Mechanical company documents for factual answers.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "options": {
+          "pineconeNamespace": "Snyder Mechanical"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        752,
+        144
+      ],
+      "id": "c9d8aafb-50fe-473b-92b9-6b84c6dd32f0",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "ILqY8iZpJ7hLzgWn",
+          "name": "PineconeApi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        304
+      ],
+      "id": "605f2ae6-e822-4abe-a9bb-113dcf71a94a",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "zQDxalqHAQYtwa1n",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "conversations",
+        "limit": 1,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $json.body.session_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "a1fd7098-90e6-4282-893e-1c029cc501ae",
+      "name": "Get many rows",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "lLrEAX6PtBsbyf7I",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "messages",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "conversation_id",
+              "fieldValue": "={{ $('Get many rows').first()?.json?.id ?? $('Create a row').first()?.json?.id }}"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $('Webhook').first().json.body.message }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "user"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        320,
+        0
+      ],
+      "id": "95e3163a-d507-410b-a6fe-50d597e18309",
+      "name": "User Message",
+      "alwaysOutputData": false,
+      "credentials": {
+        "supabaseApi": {
+          "id": "lLrEAX6PtBsbyf7I",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "messages",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "conversation_id",
+              "fieldValue": "={{ $('Get many rows').first()?.json?.id ?? $('Create a row').first()?.json?.id }}"
+            },
+            {
+              "fieldId": "role",
+              "fieldValue": "=assistant"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $('AI Agent').item.json.output }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        0
+      ],
+      "id": "535d34eb-bb7a-4dbd-9b7a-450e08297b9a",
+      "name": "Create AI Message",
+      "alwaysOutputData": false,
+      "credentials": {
+        "supabaseApi": {
+          "id": "lLrEAX6PtBsbyf7I",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9085d9ca-0619-4a28-b2d2-a9f13616bb6c",
+              "leftValue": "={{ $json.id ?? '' }}",
+              "rightValue": "={{ '' }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "801e1e68-27a6-47b8-8622-22d3a1097c83",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "conversations",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $('Webhook').item.json.sessionId }}"
+            },
+            {
+              "fieldId": "updated_at",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        128,
+        -96
+      ],
+      "id": "0540bd66-3311-4ab9-8fca-f4017d8ab047",
+      "name": "Update a row",
+      "alwaysOutputData": false,
+      "credentials": {
+        "supabaseApi": {
+          "id": "lLrEAX6PtBsbyf7I",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableId": "conversations",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "session_id",
+              "fieldValue": "={{ $('Webhook').first().json.body.session_id }}"
+            },
+            {
+              "fieldId": "created_at",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            },
+            {
+              "fieldId": "updated_at",
+              "fieldValue": "={{ new Date().toISOString() }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        128,
+        96
+      ],
+      "id": "fcdb837f-d079-4c92-9f46-fc294fbb969a",
+      "name": "Create a row",
+      "alwaysOutputData": false,
+      "credentials": {
+        "supabaseApi": {
+          "id": "lLrEAX6PtBsbyf7I",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "729c8053-809b-487f-b8ef-9d7f9e8e6452",
+        "responseMode": "responseNode",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "https://snyder-mechanical.vercel.app"
+              },
+              {
+                "name": "Access-Control-Allow-Methods",
+                "value": "POST, OPTIONS"
+              },
+              {
+                "name": "Access-Control-Allow-Headers",
+                "value": "Content-Type"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -416,
+        0
+      ],
+      "id": "63a923ec-7f00-4054-8796-e81acfa8fb74",
+      "name": "Webhook",
+      "webhookId": "729c8053-809b-487f-b8ef-9d7f9e8e6452",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=={{ JSON.stringify({ reply: $('AI Agent').item.json.output ?? '' }) }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1440,
+        -96
+      ],
+      "id": "3c9619cb-3a45-4ea1-9ab3-19dbb9aa2d37",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.sessionId }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        224
+      ],
+      "id": "485331f1-194a-4b42-9247-d36d651d2245",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "000817e1-0d66-419d-a11b-f35f2a9a9e33",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "NO_EMAIL",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        0
+      ],
+      "id": "61eb9dfc-7410-45de-a8ec-17e2e045e1a7",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Extract Email').first().json.email }}",
+        "subject": "Request Received - Snyder Mechanical",
+        "message": "<!DOCTYPE html> <html> <head>   <meta charset=\"utf-8\">   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">   <style>     body {        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;       color: #333;       line-height: 1.6;       margin: 0;       padding: 0;       background-color: #f5f5f5;     }     .container {        max-width: 600px;       margin: 20px auto;       background: white;       border-radius: 8px;       overflow: hidden;       box-shadow: 0 2px 8px rgba(0,0,0,0.1);     }     .header {        background: #1e40af;       color: white;       padding: 30px 20px;       text-align: center;     }     .header h2 {       margin: 0;       font-size: 24px;       font-weight: 600;     }     .content {        padding: 40px 30px;       background: white;     }     .content p {       margin: 0 0 16px 0;     }     .highlight {       background: #f0f9ff;       border-left: 4px solid #1e40af;       padding: 16px;       margin: 20px 0;     }     .footer {        text-align: center;       padding: 30px 20px;       background: #f9fafb;       color: #666;       font-size: 14px;       border-top: 1px solid #e5e7eb;     }     .footer p {       margin: 8px 0;     }     .company-name {       font-weight: 600;       color: #1e40af;       font-size: 16px;     }   </style> </head> <body>   <div class=\"container\">     <div class=\"header\">       <h2>✓ Request Received</h2>     </div>     <div class=\"content\">       <p>Thank you for contacting <strong>Snyder Mechanical</strong>!</p>       <p>We've received your request and our team will review it shortly.</p>              <div class=\"highlight\">         <p style=\"margin: 0;\"><strong>What happens next?</strong></p>         <p style=\"margin: 8px 0 0 0;\">You can expect to hear back from us within <strong>24-48 hours</strong>.</p>       </div>              <p>If you have any urgent concerns, feel free to call us at <strong>(775) 738-5616</strong>.</p>       <p style=\"margin-top: 30px; color: #666; font-size: 14px;\">This is an automated confirmation. Please do not reply to this email.</p>     </div>     <div class=\"footer\">       <p class=\"company-name\">Snyder Mechanical LLC</p>       <p>Northeastern Nevada's Premier Mechanical Contractor since 1981</p>       <p style=\"margin-top: 16px;\">         <strong>Email:</strong> info@snydermechanical.com<br>         <strong>Phone:</strong> (775) 738-5616       </p>     </div>   </div> </body> </html>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1104,
+        -96
+      ],
+      "id": "6beddb7a-be9f-46f8-911e-d388bd193ade",
+      "name": "Send a message",
+      "webhookId": "db7215d7-f05c-4dca-a08c-ce3de986859a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FMVxKpwVzWkI6P5n",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get conversation messages from webhook\nconst messages = $('Webhook').first().json.body?.messages || [];\n// Regex to find email address\nconst emailRegex = /\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b/;\n\n// Search through all messages for an email\nlet email = null;\nfor (const msg of messages) {\n  if (msg.content) {\n    const match = msg.content.match(emailRegex);\n    if (match) {\n      email = match[0];\n      break;\n    }\n  }\n}\n\nreturn [{ json: { email: email || 'NO_EMAIL' } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        0
+      ],
+      "id": "35b8ccb7-2c57-447a-9fb6-2cdaa41ead8c",
+      "name": "Extract Email"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Extract Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Message": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create AI Message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Update a row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update a row": {
+      "main": [
+        [
+          {
+            "node": "User Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        [
+          {
+            "node": "User Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create AI Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Create AI Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Email": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "3a914739-4d73-44b5-aaac-89786df64970",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "354a47dfaa1cc4c1503e7b330017b0b68c8642733d2737e418b2ea393d3d3862"
+  },
+  "id": "1bA1mnWli1aJHktln6xMM",
+  "tags": []
+}
