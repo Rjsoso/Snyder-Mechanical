@@ -441,7 +441,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Get conversation messages from webhook\nconst messages = $('Webhook').first().json.body?.messages || [];\n// Regex to find email address\nconst emailRegex = /\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b/;\n\n// Search through all messages for an email\nlet email = null;\nfor (const msg of messages) {\n  if (msg.content) {\n    const match = msg.content.match(emailRegex);\n    if (match) {\n      email = match[0];\n      break;\n    }\n  }\n}\n\nreturn [{ json: { email: email || 'NO_EMAIL' } }];"
+        "jsCode": "const messages = $('Webhook').first().json.body?.messages || [];\nconst emailRegex = /\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b/;\n\n// Never treat company/internal addresses as a customer email\nconst excludedEmails = [\n  'info@snydermechanical.com',\n  'rorybylund@gmail.com',\n  'snydermechanical.com',\n];\n\nlet email = null;\nfor (const msg of messages) {\n  // Only scan what the user typed — skip assistant and system messages\n  if (msg.content && msg.role === 'user') {\n    const match = msg.content.match(emailRegex);\n    if (match) {\n      const found = match[0].toLowerCase();\n      const isExcluded = excludedEmails.some(e => found.includes(e));\n      if (!isExcluded) {\n        email = found;\n        break;\n      }\n    }\n  }\n}\n\nreturn [{ json: { email: email || 'NO_EMAIL' } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
