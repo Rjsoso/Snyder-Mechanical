@@ -1,57 +1,57 @@
 import { motion } from 'framer-motion';
-import { Award, Briefcase, Shield } from 'lucide-react';
 import { useCompanyData } from '../../hooks/useSanityData';
 
 const StatsBar = () => {
   const { data: companyData } = useCompanyData();
+  const yearsInBusiness = new Date().getFullYear() - 1981;
 
-  // Fallback stats if Sanity data is not available
   const stats = [
     {
-      icon: Briefcase,
-      value: companyData?.stats?.yearsInBusiness || `${new Date().getFullYear() - 1981}+`,
-      label: 'Years in Business'
+      value: companyData?.stats?.yearsInBusiness || `${yearsInBusiness}+`,
+      label: 'Years in Business',
+      suffix: '',
     },
     {
-      icon: Award,
-      value: companyData?.stats?.projectsCompleted || '5000+',
-      label: 'Projects Completed'
+      value: companyData?.stats?.projectsCompleted || '5,000+',
+      label: 'Projects Completed',
+      suffix: '',
     },
     {
-      icon: Shield,
-      value: companyData?.stats?.certifications || 'Fully Licensed & Insured',
-      label: ''
-    }
+      value: '3',
+      label: 'Service Areas',
+      suffix: ' Counties',
+    },
+    {
+      value: '100%',
+      label: 'Satisfaction Guarantee',
+      suffix: '',
+    },
   ];
+
   return (
-    <section className="section-padding bg-primary-800 text-white">
+    <section className="bg-white border-y border-secondary-100 py-14">
       <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={index}
-                className="text-center"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 text-white mb-4">
-                  <Icon className="w-8 h-8" />
-                </div>
-                <div className="text-4xl font-bold text-white mb-2">
-                  {stat.value}
-                </div>
-                {stat.label && (
-                  <div className="text-lg text-white/80">
-                    {stat.label}
-                  </div>
-                )}
-              </motion.div>
-            );
-          })}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map((stat, index) => (
+            <motion.div
+              key={index}
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <div className="text-5xl md:text-6xl font-bold text-primary-700 leading-none mb-1">
+                {stat.value}
+                <span className="text-3xl md:text-4xl">{stat.suffix}</span>
+              </div>
+              {/* Amber accent underline */}
+              <div className="w-10 h-1 bg-amber-500 rounded-full mx-auto my-3" />
+              <div className="text-secondary-500 font-medium text-sm uppercase tracking-wide">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

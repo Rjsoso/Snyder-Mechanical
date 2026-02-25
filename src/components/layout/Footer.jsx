@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Clock } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ShieldCheck } from 'lucide-react';
 import { useCompanyData, useSiteSettings } from '../../hooks/useSanityData';
 
 const DEFAULT_ABOUT_LINKS = [
@@ -9,16 +9,17 @@ const DEFAULT_ABOUT_LINKS = [
   { label: 'Careers', path: '/about/careers' }
 ];
 const DEFAULT_SERVICES_LINKS = [
-  { label: 'Residential Services', path: '/services/residential' },
+  { label: 'Heating Services', path: '/services/heating' },
+  { label: 'Cooling Services', path: '/services/cooling' },
+  { label: 'Plumbing Services', path: '/services/plumbing' },
   { label: 'Commercial Services', path: '/commercial' },
-  { label: 'Payments', path: '/resources' },
+  { label: 'Pumps & Equipment', path: '/services/pumps-equipment' },
   { label: 'Portfolio', path: '/portfolio' },
-  { label: 'Contact Us', path: '/contact' }
 ];
 const DEFAULT_FOOTER = {
   hoursHeading: 'Business Hours',
-  mondayFridayLabel: 'Monday - Friday',
-  mondayFridayHours: '8:00 AM - 5:00 PM',
+  mondayFridayLabel: 'Monday – Friday',
+  mondayFridayHours: '8:00 AM – 5:00 PM',
   saturdayText: 'Saturday: By Appointment',
   sundayText: 'Sunday: Closed',
   licensedText: 'Fully Licensed & Insured'
@@ -37,41 +38,61 @@ const Footer = () => {
   const name = useFallback ? 'Snyder Mechanical' : (companyData?.name || 'Snyder Mechanical');
   const description = useFallback ? '' : (companyData?.description || '');
   const phone = useFallback ? '(775) 738-5616' : (companyData?.phone || '(775) 738-5616');
+  const email = useFallback ? 'info@snydermechanical.com' : (companyData?.email || 'info@snydermechanical.com');
   const address = useFallback ? 'Elko, Spring Creek, NV' : (companyData?.address?.display || 'Elko, Spring Creek, NV');
   const serviceArea = useFallback ? 'Northeastern Nevada' : (companyData?.serviceArea || 'Northeastern Nevada');
 
   return (
-    <footer className="bg-gradient-to-b from-secondary-700 to-secondary-800 text-white border-t-4 border-secondary-500">
-      <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-primary-900 text-white">
+      <div className="container-custom pt-14 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">{name}</h3>
-            <p className="text-secondary-300 mb-4">
-              {description ? `${description.substring(0, 120)}...` : 'Professional HVAC and mechanical services'}
+            <Link to="/">
+              <img
+                src="/logo.png"
+                alt={name}
+                className="h-14 w-auto object-contain mb-4 brightness-0 invert"
+              />
+            </Link>
+            <p className="text-primary-200 text-sm leading-relaxed mb-5">
+              {description
+                ? `${description.substring(0, 130)}...`
+                : `${name} — Northeastern Nevada's trusted mechanical contractor since 1981.`}
             </p>
-            <div className="flex flex-col space-y-2">
-              <a 
+            <div className="flex flex-col space-y-2.5">
+              <a
                 href={`tel:${phone}`}
-                className="flex items-center space-x-2 text-secondary-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-primary-200 hover:text-amber-300 transition-colors text-sm"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4 flex-shrink-0" />
                 <span>{phone}</span>
               </a>
-              <div className="flex items-center space-x-2 text-secondary-300">
-                <MapPin className="w-4 h-4" />
+              <a
+                href={`mailto:${email}`}
+                className="flex items-center gap-2 text-primary-200 hover:text-amber-300 transition-colors text-sm"
+              >
+                <Mail className="w-4 h-4 flex-shrink-0" />
+                <span>{email}</span>
+              </a>
+              <div className="flex items-center gap-2 text-primary-200 text-sm">
+                <MapPin className="w-4 h-4 flex-shrink-0" />
                 <span>{address}</span>
               </div>
             </div>
           </div>
 
-          {/* Quick Links - About */}
+          {/* About Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">About Us</h4>
-            <ul className="space-y-2">
+            <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">About Us</h4>
+            <ul className="space-y-2.5">
               {aboutLinks.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path} className="text-secondary-300 hover:text-white transition-colors">
+                  <Link
+                    to={link.path}
+                    className="text-primary-200 hover:text-white text-sm transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -79,13 +100,16 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Quick Links - Services */}
+          {/* Services Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Services</h4>
-            <ul className="space-y-2">
+            <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Services</h4>
+            <ul className="space-y-2.5">
               {servicesLinks.map((link, index) => (
                 <li key={index}>
-                  <Link to={link.path} className="text-secondary-300 hover:text-white transition-colors">
+                  <Link
+                    to={link.path}
+                    className="text-primary-200 hover:text-white text-sm transition-colors"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -95,33 +119,39 @@ const Footer = () => {
 
           {/* Hours */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">{footer.hoursHeading}</h4>
-            <div className="space-y-2 text-secondary-300">
-              <div className="flex items-start space-x-2">
-                <Clock className="w-4 h-4 mt-1 flex-shrink-0" />
+            <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">{footer.hoursHeading}</h4>
+            <div className="space-y-3 text-primary-200 text-sm">
+              <div className="flex items-start gap-2">
+                <Clock className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-400" />
                 <div>
                   <p className="font-medium text-white">{footer.mondayFridayLabel}</p>
-                  <p className="text-sm">{footer.mondayFridayHours}</p>
+                  <p>{footer.mondayFridayHours}</p>
                 </div>
               </div>
-              <div className="mt-4 text-sm">
-                <p>{footer.saturdayText}</p>
-                <p>{footer.sundayText}</p>
-              </div>
+              <p>{footer.saturdayText}</p>
+              <p>{footer.sundayText}</p>
+            </div>
+
+            <div className="mt-6 pt-5 border-t border-primary-700">
+              <Link
+                to="/contact"
+                className="inline-block w-full text-center py-2.5 px-4 bg-amber-500 hover:bg-amber-400 text-white rounded-lg font-semibold text-sm transition-colors"
+              >
+                Request Service
+              </Link>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-secondary-800">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-secondary-400 text-sm">
+        <div className="mt-12 pt-6 border-t border-primary-700">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-primary-300 text-sm">
               © {currentYear} {name}. All rights reserved.
-            </div>
-            <div className="flex items-center space-x-4 text-secondary-400 text-sm">
-              <span>{footer.licensedText}</span>
-              <span>•</span>
-              <span>Serving {serviceArea}</span>
+            </p>
+            <div className="flex items-center gap-2 text-primary-300 text-sm">
+              <ShieldCheck className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <span>Licensed, Bonded &amp; Insured in Nevada &mdash; Serving {serviceArea}</span>
             </div>
           </div>
         </div>

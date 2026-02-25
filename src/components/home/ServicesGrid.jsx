@@ -1,124 +1,115 @@
 import { motion } from 'framer-motion';
-import { Home, Building2, Droplets, ArrowRight } from 'lucide-react';
+import { Flame, Wind, Droplets, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Card from '../shared/Card';
-import Badge from '../shared/Badge';
-import { useHomePageData } from '../../hooks/useSanityData';
 
 const services = [
   {
-    id: 'residential',
-    title: 'Residential Services',
-    description: 'Expert HVAC and plumbing services for your home. Installation, repair, and maintenance for all your comfort needs.',
-    icon: Home,
-    link: '/services/residential',
-    color: 'primary',
-    featured: false
+    id: 'heating',
+    title: 'Heating Services',
+    description: 'Keep your home warm through Nevada winters. Furnace repair, installation, heat pumps, and preventive maintenance by certified technicians.',
+    icon: Flame,
+    link: '/services/heating',
+    startingPrice: 'Starting at $95',
+    highlight: 'Furnace Repair · Installation · Heat Pumps',
   },
   {
-    id: 'commercial',
-    title: 'Commercial Services',
-    description: 'Design/build projects and commercial mechanical contracting for businesses and industrial facilities.',
-    icon: Building2,
-    link: '/services/commercial',
-    color: 'secondary',
-    featured: false
+    id: 'cooling',
+    title: 'Cooling Services',
+    description: 'Stay cool all summer long. AC repair, new system installation, tune-ups, and ductless mini-splits for every home.',
+    icon: Wind,
+    link: '/services/cooling',
+    startingPrice: 'Starting at $85',
+    highlight: 'AC Repair · Installation · Tune-Ups',
   },
   {
-    id: 'pumps',
-    title: 'Pumps & Equipment',
-    description: 'Professional pump installation, maintenance, and equipment supply for all applications.',
+    id: 'plumbing',
+    title: 'Plumbing Services',
+    description: 'From leaky faucets to full water heater replacements, our licensed plumbers handle every residential plumbing need.',
     icon: Droplets,
-    link: '/services/pumps-equipment',
-    color: 'primary',
-    featured: false
-  }
+    link: '/services/plumbing',
+    startingPrice: 'Starting at $75',
+    highlight: 'Water Heaters · Drain Cleaning · Leak Repair',
+  },
 ];
 
 const ServicesGrid = () => {
-  const { data: homePageData } = useHomePageData();
-
-  // Fallback content if Sanity data is not available
-  const section = homePageData?.servicesGridSection || {
-    heading: 'Our Services',
-    description: 'Comprehensive mechanical solutions for residential, commercial, and industrial clients'
-  };
-
   return (
-    <section className="section-padding bg-gradient-to-b from-white to-secondary-50">
+    <section className="section-padding bg-white">
       <div className="container-custom">
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
+          <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2">What We Do</p>
           <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
-            {section.heading}
+            Residential Services
           </h2>
-          <p className="text-lg text-secondary-600 max-w-2xl mx-auto">
-            {section.description}
+          <p className="text-lg text-secondary-500 max-w-2xl mx-auto">
+            Comprehensive home comfort solutions — heating, cooling, and plumbing — all from one trusted local team.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
-            const isFeatured = service.featured;
-            
             return (
               <motion.div
                 key={service.id}
-                className={isFeatured ? 'lg:col-span-3' : ''}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link to={service.link}>
-                  <Card 
-                    hover 
-                    className={`h-full border-t-4 border-primary-600 relative ${
-                      isFeatured 
-                        ? 'bg-gradient-to-br from-primary-50 to-white lg:flex lg:items-center lg:gap-8 lg:p-8' 
-                        : ''
-                    }`}
-                  >
-                    {service.badge && (
-                      <div className="absolute top-4 right-4">
-                        <Badge variant="accent" size="sm">{service.badge}</Badge>
+                <Link to={service.link} className="group block h-full">
+                  <div className="h-full rounded-2xl overflow-hidden border border-secondary-100 shadow-sm hover:shadow-lg transition-all duration-300 bg-white flex flex-col">
+                    {/* Gradient header band */}
+                    <div className="bg-gradient-to-br from-primary-800 to-primary-600 px-6 pt-8 pb-6">
+                      <div className="w-14 h-14 rounded-xl bg-white/15 flex items-center justify-center mb-4">
+                        <Icon className="w-7 h-7 text-white" />
                       </div>
-                    )}
-                    
-                    <div className={isFeatured ? 'lg:flex-shrink-0' : ''}>
-                      <div className={`rounded-lg bg-primary-100 flex items-center justify-center mb-4 ${
-                        isFeatured ? 'w-24 h-24' : 'w-16 h-16'
-                      }`}>
-                        <Icon className={`text-primary-700 ${isFeatured ? 'w-12 h-12' : 'w-8 h-8'}`} />
-                      </div>
+                      <h3 className="text-xl font-bold text-white mb-1">{service.title}</h3>
+                      <p className="text-primary-200 text-xs font-medium">{service.highlight}</p>
                     </div>
-                    
-                    <div className={isFeatured ? 'lg:flex-1' : ''}>
-                      <h3 className={`font-bold text-secondary-900 mb-3 ${
-                        isFeatured ? 'text-2xl md:text-3xl' : 'text-xl'
-                      }`}>
-                        {service.title}
-                      </h3>
-                      <p className={`text-secondary-600 mb-4 ${isFeatured ? 'text-lg' : ''}`}>
+
+                    {/* Card body */}
+                    <div className="px-6 py-5 flex flex-col flex-1">
+                      <p className="text-secondary-600 text-sm leading-relaxed mb-4 flex-1">
                         {service.description}
                       </p>
-                      <div className="flex items-center text-primary-600 font-medium group-hover:text-primary-700">
-                        <span>{isFeatured ? 'Explore Our Services' : 'Learn More'}</span>
-                        <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                      <div className="flex items-center justify-between pt-4 border-t border-secondary-100">
+                        <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">
+                          {service.startingPrice}
+                        </span>
+                        <span className="flex items-center gap-1 text-primary-700 font-semibold text-sm group-hover:gap-2 transition-all">
+                          Learn More <ArrowRight className="w-4 h-4" />
+                        </span>
                       </div>
                     </div>
-                  </Card>
+                  </div>
                 </Link>
               </motion.div>
             );
           })}
         </div>
+
+        {/* Commercial link */}
+        <motion.div
+          className="mt-10 text-center"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <p className="text-secondary-500 text-sm">
+            Need commercial mechanical services?{' '}
+            <Link to="/commercial" className="text-primary-700 font-semibold hover:underline">
+              View Commercial Services →
+            </Link>
+          </p>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,0 +1,48 @@
+import { motion } from 'framer-motion';
+import { Phone, CalendarCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import companyData from '../../data/company.json';
+
+const CTABanner = () => {
+  const phone = companyData?.phone || '(775) 738-5616';
+
+  return (
+    <section className="bg-gradient-to-br from-primary-800 via-primary-700 to-primary-900 text-white py-20">
+      <div className="container-custom text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Ready to Get Started?</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Let's Get Your Home Comfortable
+          </h2>
+          <p className="text-primary-200 text-lg max-w-xl mx-auto mb-10">
+            Serving Elko, Spring Creek, and all of Northeastern Nevada. Call us or request service online today.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`tel:${phone}`}
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-white rounded-xl font-bold text-lg shadow-lg shadow-amber-900/30 transition-all hover:scale-105"
+            >
+              <Phone className="w-5 h-5" />
+              Call {phone}
+            </a>
+            <Link
+              to="/?modal=schedule"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 border-2 border-white text-white rounded-xl font-semibold text-lg transition-all hover:scale-105"
+            >
+              <CalendarCheck className="w-5 h-5" />
+              Request Service
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default CTABanner;
