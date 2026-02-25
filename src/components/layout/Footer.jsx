@@ -64,14 +64,14 @@ const Footer = () => {
             <div className="flex flex-col space-y-2.5">
               <a
                 href={`tel:${phone}`}
-                className="flex items-center gap-2 text-primary-200 hover:text-amber-300 transition-colors text-sm"
+                className="flex items-center gap-2 text-primary-200 hover:text-white transition-colors text-sm"
               >
                 <Phone className="w-4 h-4 flex-shrink-0" />
                 <span>{phone}</span>
               </a>
               <a
                 href={`mailto:${email}`}
-                className="flex items-center gap-2 text-primary-200 hover:text-amber-300 transition-colors text-sm"
+                className="flex items-center gap-2 text-primary-200 hover:text-white transition-colors text-sm"
               >
                 <Mail className="w-4 h-4 flex-shrink-0" />
                 <span>{email}</span>
@@ -122,7 +122,7 @@ const Footer = () => {
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">{footer.hoursHeading}</h4>
             <div className="space-y-3 text-primary-200 text-sm">
               <div className="flex items-start gap-2">
-                <Clock className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-400" />
+                <Clock className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary-300" />
                 <div>
                   <p className="font-medium text-white">{footer.mondayFridayLabel}</p>
                   <p>{footer.mondayFridayHours}</p>
@@ -135,7 +135,7 @@ const Footer = () => {
             <div className="mt-6 pt-5 border-t border-primary-700">
               <Link
                 to="/contact"
-                className="inline-block w-full text-center py-2.5 px-4 bg-amber-500 hover:bg-amber-400 text-white rounded-lg font-semibold text-sm transition-colors"
+                className="inline-block w-full text-center py-2.5 px-4 bg-primary-600 hover:bg-primary-500 text-white rounded-lg font-semibold text-sm transition-colors"
               >
                 Request Service
               </Link>
@@ -150,7 +150,7 @@ const Footer = () => {
               © {currentYear} {name}. All rights reserved.
             </p>
             <div className="flex items-center gap-2 text-primary-300 text-sm">
-              <ShieldCheck className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <ShieldCheck className="w-4 h-4 text-primary-300 flex-shrink-0" />
               <span>Licensed, Bonded &amp; Insured in Nevada &mdash; Serving {serviceArea}</span>
             </div>
           </div>

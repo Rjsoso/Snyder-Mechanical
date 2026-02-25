@@ -17,7 +17,7 @@ const QuickActionBar = () => {
       <div className="grid grid-cols-3">
         <a
           href={`tel:${phone}`}
-          className="flex flex-col items-center justify-center gap-1 py-3.5 bg-amber-500 hover:bg-amber-400 text-white transition-colors active:scale-95"
+          className="flex flex-col items-center justify-center gap-1 py-3.5 bg-primary-600 hover:bg-primary-700 text-white transition-colors active:scale-95"
         >
           <Phone className="w-5 h-5" />
           <span className="text-xs font-bold">Call Us</span>

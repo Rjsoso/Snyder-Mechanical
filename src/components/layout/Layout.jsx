@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
       <div className="flex-shrink-0">
         <Header />
       </div>
-      <main className="flex-shrink-0 pb-20 lg:pb-0 pt-28 md:pt-32 bg-white">
+      <main className="flex-shrink-0 pb-20 lg:pb-0 pt-24 md:pt-28 bg-white">
         {children}
       </main>
       {location.pathname !== '/' && (

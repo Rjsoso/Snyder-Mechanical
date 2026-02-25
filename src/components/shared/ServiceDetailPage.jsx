@@ -83,7 +83,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">
+            <p className="text-primary-200 font-semibold text-sm uppercase tracking-wider mb-3">
               Residential Services
             </p>
             <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
@@ -95,7 +95,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href={`tel:${phone}`}
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-amber-500 hover:bg-amber-400 text-white rounded-xl font-bold transition-all hover:scale-105 shadow-lg shadow-amber-900/20"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold transition-all hover:scale-105 shadow-lg"
               >
                 <Phone className="w-5 h-5" />
                 Call {phone}
@@ -150,14 +150,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
                       <Icon className="w-6 h-6 text-primary-700" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-1.5">
-                        <h3 className="text-lg font-bold text-secondary-900">{item.title}</h3>
-                        {item.startingPrice && (
-                          <span className="text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full whitespace-nowrap flex-shrink-0">
-                            From {item.startingPrice}
-                          </span>
-                        )}
-                      </div>
+                      <h3 className="text-lg font-bold text-secondary-900 mb-1.5">{item.title}</h3>
                       <p className="text-secondary-500 text-sm leading-relaxed">{item.description}</p>
                     </div>
                   </div>
@@ -277,7 +270,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href={`tel:${phone}`}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg"
               >
                 <Phone className="w-5 h-5" />
                 Call {phone}

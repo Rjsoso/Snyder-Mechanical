@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Phone, ArrowRight, Calendar, FileText, BadgeCheck } from 'lucide-react';
+import { Phone, ArrowRight, Calendar, BadgeCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroCarousel from './HeroCarousel';
 import { useCompanyData } from '../../hooks/useSanityData';
@@ -16,7 +16,6 @@ const Hero = () => {
     commercialLinkText: 'Looking for commercial services?',
     primaryButtonText: 'Call Now',
     scheduleButtonText: 'Schedule Service',
-    quoteButtonText: 'Get Free Quote'
   };
 
   const phone = companyData?.phone || '(775) 738-5616';
@@ -45,7 +44,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <span className="inline-flex items-center gap-1.5 bg-amber-500/90 text-white text-sm font-semibold px-3.5 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1.5 bg-primary-700/80 text-white text-sm font-semibold px-3.5 py-1 rounded-full">
                 <BadgeCheck className="w-4 h-4" />
                 {yearsInBusiness}+ Years Serving Nevada
               </span>
@@ -95,7 +94,7 @@ const Hero = () => {
             >
               {['Licensed & Insured', 'Free Estimates', 'Local & Family-Owned', 'Since 1981'].map((badge) => (
                 <span key={badge} className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/60 flex-shrink-0" />
                   {badge}
                 </span>
               ))}
@@ -111,11 +110,11 @@ const Hero = () => {
               {/* Primary: Call */}
               <a
                 href={`tel:${phone}`}
-                className="flex items-center justify-center gap-3 px-7 py-4 bg-amber-500 hover:bg-amber-400 text-white rounded-xl font-bold text-lg shadow-lg shadow-amber-900/30 hover:shadow-xl transition-all hover:scale-105"
+                className="flex items-center justify-center gap-3 px-7 py-4 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105"
               >
                 <Phone className="w-5 h-5 flex-shrink-0" />
                 <div className="text-left">
-                  <div className="text-xs font-normal text-amber-100 leading-none mb-0.5">{hero.primaryButtonText}</div>
+                  <div className="text-xs font-normal text-primary-200 leading-none mb-0.5">{hero.primaryButtonText}</div>
                   <div className="leading-none">{phone}</div>
                 </div>
               </a>
@@ -127,15 +126,6 @@ const Hero = () => {
               >
                 <Calendar className="w-5 h-5" />
                 {hero.scheduleButtonText}
-              </Link>
-
-              {/* Tertiary: Quote */}
-              <Link
-                to="/?modal=estimate"
-                className="flex items-center justify-center gap-2 px-7 py-4 bg-transparent hover:bg-white/10 border-2 border-white/50 hover:border-white text-white rounded-xl font-semibold text-base transition-all"
-              >
-                <FileText className="w-5 h-5" />
-                {hero.quoteButtonText}
               </Link>
             </motion.div>
           </motion.div>

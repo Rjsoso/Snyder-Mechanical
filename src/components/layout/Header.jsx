@@ -62,249 +62,217 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 shadow-md">
-      {/* Utility Bar */}
-      <div className="bg-primary-900 text-white text-sm">
-        <div className="container-custom py-1.5 flex items-center justify-between">
-          <span className="text-primary-200 hidden sm:block">
-            Serving Northeastern Nevada since 1981 &mdash; Licensed &amp; Insured
-          </span>
-          <span className="text-primary-200 sm:hidden text-xs">Licensed &amp; Insured · NV</span>
-          <a
-            href={`tel:${phone}`}
-            className="flex items-center gap-1.5 text-white hover:text-amber-300 transition-colors font-medium"
-          >
-            <Phone className="w-3.5 h-3.5" />
-            <span>{phone}</span>
-          </a>
-        </div>
-      </div>
+    <header className="bg-white shadow-lg border-b-4 border-secondary-500 fixed top-0 left-0 right-0 z-50">
+      <nav className="container-custom py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <img
+              src="/logo.png"
+              alt="Snyder Mechanical"
+              className="h-16 md:h-20 w-auto object-contain"
+            />
+          </Link>
 
-      {/* Main Nav */}
-      <nav className="bg-white border-b border-secondary-100">
-        <div className="container-custom py-3">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="flex items-center flex-shrink-0">
-              <img
-                src="/logo.png"
-                alt="Snyder Mechanical"
-                className="h-14 md:h-16 w-auto object-contain"
-              />
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-8">
+            <Link
+              to="/"
+              className={`font-medium transition-colors ${isActive('/') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+            >
+              Home
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-7">
-              <Link
-                to="/"
-                className={`font-medium text-sm transition-colors pb-1 border-b-2 ${
-                  isActive('/') ? 'text-primary-700 border-primary-700' : 'text-secondary-700 hover:text-primary-700 border-transparent hover:border-primary-300'
-                }`}
-              >
-                Home
-              </Link>
-
-              {/* About Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={handleAboutMouseEnter}
-                onMouseLeave={handleAboutMouseLeave}
-              >
-                <button className={`flex items-center space-x-1 font-medium text-sm transition-colors pb-1 border-b-2 ${
-                  location.pathname.startsWith('/about') ? 'text-primary-700 border-primary-700' : 'text-secondary-700 hover:text-primary-700 border-transparent hover:border-primary-300'
-                }`}>
-                  <span>About</span>
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
-                {aboutDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-2 border border-secondary-100 z-50">
-                    {aboutDropdown.map((item, index) => (
-                      <Link
-                        key={index}
-                        to={item.path}
-                        className="block px-4 py-2.5 text-sm text-secondary-700 hover:bg-primary-50 hover:text-primary-700 transition-colors"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Services Mega Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={handleServicesMouseEnter}
-                onMouseLeave={handleServicesMouseLeave}
-              >
-                <button className={`flex items-center space-x-1 font-medium text-sm transition-colors pb-1 border-b-2 ${
-                  location.pathname.startsWith('/services') ? 'text-primary-700 border-primary-700' : 'text-secondary-700 hover:text-primary-700 border-transparent hover:border-primary-300'
-                }`}>
-                  <span>Services</span>
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
-                {servicesDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-2 w-96 bg-white rounded-lg shadow-xl py-4 border border-secondary-100 z-50">
-                    <div className="grid grid-cols-2 gap-2 px-4">
-                      <div>
-                        <div className="text-xs font-bold text-secondary-400 uppercase tracking-wider mb-2 px-2">
-                          For Homeowners
-                        </div>
-                        {homeownersServices.map((item, index) => (
-                          <Link
-                            key={index}
-                            to={item.path}
-                            className="block px-2 py-2 text-sm text-secondary-700 hover:bg-primary-50 hover:text-primary-700 transition-colors rounded-md"
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
-                      </div>
-                      <div className="border-l border-secondary-100 pl-4">
-                        <div className="text-xs font-bold text-secondary-400 uppercase tracking-wider mb-2 px-2">
-                          For Businesses
-                        </div>
-                        {businessServices.map((item, index) => (
-                          <Link
-                            key={index}
-                            to={item.path}
-                            className="block px-2 py-2 text-sm text-secondary-700 hover:bg-primary-50 hover:text-primary-700 transition-colors rounded-md"
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <Link
-                to="/portfolio"
-                className={`font-medium text-sm transition-colors pb-1 border-b-2 ${
-                  isActive('/portfolio') ? 'text-primary-700 border-primary-700' : 'text-secondary-700 hover:text-primary-700 border-transparent hover:border-primary-300'
-                }`}
-              >
-                Portfolio
-              </Link>
-              <Link
-                to="/contact"
-                className={`font-medium text-sm transition-colors pb-1 border-b-2 ${
-                  isActive('/contact') ? 'text-primary-700 border-primary-700' : 'text-secondary-700 hover:text-primary-700 border-transparent hover:border-primary-300'
-                }`}
-              >
-                Contact
-              </Link>
-
-              <Link
-                to="/resources"
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive('/resources')
-                    ? 'bg-primary-700 text-white'
-                    : 'bg-primary-700 text-white hover:bg-primary-800'
-                }`}
-              >
-                {paymentsLabel}
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-secondary-700 hover:text-primary-700 transition-colors"
-              aria-label="Toggle menu"
+            {/* About Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={handleAboutMouseEnter}
+              onMouseLeave={handleAboutMouseLeave}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="lg:hidden mt-3 pt-4 pb-40 border-t border-secondary-100 max-h-[calc(100vh-8rem)] overflow-y-auto">
-              {/* Mobile phone CTA */}
-              <a
-                href={`tel:${phone}`}
-                className="flex items-center justify-center gap-2 w-full mb-4 py-3 bg-amber-500 hover:bg-amber-400 text-white rounded-lg font-semibold transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Phone className="w-5 h-5" />
-                <span>Call {phone}</span>
-              </a>
-
-              <div className="flex flex-col space-y-1">
-                <Link
-                  to="/"
-                  className="font-medium text-secondary-700 hover:text-primary-700 hover:bg-primary-50 px-3 py-2.5 rounded-lg transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Home
-                </Link>
-
-                <div className="space-y-1">
-                  <div className="font-medium text-secondary-900 px-3 py-2">About</div>
+              <button className="flex items-center space-x-1 font-medium text-secondary-700 hover:text-primary-600 transition-colors">
+                <span>About</span>
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              {aboutDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 border border-secondary-100 z-50">
                   {aboutDropdown.map((item, index) => (
                     <Link
                       key={index}
                       to={item.path}
-                      className="block pl-6 pr-3 py-2 text-secondary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
+                      className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
                     >
                       {item.label}
                     </Link>
                   ))}
                 </div>
-
-                <div className="space-y-1">
-                  <div className="font-medium text-secondary-900 px-3 py-2">Services</div>
-                  <div className="text-xs font-bold text-secondary-400 uppercase tracking-wider pl-6 pt-1 pb-1">For Homeowners</div>
-                  {homeownersServices.map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.path}
-                      className="block pl-6 pr-3 py-2 text-secondary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                  <div className="text-xs font-bold text-secondary-400 uppercase tracking-wider pl-6 pt-2 pb-1">For Businesses</div>
-                  {businessServices.map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.path}
-                      className="block pl-6 pr-3 py-2 text-secondary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-
-                <Link
-                  to="/portfolio"
-                  className="font-medium text-secondary-700 hover:text-primary-700 hover:bg-primary-50 px-3 py-2.5 rounded-lg transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Portfolio
-                </Link>
-                <Link
-                  to="/contact"
-                  className="font-medium text-secondary-700 hover:text-primary-700 hover:bg-primary-50 px-3 py-2.5 rounded-lg transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Contact
-                </Link>
-                <Link
-                  to="/resources"
-                  className="font-medium text-white bg-primary-700 hover:bg-primary-800 px-3 py-2.5 rounded-lg text-center transition-colors mt-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {paymentsLabel}
-                </Link>
-              </div>
+              )}
             </div>
-          )}
+
+            {/* Services Mega Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={handleServicesMouseEnter}
+              onMouseLeave={handleServicesMouseLeave}
+            >
+              <button className="flex items-center space-x-1 font-medium text-secondary-700 hover:text-primary-600 transition-colors">
+                <span>Services</span>
+                <ChevronDown className="w-4 h-4" />
+              </button>
+              {servicesDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-96 bg-white rounded-lg shadow-xl py-4 border border-secondary-100 z-50">
+                  <div className="grid grid-cols-2 gap-4 px-4">
+                    {/* For Homeowners */}
+                    <div>
+                      <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
+                        For Homeowners
+                      </div>
+                      {homeownersServices.map((item, index) => (
+                        <Link
+                          key={index}
+                          to={item.path}
+                          className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* For Businesses */}
+                    <div className="border-l border-secondary-200 pl-4">
+                      <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
+                        For Businesses
+                      </div>
+                      {businessServices.map((item, index) => (
+                        <Link
+                          key={index}
+                          to={item.path}
+                          className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link
+              to="/portfolio"
+              className={`font-medium transition-colors ${isActive('/portfolio') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+            >
+              Portfolio
+            </Link>
+            <Link
+              to="/contact"
+              className={`font-medium transition-colors ${isActive('/contact') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+            >
+              Contact
+            </Link>
+
+            {/* Payments - Highlighted */}
+            <Link
+              to="/resources"
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                isActive('/resources')
+                  ? 'bg-primary-100 text-primary-700'
+                  : 'bg-primary-50 text-primary-700 hover:bg-primary-100'
+              }`}
+            >
+              {paymentsLabel}
+            </Link>
+
+            {/* Phone Number */}
+            <a
+              href={`tel:${phone}`}
+              className="flex items-center space-x-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors"
+            >
+              <Phone className="w-4 h-4" />
+              <span className="hidden xl:inline">{phone}</span>
+            </a>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 text-secondary-700 hover:text-primary-600 transition-colors"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden mt-4 py-4 pb-40 border-t border-secondary-200 max-h-[calc(100vh-7rem)] overflow-y-auto">
+            <div className="flex flex-col space-y-4">
+              <Link to="/" className="font-medium text-secondary-700 hover:text-primary-600" onClick={() => setMobileMenuOpen(false)}>
+                Home
+              </Link>
+
+              {/* About Submenu */}
+              <div className="space-y-2">
+                <div className="font-medium text-secondary-900">About</div>
+                {aboutDropdown.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.path}
+                    className="block pl-4 text-secondary-700 hover:text-primary-600"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              {/* Services Submenu */}
+              <div className="space-y-2">
+                <div className="font-medium text-secondary-900">Services</div>
+                <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-2">For Homeowners</div>
+                {homeownersServices.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.path}
+                    className="block pl-4 text-secondary-700 hover:text-primary-600"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide pl-4 mt-3">For Businesses</div>
+                {businessServices.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.path}
+                    className="block pl-4 text-secondary-700 hover:text-primary-600"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+
+              <Link to="/portfolio" className="font-medium text-secondary-700 hover:text-primary-600" onClick={() => setMobileMenuOpen(false)}>
+                Portfolio
+              </Link>
+              <Link to="/contact" className="font-medium text-secondary-700 hover:text-primary-600" onClick={() => setMobileMenuOpen(false)}>
+                Contact
+              </Link>
+
+              <Link to="/resources" className="font-medium text-primary-700 bg-primary-50 hover:bg-primary-100 px-4 py-2 rounded-lg text-center transition-colors" onClick={() => setMobileMenuOpen(false)}>
+                {paymentsLabel}
+              </Link>
+
+              <a
+                href={`tel:${phone}`}
+                className="flex items-center space-x-2 text-primary-600 font-semibold text-lg justify-center py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Phone className="w-5 h-5" />
+                <span>{phone}</span>
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
     </header>
   );

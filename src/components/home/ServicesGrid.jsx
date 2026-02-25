@@ -9,7 +9,6 @@ const services = [
     description: 'Keep your home warm through Nevada winters. Furnace repair, installation, heat pumps, and preventive maintenance by certified technicians.',
     icon: Flame,
     link: '/services/heating',
-    startingPrice: 'Starting at $95',
     highlight: 'Furnace Repair · Installation · Heat Pumps',
   },
   {
@@ -18,7 +17,6 @@ const services = [
     description: 'Stay cool all summer long. AC repair, new system installation, tune-ups, and ductless mini-splits for every home.',
     icon: Wind,
     link: '/services/cooling',
-    startingPrice: 'Starting at $85',
     highlight: 'AC Repair · Installation · Tune-Ups',
   },
   {
@@ -27,7 +25,6 @@ const services = [
     description: 'From leaky faucets to full water heater replacements, our licensed plumbers handle every residential plumbing need.',
     icon: Droplets,
     link: '/services/plumbing',
-    startingPrice: 'Starting at $75',
     highlight: 'Water Heaters · Drain Cleaning · Leak Repair',
   },
 ];
@@ -79,10 +76,7 @@ const ServicesGrid = () => {
                       <p className="text-secondary-600 text-sm leading-relaxed mb-4 flex-1">
                         {service.description}
                       </p>
-                      <div className="flex items-center justify-between pt-4 border-t border-secondary-100">
-                        <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full">
-                          {service.startingPrice}
-                        </span>
+                      <div className="flex items-center justify-end pt-4 border-t border-secondary-100">
                         <span className="flex items-center gap-1 text-primary-700 font-semibold text-sm group-hover:gap-2 transition-all">
                           Learn More <ArrowRight className="w-4 h-4" />
                         </span>

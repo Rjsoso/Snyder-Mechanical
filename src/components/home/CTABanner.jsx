@@ -15,7 +15,7 @@ const CTABanner = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-3">Ready to Get Started?</p>
+          <p className="text-primary-200 font-semibold text-sm uppercase tracking-wider mb-3">Ready to Get Started?</p>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Let's Get Your Home Comfortable
           </h2>
@@ -26,7 +26,7 @@ const CTABanner = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href={`tel:${phone}`}
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-white rounded-xl font-bold text-lg shadow-lg shadow-amber-900/30 transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-primary-700 hover:bg-primary-50 rounded-xl font-bold text-lg shadow-lg transition-all hover:scale-105"
             >
               <Phone className="w-5 h-5" />
               Call {phone}
