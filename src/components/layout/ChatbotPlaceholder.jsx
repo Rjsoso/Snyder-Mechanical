@@ -619,7 +619,7 @@ function FloatingBubble() {
       }}
     >
       <div className="bg-white shadow-lg shadow-black/5 rounded-full px-4 py-2.5 text-sm font-medium text-secondary-700 whitespace-nowrap border border-secondary-100">
-        Ask us anything →
+        Questions? Chat with us
       </div>
     </motion.div>
   );
