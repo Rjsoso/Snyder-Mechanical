@@ -51,7 +51,7 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white py-20">
+      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-32 pb-20">
         <div className="container-custom text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -61,7 +61,7 @@ const AboutPage = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {pageData.hero.title}
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="text-xl text-primary-200 max-w-2xl mx-auto">
               {pageData.hero.subtitle}
             </p>
           </motion.div>
@@ -204,54 +204,58 @@ const AboutPage = () => {
 
       {/* Safety */}
       {section === 'safety' && (
-        <>
-          <section className="section-padding bg-white">
-            <div className="container-custom max-w-4xl text-center">
-              <p className="text-xl text-secondary-700">
-                {pageData.commitment}
-              </p>
-            </div>
-          </section>
+        <section className="section-padding bg-white">
+          <div className="container-custom">
+            {/* Commitment lead text */}
+            <motion.p
+              className="text-xl text-secondary-600 text-center max-w-3xl mx-auto mb-14 leading-relaxed"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              {pageData.commitment}
+            </motion.p>
 
-          <section className="section-padding bg-secondary-50">
-            <div className="container-custom">
-              <h2 className="text-3xl font-bold text-secondary-900 text-center mb-12">
+            {/* Divider */}
+            <div className="flex items-center gap-4 mb-12">
+              <div className="flex-1 h-px bg-secondary-200" />
+              <h2 className="text-2xl md:text-3xl font-bold text-secondary-900 whitespace-nowrap">
                 Our Safety Protocols
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {pageData.protocols.map((protocol, index) => {
-                  const Icon = iconMap[protocol.icon] || Shield;
-                  
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                    >
-                      <Card>
-                        <div className="flex items-start space-x-4">
-                          <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                            <Icon className="w-6 h-6 text-primary-600" />
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-secondary-900 mb-2">
-                              {protocol.title}
-                            </h3>
-                            <p className="text-secondary-600">
-                              {protocol.description}
-                            </p>
-                          </div>
-                        </div>
-                      </Card>
-                    </motion.div>
-                  );
-                })}
-              </div>
+              <div className="flex-1 h-px bg-secondary-200" />
             </div>
-          </section>
-        </>
+
+            {/* Protocols grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {pageData.protocols.map((protocol, index) => {
+                const Icon = iconMap[protocol.icon] || Shield;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex items-start gap-5 p-6 rounded-2xl border border-secondary-100 bg-secondary-50 hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-primary-700" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-secondary-900 mb-1">
+                        {protocol.title}
+                      </h3>
+                      <p className="text-secondary-600 text-sm leading-relaxed">
+                        {protocol.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
       )}
 
       {/* Recognitions */}
