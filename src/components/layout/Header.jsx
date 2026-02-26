@@ -71,14 +71,16 @@ const Header = () => {
     <header className="bg-white shadow-md border-b border-secondary-200 fixed top-0 left-0 right-0 z-50 overflow-visible">
       <nav className="container-custom py-3">
         <div className="flex items-center justify-between">
-          {/* Logo — hangs below the header bar */}
-          <Link to="/" className="relative flex-shrink-0 mr-6">
-            {/* White backing tab that extends below the header border */}
-            <div className="absolute -inset-x-3 top-0 h-[calc(100%+1.25rem)] bg-white rounded-b-2xl shadow-[0_6px_16px_-4px_rgba(0,0,0,0.15)]" />
+          {/* Logo — hangs below the header bar with drop shadow for depth */}
+          <Link to="/" className="flex-shrink-0 mr-6">
             <img
               src="/logo.png"
               alt="Snyder Mechanical"
-              className="relative h-[78px] md:h-[88px] w-auto object-contain"
+              className="h-[78px] md:h-[88px] w-auto object-contain"
+              style={{
+                filter:
+                  'drop-shadow(0 3px 6px rgba(0,0,0,0.55)) drop-shadow(0 1px 2px rgba(0,0,0,0.35))',
+              }}
             />
           </Link>
 
