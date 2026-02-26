@@ -70,13 +70,13 @@ const Header = () => {
   return (
     <header className="bg-white shadow-md border-b border-secondary-200 fixed top-0 left-0 right-0 z-50 overflow-visible">
       <nav className="container-custom">
-        <div className="flex items-start justify-between h-[56px]">
+        <div className="flex items-start justify-between h-[68px]">
           {/* Logo — starts at top of nav bar and hangs below */}
           <Link to="/" className="flex-shrink-0 mr-6 pt-1">
             <img
               src="/logo.png"
               alt="Snyder Mechanical"
-              className="h-[95px] md:h-[108px] w-auto object-contain"
+              className="h-[110px] md:h-[124px] w-auto object-contain"
               style={{
                 filter:
                   'drop-shadow(0 3px 6px rgba(0,0,0,0.55)) drop-shadow(0 1px 2px rgba(0,0,0,0.35))',
