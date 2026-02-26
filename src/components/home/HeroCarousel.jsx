@@ -14,7 +14,7 @@ const HeroCarousel = ({ images }) => {
   }, [images]);
 
   if (!images || images.length === 0) {
-    return <div className="absolute inset-0 bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600" />;
+    return <div className="absolute inset-0 bg-primary-900" />;
   }
 
   return (
@@ -44,7 +44,7 @@ const HeroCarousel = ({ images }) => {
       })}
 
       {!isLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600" />
+        <div className="absolute inset-0 bg-primary-900" />
       )}
     </div>
   );
