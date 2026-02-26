@@ -2,48 +2,68 @@
   "featured": [
     {
       "id": "review-1",
-      "name": "Sarah Johnson",
+      "name": "Spencer Mathews",
       "location": "Elko, NV",
       "rating": 5,
-      "date": "2026-01-15",
-      "service": "Heating Repair",
-      "text": "When our furnace went out on a freezing night, Snyder Mechanical came out within an hour. The technician was professional, explained everything clearly, and had us warm again in no time. Highly recommend!",
-      "avatar": "SJ"
+      "date": "2025-06-01",
+      "service": "Furnace, AC & Water Heater",
+      "text": "I had my gas furnace, air conditioning, and water heater replaced by Snyder in the span of two weeks. Everyone was very friendly and courteous, and the technicians that came to do the work were very knowledgeable and very friendly. Everyone I've interacted with, in the office or technicians, has been delightful.",
+      "avatar": "SM"
     },
     {
       "id": "review-2",
-      "name": "Mike Rodriguez",
-      "location": "Spring Creek, NV",
+      "name": "Patricia Murphree",
+      "location": "Elko, NV",
       "rating": 5,
-      "date": "2026-01-08",
-      "service": "AC Installation",
-      "text": "Best HVAC company in the area! They installed our new AC system quickly and professionally. The pricing was fair and transparent. Five stars all around!",
-      "avatar": "MR"
+      "date": "2025-10-01",
+      "service": "Service & Repair",
+      "text": "Snyders has a quick response, from quote to fix, service was amazing! Chaz was awesome. They know what they are doing and help you figure out the fix.",
+      "avatar": "PM"
     },
     {
       "id": "review-3",
-      "name": "Lisa Chen",
+      "name": "Nicole Jameson",
       "location": "Elko, NV",
       "rating": 5,
-      "date": "2025-12-20",
-      "service": "HVAC Service",
-      "text": "Snyder Mechanical has serviced my HVAC system for 3 years now. My system runs perfectly and I've saved money on my energy bills. Great preventive service!",
-      "avatar": "LC"
+      "date": "2025-02-01",
+      "service": "Heating Service",
+      "text": "The tech, Julian, came out to service our heater and did a fantastic job! He is very knowledgeable and also took the time to explain things to me. I appreciated that and highly recommend them also!",
+      "avatar": "NJ"
     },
     {
       "id": "review-4",
-      "name": "Tom Anderson",
-      "location": "Spring Creek, NV",
+      "name": "John Glenn",
+      "location": "Elko, NV",
       "rating": 5,
-      "date": "2025-12-10",
-      "service": "Plumbing Repair",
-      "text": "Had a major leak that needed immediate attention. They responded quickly and fixed it right. Very professional team that I trust completely.",
-      "avatar": "TA"
+      "date": "2025-01-01",
+      "service": "Water Heater Repair",
+      "text": "My water heater was not heating to temperature for quite a while. I called and they had an idea what it might be. They brought the part they thought they needed with them, verified what was wrong and changed it quickly. Chaz and Josh were very polite and clean. Works great now.",
+      "avatar": "JG"
+    },
+    {
+      "id": "review-5",
+      "name": "Betsy Barker",
+      "location": "Elko, NV",
+      "rating": 5,
+      "date": "2025-01-01",
+      "service": "Water Heater Installation",
+      "text": "We had them install an on-demand water heater this past summer. It developed a leak, and they were right back out to repair it. Great customer service.",
+      "avatar": "BB"
+    },
+    {
+      "id": "review-6",
+      "name": "Alissa Hyzer",
+      "location": "Elko, NV",
+      "rating": 5,
+      "date": "2022-01-01",
+      "service": "Heating Repair",
+      "text": "They were able to find and fix an issue that another company didn't or couldn't fix due to the age of the equipment (early 90's). Thanks Snyder! Heater hadn't worked in a long time.",
+      "avatar": "AH"
     }
   ],
   "stats": {
-    "averageRating": 4.9,
-    "totalReviews": 487,
-    "fiveStarPercentage": 94
+    "averageRating": 3.9,
+    "totalReviews": 36,
+    "fiveStarPercentage": 78
   }
 }
