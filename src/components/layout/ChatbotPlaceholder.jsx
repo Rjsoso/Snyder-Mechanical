@@ -356,7 +356,19 @@ const ChatbotPlaceholder = () => {
   if (!webhookUrl) {
     return (
       <div className="fixed bottom-20 right-6 z-50 lg:bottom-6 flex items-center gap-3">
-        {!isOpen && <FloatingBubble />}
+        <AnimatePresence>
+          {!isOpen && (
+            <motion.div
+              key="chat-bubble"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.1 } }}
+              transition={{ delay: 0.25, duration: 0.15 }}
+            >
+              <FloatingBubble />
+            </motion.div>
+          )}
+        </AnimatePresence>
         <div className="flex flex-col items-end">
           {isOpen && (
             <div className="mb-4 w-80 md:w-96 bg-white rounded-lg shadow-2xl overflow-hidden">
@@ -383,7 +395,19 @@ const ChatbotPlaceholder = () => {
 
   return (
     <div className="fixed bottom-20 right-6 z-50 lg:bottom-6 flex items-center gap-3">
-      {!isOpen && <FloatingBubble />}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            key="chat-bubble"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            transition={{ delay: 0.25, duration: 0.15 }}
+          >
+            <FloatingBubble />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="flex flex-col items-end">
         <AnimatePresence>
           {isOpen && (
