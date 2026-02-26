@@ -47,10 +47,10 @@ const WhyChooseUs = () => {
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: '+=150%',
+        end: '+=200%',
         pin: true,
         pinSpacing: true,
-        scrub: 0.8,
+        scrub: 1.5,
       },
     });
 
@@ -65,7 +65,8 @@ const WhyChooseUs = () => {
           stagger: 0.15,
         },
         '-=0.5'
-      );
+      )
+      .to([heading, ...cards], { opacity: 0, y: -40, duration: 0.6, ease: 'power2.in', stagger: 0.05 }, '+=0.3');
 
     return () => {
       tl.scrollTrigger?.kill();
@@ -77,7 +78,6 @@ const WhyChooseUs = () => {
     <section
       ref={sectionRef}
       className="section-padding min-h-screen flex items-center text-white relative overflow-hidden"
-      style={{ background: 'radial-gradient(ellipse at 60% 0%, #1e293b 0%, #020617 65%)' }}
     >
       {/* Watermark year */}
       <div
