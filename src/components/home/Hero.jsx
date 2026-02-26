@@ -137,16 +137,22 @@ const Hero = () => {
                 {badge}
               </span>
             ))}
-            <span className="flex items-center gap-2">
-              <span className="w-px h-4 bg-white/25" />
-              <Link
-                to="/commercial"
-                className="inline-flex items-center gap-1 hover:text-white/80 transition-colors normal-case"
-              >
-                {hero.commercialLinkText}
-                <ArrowRight className="w-3 h-3" />
-              </Link>
-            </span>
+          </motion.div>
+
+          {/* Commercial services CTA — own line, distinct from trust badges */}
+          <motion.div
+            className="mt-5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+          >
+            <Link
+              to="/commercial"
+              className="inline-flex items-center gap-2 text-sm text-white/75 hover:text-white font-medium border-b border-white/30 hover:border-white/70 pb-px transition-all group"
+            >
+              {hero.commercialLinkText}
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
           </motion.div>
         </div>
       </div>
