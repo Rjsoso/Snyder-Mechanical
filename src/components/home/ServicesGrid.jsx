@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const services = [
   {
     id: 'heating',
-    label: '01',
     title: 'Heating Services',
     description: 'Keep your home warm through Nevada winters. Furnace repair, installation, heat pumps, and preventive maintenance by certified technicians.',
     icon: Flame,
@@ -14,7 +13,6 @@ const services = [
   },
   {
     id: 'cooling',
-    label: '02',
     title: 'Cooling Services',
     description: 'Stay cool all summer long. AC repair, new system installation, tune-ups, and ductless mini-splits for every home.',
     icon: Wind,
@@ -23,7 +21,6 @@ const services = [
   },
   {
     id: 'plumbing',
-    label: '03',
     title: 'Plumbing Services',
     description: 'From leaky faucets to full water heater replacements, our licensed plumbers handle every residential plumbing need.',
     icon: Droplets,
@@ -72,47 +69,38 @@ const ServicesGrid = () => {
                 transition={{ duration: 0.55, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <Link to={service.link} className="group block h-full">
-                  <div className="relative h-full bg-primary-900 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/25">
+                  <div className="relative h-full bg-white border border-secondary-200 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:shadow-secondary-200/60">
 
                     {/* Top accent line — slides in on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-white/0 group-hover:bg-white/20 transition-colors duration-300" />
-
-                    {/* Decorative number */}
-                    <div
-                      className="absolute top-4 right-5 font-black text-white/[0.06] select-none pointer-events-none leading-none"
-                      style={{ fontSize: '6rem' }}
-                      aria-hidden="true"
-                    >
-                      {service.label}
-                    </div>
+                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-secondary-200/0 group-hover:bg-secondary-300 transition-colors duration-300" />
 
                     {/* Card content */}
                     <div className="relative p-7 flex flex-col flex-1">
                       {/* Icon */}
-                      <div className="w-11 h-11 rounded-full border border-white/15 flex items-center justify-center mb-8">
-                        <Icon className="w-5 h-5 text-white/80" />
+                      <div className="w-11 h-11 rounded-full border border-secondary-200 flex items-center justify-center mb-8">
+                        <Icon className="w-5 h-5 text-primary-700" />
                       </div>
 
                       {/* Title + tags */}
-                      <h3 className="text-xl font-bold text-white mb-3 tracking-tight">{service.title}</h3>
+                      <h3 className="text-xl font-bold text-primary-900 mb-3 tracking-tight">{service.title}</h3>
                       <div className="flex flex-wrap gap-1.5 mb-5">
                         {service.tags.map(tag => (
-                          <span key={tag} className="text-[11px] font-medium text-white/40 bg-white/5 border border-white/10 rounded-full px-2.5 py-0.5">
+                          <span key={tag} className="text-[11px] font-medium text-secondary-500 bg-secondary-100 border border-secondary-200 rounded-full px-2.5 py-0.5">
                             {tag}
                           </span>
                         ))}
                       </div>
 
                       {/* Description */}
-                      <p className="text-white/50 text-sm leading-relaxed flex-1">
+                      <p className="text-secondary-500 text-sm leading-relaxed flex-1">
                         {service.description}
                       </p>
 
                       {/* CTA */}
-                      <div className="mt-8 pt-5 border-t border-white/10 flex items-center justify-between">
-                        <span className="text-white/40 text-xs uppercase tracking-widest font-medium">Learn More</span>
-                        <span className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center group-hover:bg-white/10 group-hover:border-white/30 transition-all duration-200">
-                          <ArrowRight className="w-3.5 h-3.5 text-white/60 group-hover:translate-x-0.5 transition-transform duration-200" />
+                      <div className="mt-8 pt-5 border-t border-secondary-100 flex items-center justify-between">
+                        <span className="text-secondary-400 text-xs uppercase tracking-widest font-medium">Learn More</span>
+                        <span className="w-8 h-8 rounded-full border border-secondary-200 flex items-center justify-center group-hover:bg-secondary-100 group-hover:border-secondary-300 transition-all duration-200">
+                          <ArrowRight className="w-3.5 h-3.5 text-secondary-500 group-hover:translate-x-0.5 transition-transform duration-200" />
                         </span>
                       </div>
                     </div>

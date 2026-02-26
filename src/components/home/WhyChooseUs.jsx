@@ -4,25 +4,21 @@ import { ShieldCheck, MapPin, ThumbsUp, Award } from 'lucide-react';
 const pillars = [
   {
     icon: ShieldCheck,
-    label: '01',
     title: 'Licensed & Insured',
     description: 'Fully licensed, bonded, and insured in Nevada. Your home and family are in safe, qualified hands.',
   },
   {
     icon: MapPin,
-    label: '02',
     title: 'Local & Family-Owned',
     description: 'Proudly serving Elko and Spring Creek since 1981. We live here too — your neighbors and your contractors.',
   },
   {
     icon: Award,
-    label: '03',
     title: '40+ Years of Experience',
     description: 'Decades of hands-on expertise across residential heating, cooling, and plumbing. We\'ve seen it all and fixed it all.',
   },
   {
     icon: ThumbsUp,
-    label: '04',
     title: '100% Satisfaction',
     description: 'We stand behind every job we do. If you\'re not satisfied, we\'ll make it right — no questions asked.',
   },
@@ -53,8 +49,8 @@ const WhyChooseUs = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="w-8 h-px bg-amber-400/70 flex-shrink-0" />
-            <p className="text-amber-400/80 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
+            <span className="w-8 h-px bg-white/25 flex-shrink-0" />
+            <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-xl">
             The Trusted Choice in Northeastern Nevada
@@ -76,20 +72,11 @@ const WhyChooseUs = () => {
                 whileHover={{ y: -5, boxShadow: '0 24px 48px rgba(0,0,0,0.4)' }}
               >
                 {/* Top accent line */}
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* Large decorative number */}
-                <div
-                  className="absolute bottom-3 right-4 font-black text-white/[0.05] select-none pointer-events-none leading-none"
-                  style={{ fontSize: '5rem' }}
-                  aria-hidden="true"
-                >
-                  {pillar.label}
-                </div>
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 {/* Icon */}
-                <div className="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center mb-5">
-                  <Icon className="w-5 h-5 text-amber-400" />
+                <div className="w-11 h-11 rounded-xl bg-white/8 border border-white/15 flex items-center justify-center mb-5">
+                  <Icon className="w-5 h-5 text-white/70" />
                 </div>
 
                 <h3 className="text-base font-bold text-white mb-2 tracking-tight">{pillar.title}</h3>
