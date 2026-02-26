@@ -10,9 +10,9 @@ class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-white">
-          <div className="text-center px-6">
+          <div className="text-center px-6 max-w-lg">
             <h1 className="text-2xl font-bold text-secondary-900 mb-3">Something went wrong</h1>
-            <p className="text-secondary-500 mb-6">Please reload the page to continue.</p>
+            <pre className="text-xs text-left bg-secondary-50 border border-secondary-200 rounded p-4 mb-4 overflow-auto max-h-48 text-red-600">{this.state.error?.message}{'\n'}{this.state.error?.stack}</pre>
             <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary-900 text-white rounded-md font-semibold hover:bg-primary-800 transition-colors">
               Reload Page
             </button>
