@@ -69,14 +69,14 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md border-b border-secondary-200 fixed top-0 left-0 right-0 z-50 overflow-visible">
-      <nav className="container-custom py-3">
-        <div className="flex items-center justify-between">
-          {/* Logo — hangs below the header bar with drop shadow for depth */}
-          <Link to="/" className="flex-shrink-0 mr-6">
+      <nav className="container-custom">
+        <div className="flex items-start justify-between h-[56px]">
+          {/* Logo — starts at top of nav bar and hangs below */}
+          <Link to="/" className="flex-shrink-0 mr-6 pt-1">
             <img
               src="/logo.png"
               alt="Snyder Mechanical"
-              className="h-[78px] md:h-[88px] w-auto object-contain"
+              className="h-[95px] md:h-[108px] w-auto object-contain"
               style={{
                 filter:
                   'drop-shadow(0 3px 6px rgba(0,0,0,0.55)) drop-shadow(0 1px 2px rgba(0,0,0,0.35))',
@@ -85,7 +85,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-7">
+          <div className="hidden lg:flex items-center self-center gap-7">
             <Link
               to="/"
               className={`${NAV_LINK} ${isActive('/') ? NAV_ACTIVE : NAV_IDLE}`}
@@ -182,7 +182,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-secondary-700 hover:text-primary-900 transition-colors"
+            className="lg:hidden self-center p-2 text-secondary-700 hover:text-primary-900 transition-colors"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
