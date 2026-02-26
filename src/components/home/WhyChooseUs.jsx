@@ -87,7 +87,8 @@ const WhyChooseUs = ({ scrollProgress }) => {
               <motion.div
                 key={pillar.title}
                 style={{ opacity: cardOpacity[index], y: cardY[index], willChange: 'transform, opacity' }}
-                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-200 hover:bg-white/[0.07] hover:border-white/20 hover:-translate-y-1 hover:shadow-2xl"
+                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-200 hover:bg-white/[0.07] hover:border-white/20"
+                whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: 'easeOut' } }}
               >
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
