@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dark Blue - Navy palette; light tints are neutral grey for B/W/dark blue only */
-  --color-primary-50: #fafafa;
-  --color-primary-100: #f0f0f0;
-  --color-primary-200: #e5e5e5;
-  --color-primary-300: #7986cb;
-  --color-primary-400: #5c6bc0;
-  --color-primary-500: #3f51b5;
-  --color-primary-600: #3949ab;
-  --color-primary-700: #303f9f;
-  --color-primary-800: #283593;
-  --color-primary-900: #1a237e;
+  /* Charcoal - cool slate palette; only the logo retains dark blue */
+  --color-primary-50: #f8fafc;
+  --color-primary-100: #f1f5f9;
+  --color-primary-200: #e2e8f0;
+  --color-primary-300: #94a3b8;
+  --color-primary-400: #64748b;
+  --color-primary-500: #475569;
+  --color-primary-600: #334155;
+  --color-primary-700: #1e293b;
+  --color-primary-800: #0f172a;
+  --color-primary-900: #020617;
   
   /* Pure Grey - Neutral Grey palette */
   --color-secondary-50: #fafafa;
@@ -25,17 +25,17 @@
   --color-secondary-800: #303030;
   --color-secondary-900: #1a1a1a;
   
-  /* Accent = Dark Blue (same as primary, no light blue) */
-  --color-accent-50: #fafafa;
-  --color-accent-100: #f0f0f0;
-  --color-accent-200: #e5e5e5;
-  --color-accent-300: #7986cb;
-  --color-accent-400: #5c6bc0;
-  --color-accent-500: #3f51b5;
-  --color-accent-600: #3949ab;
-  --color-accent-700: #303f9f;
-  --color-accent-800: #283593;
-  --color-accent-900: #1a237e;
+  /* Accent = Charcoal (same as primary) */
+  --color-accent-50: #f8fafc;
+  --color-accent-100: #f1f5f9;
+  --color-accent-200: #e2e8f0;
+  --color-accent-300: #94a3b8;
+  --color-accent-400: #64748b;
+  --color-accent-500: #475569;
+  --color-accent-600: #334155;
+  --color-accent-700: #1e293b;
+  --color-accent-800: #0f172a;
+  --color-accent-900: #020617;
 
   /* Amber — emergency/CTA highlights */
   --color-amber-50: #fffbeb;
@@ -81,7 +81,7 @@
 
 @layer components {
   .btn-primary {
-    background-color: #303f9f;
+    background-color: #1e293b;
     color: white;
     font-weight: 600;
     padding: 0.75rem 1.5rem;
@@ -90,7 +90,7 @@
   }
   
   .btn-primary:hover {
-    background-color: #283593;
+    background-color: #0f172a;
   }
   
   .btn-secondary {
@@ -107,8 +107,8 @@
   }
   
   .btn-outline {
-    border: 2px solid #303f9f;
-    color: #303f9f;
+    border: 2px solid #1e293b;
+    color: #1e293b;
     font-weight: 600;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -116,9 +116,9 @@
   }
   
   .btn-outline:hover {
-    background-color: #f0f0f0;
-    border-color: #283593;
-    color: #283593;
+    background-color: #f1f5f9;
+    border-color: #0f172a;
+    color: #0f172a;
   }
   
   .section-padding {
