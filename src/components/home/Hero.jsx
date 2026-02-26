@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { Phone, ArrowRight, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroCarousel from './HeroCarousel';
@@ -21,8 +21,9 @@ const Hero = () => {
   const phone = companyData?.phone || '(775) 738-5616';
 
   const { scrollY } = useScroll();
-  const contentOpacity = useTransform(scrollY, [0, window.innerHeight * 0.55], [1, 0]);
-  const contentY = useTransform(scrollY, [0, window.innerHeight * 0.55], [0, -70]);
+  const smoothScrollY = useSpring(scrollY, { stiffness: 120, damping: 28, restDelta: 0.001 });
+  const contentOpacity = useTransform(smoothScrollY, [0, window.innerHeight * 0.55], [1, 0]);
+  const contentY = useTransform(smoothScrollY, [0, window.innerHeight * 0.55], [0, -70]);
 
   return (
     <section className="fixed inset-x-0 top-0 h-screen z-0 overflow-hidden">
@@ -45,7 +46,7 @@ const Hero = () => {
       {/* Content — left-aligned editorial layout; fades + rises as user scrolls away */}
       <motion.div
         className="container-custom relative z-20 h-full flex flex-col justify-center"
-        style={{ opacity: contentOpacity, y: contentY }}
+        style={{ opacity: contentOpacity, y: contentY, willChange: 'transform, opacity' }}
       >
         <div className="max-w-2xl pt-24 md:pt-28">
 

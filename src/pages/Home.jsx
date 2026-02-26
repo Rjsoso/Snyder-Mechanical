@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useScroll } from 'framer-motion';
+import { useScroll, useSpring } from 'framer-motion';
 import Hero from '../components/home/Hero';
 import StatsBar from '../components/home/StatsBar';
 import ServicesGrid from '../components/home/ServicesGrid';
@@ -19,6 +19,7 @@ const Home = () => {
     target: whyWrapperRef,
     offset: ['start start', 'end end'],
   });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
 
   return (
     <>
@@ -32,7 +33,7 @@ const Home = () => {
       {/* Sticky wrapper: 300vh gives 200vh of pinned scroll for the content to animate in */}
       <div ref={whyWrapperRef} className="relative z-10" style={{ height: '300vh' }}>
         <div className="sticky top-0 h-screen">
-          <WhyChooseUs scrollProgress={scrollYProgress} />
+          <WhyChooseUs scrollProgress={smoothProgress} />
         </div>
       </div>
       <div className="relative z-20 bg-white">

@@ -65,7 +65,7 @@ const WhyChooseUs = ({ scrollProgress }) => {
         <div className="mb-16">
           <motion.div
             className="flex items-center gap-3 mb-4"
-            style={{ opacity: eyebrowOpacity, y: eyebrowY }}
+            style={{ opacity: eyebrowOpacity, y: eyebrowY, willChange: 'transform, opacity' }}
           >
             <span className="w-8 h-px bg-white/25 flex-shrink-0" />
             <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
@@ -73,7 +73,7 @@ const WhyChooseUs = ({ scrollProgress }) => {
 
           <motion.h2
             className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-xl"
-            style={{ opacity: headingOpacity, y: headingY }}
+            style={{ opacity: headingOpacity, y: headingY, willChange: 'transform, opacity' }}
           >
             The Trusted Choice in Northeastern Nevada
           </motion.h2>
@@ -86,9 +86,8 @@ const WhyChooseUs = ({ scrollProgress }) => {
             return (
               <motion.div
                 key={pillar.title}
-                style={{ opacity: cardOpacity[index], y: cardY[index] }}
-                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-300 hover:bg-white/[0.07] hover:border-white/20"
-                whileHover={{ y: -5, boxShadow: '0 24px 48px rgba(0,0,0,0.4)' }}
+                style={{ opacity: cardOpacity[index], y: cardY[index], willChange: 'transform, opacity' }}
+                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-200 hover:bg-white/[0.07] hover:border-white/20 hover:-translate-y-1 hover:shadow-2xl"
               >
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
