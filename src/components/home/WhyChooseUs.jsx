@@ -78,6 +78,7 @@ const WhyChooseUs = () => {
     <section
       ref={sectionRef}
       className="section-padding min-h-screen flex items-center text-white relative overflow-hidden"
+      style={{ background: 'rgba(2, 6, 23, 0.82)' }}
     >
       {/* Watermark year */}
       <div

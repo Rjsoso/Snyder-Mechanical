@@ -18,7 +18,9 @@ const Home = () => {
       <div className="relative z-10 bg-white">
         <StatsBar />
         <ServicesGrid />
-        <WhyChooseUs />
+      </div>
+      <WhyChooseUs />
+      <div className="relative z-10 bg-white">
         <ReviewsSection />
         <ProcessSection />
         <CTABanner />
