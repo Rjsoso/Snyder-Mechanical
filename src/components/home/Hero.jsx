@@ -141,17 +141,18 @@ const Hero = () => {
 
           {/* Commercial services CTA — own line, distinct from trust badges */}
           <motion.div
-            className="mt-5"
+            className="mt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.55 }}
           >
             <Link
               to="/commercial"
-              className="inline-flex items-center gap-2 text-sm text-white/75 hover:text-white font-medium border-b border-white/30 hover:border-white/70 pb-px transition-all group"
+              className="inline-flex items-center gap-2.5 text-base font-semibold text-white hover:text-white/80 transition-all group"
             >
+              <span className="w-5 h-px bg-white/50 flex-shrink-0 group-hover:w-7 transition-all duration-300" />
               {hero.commercialLinkText}
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
             </Link>
           </motion.div>
         </div>
