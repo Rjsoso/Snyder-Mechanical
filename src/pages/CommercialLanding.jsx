@@ -168,11 +168,8 @@ const CommercialLanding = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative overflow-hidden bg-white border border-secondary-200 border-l-2 border-l-primary-700 rounded-lg shadow-sm hover:shadow-md transition-shadow p-6"
+                  className="bg-white border border-secondary-200 border-l-2 border-l-primary-700 rounded-lg shadow-sm hover:shadow-md transition-shadow p-6"
                 >
-                  <div className="absolute -top-3 -right-2 text-6xl font-black text-primary-900/[0.05] leading-none select-none pointer-events-none">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-primary-900/5 flex items-center justify-center">
                       <Icon className="w-5 h-5 text-primary-700" />
