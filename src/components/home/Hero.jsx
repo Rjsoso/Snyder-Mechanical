@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Phone, ArrowRight, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroCarousel from './HeroCarousel';
@@ -20,6 +20,10 @@ const Hero = () => {
 
   const phone = companyData?.phone || '(775) 738-5616';
 
+  const { scrollY } = useScroll();
+  const contentOpacity = useTransform(scrollY, [0, window.innerHeight * 0.55], [1, 0]);
+  const contentY = useTransform(scrollY, [0, window.innerHeight * 0.55], [0, -70]);
+
   return (
     <section className="fixed inset-x-0 top-0 h-screen z-0 overflow-hidden">
       {/* Background Carousel */}
@@ -38,8 +42,11 @@ const Hero = () => {
         1981
       </div>
 
-      {/* Content — left-aligned editorial layout */}
-      <div className="container-custom relative z-20 h-full flex flex-col justify-center">
+      {/* Content — left-aligned editorial layout; fades + rises as user scrolls away */}
+      <motion.div
+        className="container-custom relative z-20 h-full flex flex-col justify-center"
+        style={{ opacity: contentOpacity, y: contentY }}
+      >
         <div className="max-w-2xl pt-24 md:pt-28">
 
           {/* Eyebrow label with vertical accent line */}
@@ -134,7 +141,7 @@ const Hero = () => {
             </Link>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

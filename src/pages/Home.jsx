@@ -18,12 +18,17 @@ const Home = () => {
       <Hero />
       {/* Spacer matches hero height so scroll length is correct; content scrolls over fixed hero */}
       <div className="h-screen" aria-hidden="true" />
-      <div className="relative z-10 bg-white">
+      <div className="relative z-20 bg-white">
         <StatsBar />
         <ServicesGrid />
       </div>
-      <WhyChooseUs />
-      <div className="relative z-10 bg-white">
+      {/* Sticky wrapper: the section pins for 100vh of extra scroll before the next section takes over */}
+      <div className="relative z-10" style={{ height: '200vh' }}>
+        <div className="sticky top-0 h-screen">
+          <WhyChooseUs />
+        </div>
+      </div>
+      <div className="relative z-20 bg-white">
         <ReviewsSection />
         <ProcessSection />
         <CTABanner />
