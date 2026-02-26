@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useTransform } from 'framer-motion';
 import { ShieldCheck, MapPin, ThumbsUp, Award } from 'lucide-react';
 
 const pillars = [
@@ -24,29 +24,60 @@ const pillars = [
   },
 ];
 
-const WhyChooseUs = () => {
+// Scroll progress ranges for each element
+const SCHEDULE = {
+  eyebrow:  [0.00, 0.18],
+  heading:  [0.14, 0.35],
+  card0:    [0.32, 0.50],
+  card1:    [0.42, 0.60],
+  card2:    [0.52, 0.70],
+  card3:    [0.62, 0.80],
+};
+
+const Y_START = 60;
+
+const WhyChooseUs = ({ scrollProgress }) => {
+  const eyebrowOpacity = useTransform(scrollProgress, SCHEDULE.eyebrow, [0, 1]);
+  const eyebrowY      = useTransform(scrollProgress, SCHEDULE.eyebrow, [Y_START, 0]);
+
+  const headingOpacity = useTransform(scrollProgress, SCHEDULE.heading, [0, 1]);
+  const headingY      = useTransform(scrollProgress, SCHEDULE.heading, [Y_START, 0]);
+
+  const card0Opacity = useTransform(scrollProgress, SCHEDULE.card0, [0, 1]);
+  const card0Y       = useTransform(scrollProgress, SCHEDULE.card0, [Y_START, 0]);
+  const card1Opacity = useTransform(scrollProgress, SCHEDULE.card1, [0, 1]);
+  const card1Y       = useTransform(scrollProgress, SCHEDULE.card1, [Y_START, 0]);
+  const card2Opacity = useTransform(scrollProgress, SCHEDULE.card2, [0, 1]);
+  const card2Y       = useTransform(scrollProgress, SCHEDULE.card2, [Y_START, 0]);
+  const card3Opacity = useTransform(scrollProgress, SCHEDULE.card3, [0, 1]);
+  const card3Y       = useTransform(scrollProgress, SCHEDULE.card3, [Y_START, 0]);
+
+  const cardOpacity = [card0Opacity, card1Opacity, card2Opacity, card3Opacity];
+  const cardY       = [card0Y, card1Y, card2Y, card3Y];
+
   return (
     <section
-      className="section-padding min-h-screen flex items-center text-white relative z-10 overflow-hidden"
+      className="section-padding h-screen flex items-center text-white relative z-10 overflow-hidden"
       style={{ background: 'rgba(2, 6, 23, 0.40)' }}
     >
       <div className="container-custom relative w-full">
         {/* Heading */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-        >
-          <div className="flex items-center gap-3 mb-4">
+        <div className="mb-16">
+          <motion.div
+            className="flex items-center gap-3 mb-4"
+            style={{ opacity: eyebrowOpacity, y: eyebrowY }}
+          >
             <span className="w-8 h-px bg-white/25 flex-shrink-0" />
             <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-xl">
+          </motion.div>
+
+          <motion.h2
+            className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-xl"
+            style={{ opacity: headingOpacity, y: headingY }}
+          >
             The Trusted Choice in Northeastern Nevada
-          </h2>
-        </motion.div>
+          </motion.h2>
+        </div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -55,10 +86,7 @@ const WhyChooseUs = () => {
             return (
               <motion.div
                 key={pillar.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: 'easeOut' }}
+                style={{ opacity: cardOpacity[index], y: cardY[index] }}
                 className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-300 hover:bg-white/[0.07] hover:border-white/20"
                 whileHover={{ y: -5, boxShadow: '0 24px 48px rgba(0,0,0,0.4)' }}
               >
