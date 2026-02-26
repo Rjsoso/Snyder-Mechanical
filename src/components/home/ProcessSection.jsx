@@ -34,7 +34,6 @@ const ProcessSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">Simple Process</p>
           <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
             How It Works
           </h2>
