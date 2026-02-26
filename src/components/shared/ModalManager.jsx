@@ -56,30 +56,39 @@ const ModalManager = () => {
             exit={{ scale: 0.9, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           >
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 z-10 p-2 rounded-md bg-white/80 hover:bg-secondary-100 transition-colors"
-              aria-label="Close modal"
-            >
-              <X className="w-5 h-5 text-secondary-700" />
-            </button>
-
-            {/* Call strip — shown on schedule modal */}
-            {activeModal === 'schedule' && (
-              <div className="bg-primary-900 rounded-t-xl px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <div>
-                  <p className="text-white/60 text-xs uppercase tracking-[0.15em] font-medium mb-0.5">Prefer to talk?</p>
-                  <p className="text-white font-semibold text-sm">Call us and we'll get you booked right away.</p>
+            {/* Call strip — shown on schedule modal (close button integrated here) */}
+            {activeModal === 'schedule' ? (
+              <div className="bg-primary-900 rounded-t-xl px-6 py-4 flex flex-row items-center justify-between gap-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 min-w-0">
+                  <div className="min-w-0">
+                    <p className="text-white/60 text-xs uppercase tracking-[0.15em] font-medium mb-0.5">Prefer to talk?</p>
+                    <p className="text-white font-semibold text-sm">Call us and we'll get you booked right away.</p>
+                  </div>
+                  <a
+                    href={`tel:${PHONE.replace(/[^0-9]/g, '')}`}
+                    className="inline-flex items-center gap-2 bg-white text-primary-900 hover:bg-primary-50 px-5 py-2.5 rounded-md font-bold text-sm transition-colors flex-shrink-0 shadow"
+                  >
+                    <Phone className="w-4 h-4" />
+                    {PHONE}
+                  </a>
                 </div>
-                <a
-                  href={`tel:${PHONE.replace(/[^0-9]/g, '')}`}
-                  className="inline-flex items-center gap-2 bg-white text-primary-900 hover:bg-primary-50 px-5 py-2.5 rounded-md font-bold text-sm transition-colors flex-shrink-0 shadow"
+                <button
+                  onClick={closeModal}
+                  className="flex-shrink-0 p-1.5 rounded-md bg-white/20 hover:bg-white/30 transition-colors ml-2"
+                  aria-label="Close modal"
                 >
-                  <Phone className="w-4 h-4" />
-                  {PHONE}
-                </a>
+                  <X className="w-4 h-4 text-white" />
+                </button>
               </div>
+            ) : (
+              /* Close Button */
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 z-10 p-2 rounded-md bg-white/80 hover:bg-secondary-100 transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5 text-secondary-700" />
+              </button>
             )}
 
             {/* Form Content */}
