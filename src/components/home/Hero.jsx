@@ -1,13 +1,35 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, ArrowRight, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import HeroCarousel from './HeroCarousel';
 import { useCompanyData } from '../../hooks/useSanityData';
 import { useHomePageData } from '../../hooks/useSanityData';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const { data: companyData } = useCompanyData();
   const { data: homePageData } = useHomePageData();
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.to('.hero-content', {
+        opacity: 0,
+        y: -30,
+        ease: 'power1.in',
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: '+=60%',
+          scrub: true,
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, []);
 
   const hero = homePageData?.hero || {
     title: 'Comfort & Reliability For Your Home',
@@ -39,7 +61,7 @@ const Hero = () => {
       </div>
 
       {/* Content — left-aligned editorial layout */}
-      <div className="container-custom relative z-20 h-full flex flex-col justify-center">
+      <div className="hero-content container-custom relative z-20 h-full flex flex-col justify-center">
         <div className="max-w-2xl pt-24 md:pt-28">
 
           {/* Eyebrow label with vertical accent line */}
