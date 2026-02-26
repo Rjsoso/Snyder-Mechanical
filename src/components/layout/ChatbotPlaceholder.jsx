@@ -425,11 +425,8 @@ const ChatbotPlaceholder = () => {
                   <MessageSquare className="w-5 h-5" aria-hidden />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-bold text-sm tracking-tight text-white">Snyder Mechanical</h3>
-                  <div className="flex items-center gap-1.5 mt-0.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                    <p className="text-white/60 text-xs">Online — We&apos;re here to help</p>
-                  </div>
+                  <h3 className="font-semibold text-sm tracking-tight text-white">Snyder Mechanical</h3>
+                  <p className="text-white/50 text-xs mt-0.5">Ask us anything</p>
                 </div>
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -525,7 +522,7 @@ const ChatbotPlaceholder = () => {
                       key={label}
                       type="button"
                       onClick={() => sendMessage(label)}
-                      className="rounded-full bg-white border border-secondary-200/80 px-4 py-2.5 text-sm font-medium text-secondary-700 hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-colors duration-150"
+                      className="rounded-md bg-white border border-secondary-200 px-3 py-1.5 text-xs font-medium text-secondary-600 hover:border-primary-300 hover:text-primary-700 hover:bg-primary-50/60 transition-colors duration-150"
                     >
                       {label}
                     </button>
@@ -620,9 +617,6 @@ const ChatbotPlaceholder = () => {
           )}
         </AnimatePresence>
         <div className="relative">
-          {!isOpen && (
-            <span className="absolute inset-0 rounded-xl bg-primary-700 animate-ping opacity-20 pointer-events-none" />
-          )}
           <motion.button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
