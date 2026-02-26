@@ -1,28 +1,25 @@
 import { motion } from 'framer-motion';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
-import { useState } from 'react';
+import { Star, Quote } from 'lucide-react';
 import reviewsData from '../../data/reviews.json';
+import LogoLoop from './LogoLoop';
 
-const StarRow = ({ rating = 5, size = 'sm' }) => {
-  const cls = size === 'sm' ? 'w-4 h-4' : 'w-5 h-5';
-  return (
-    <div className="flex gap-0.5">
-      {[...Array(rating)].map((_, i) => (
-        <Star key={i} className={`${cls} fill-amber-400 text-amber-400`} />
-      ))}
-    </div>
-  );
-};
+const StarRow = ({ rating = 5 }) => (
+  <div className="flex gap-0.5">
+    {[...Array(rating)].map((_, i) => (
+      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+    ))}
+  </div>
+);
 
 const ReviewCard = ({ review }) => (
-  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col h-full">
-    <Quote className="w-7 h-7 text-white/20 mb-3 flex-shrink-0" />
+  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col w-80 h-full">
+    <Quote className="w-6 h-6 text-white/20 mb-3 flex-shrink-0" />
     <p className="text-secondary-300 text-sm leading-relaxed flex-1 mb-5">
       "{review.text}"
     </p>
     <div className="flex items-center justify-between pt-4 border-t border-white/10">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+        <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
           {review.avatar}
         </div>
         <div>
@@ -36,15 +33,10 @@ const ReviewCard = ({ review }) => (
 );
 
 const ReviewsSection = () => {
-  const [mobileIndex, setMobileIndex] = useState(0);
   const reviews = reviewsData.featured;
-  const desktopReviews = reviews.slice(0, 3);
-
-  const nextReview = () => setMobileIndex((prev) => (prev + 1) % reviews.length);
-  const prevReview = () => setMobileIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
   return (
-    <section className="section-padding bg-secondary-900">
+    <section className="section-padding bg-secondary-900 overflow-hidden">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -54,7 +46,6 @@ const ReviewsSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          {/* Google Reviews badge */}
           <div className="inline-flex items-center gap-2 bg-white border border-secondary-200 rounded-full px-4 py-2 shadow-sm mb-5">
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
@@ -73,63 +64,21 @@ const ReviewsSection = () => {
             {reviewsData.stats.fiveStarPercentage}% five-star ratings from your Elko &amp; Spring Creek neighbors
           </p>
         </motion.div>
-
-        {/* Desktop 3-up grid */}
-        <div className="hidden md:grid grid-cols-3 gap-6">
-          {desktopReviews.map((review, index) => (
-            <motion.div
-              key={review.id || index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <ReviewCard review={review} />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Mobile carousel */}
-        <div className="md:hidden">
-          <motion.div
-            key={mobileIndex}
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.35 }}
-          >
-            <ReviewCard review={reviews[mobileIndex]} />
-          </motion.div>
-
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <button
-              onClick={prevReview}
-              className="p-2 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
-              aria-label="Previous review"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <div className="flex gap-1.5">
-              {reviews.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setMobileIndex(i)}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === mobileIndex ? 'bg-white w-6' : 'bg-white/30 w-1.5'
-                  }`}
-                  aria-label={`Go to review ${i + 1}`}
-                />
-              ))}
-            </div>
-            <button
-              onClick={nextReview}
-              className="p-2 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
-              aria-label="Next review"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
       </div>
+
+      {/* Infinite scroll loop — full width, bleeds past container */}
+      <LogoLoop
+        logos={reviews}
+        speed={60}
+        direction="left"
+        pauseOnHover
+        fadeOut
+        fadeOutColor="#1a1a1a"
+        gap={24}
+        logoHeight={220}
+        ariaLabel="Customer reviews"
+        renderItem={(review) => <ReviewCard review={review} />}
+      />
     </section>
   );
 };
