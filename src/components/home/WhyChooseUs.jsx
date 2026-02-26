@@ -78,17 +78,8 @@ const WhyChooseUs = () => {
     <section
       ref={sectionRef}
       className="section-padding min-h-screen flex items-center text-white relative overflow-hidden"
-      style={{ background: 'rgba(2, 6, 23, 0.88)' }}
+      style={{ background: 'rgba(2, 6, 23, 0.70)' }}
     >
-      {/* Watermark year */}
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none font-black text-white/[0.03] leading-none"
-        style={{ fontSize: 'clamp(10rem, 28vw, 28rem)' }}
-        aria-hidden="true"
-      >
-        1981
-      </div>
-
       <div className="container-custom relative w-full">
         {/* Heading */}
         <div ref={headingRef} className="mb-16">
