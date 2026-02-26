@@ -78,7 +78,7 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-8">
             <Link
               to="/"
-              className={`font-medium transition-colors ${isActive('/') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+              className={`font-medium transition-colors pb-0.5 ${isActive('/') ? 'text-primary-700 border-b-2 border-primary-700' : 'text-secondary-700 hover:text-primary-700'}`}
             >
               Home
             </Link>
@@ -99,13 +99,13 @@ const Header = () => {
                     <Link
                       key={index}
                       to={item.path}
-                      className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
+                    className="block px-4 py-2 text-secondary-700 hover:bg-secondary-50 hover:text-primary-700 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
             </div>
 
             {/* Services Mega Dropdown */}
@@ -124,11 +124,11 @@ const Header = () => {
                     <Link
                       key={index}
                       to={item.path}
-                      className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                    className="block px-4 py-2 text-secondary-700 hover:bg-secondary-50 hover:text-primary-700 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
                   <div className="mx-4 my-1 border-t border-secondary-100" />
                   <div className="px-4 pt-1 pb-1 text-xs font-bold text-secondary-400 uppercase tracking-wide">
                     Commercial
@@ -137,24 +137,24 @@ const Header = () => {
                     <Link
                       key={index}
                       to={item.path}
-                      className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
+                    className="block px-4 py-2 text-secondary-700 hover:bg-secondary-50 hover:text-primary-700 transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
             </div>
 
             <Link
               to="/portfolio"
-              className={`font-medium transition-colors ${isActive('/portfolio') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+              className={`font-medium transition-colors pb-0.5 ${isActive('/portfolio') ? 'text-primary-700 border-b-2 border-primary-700' : 'text-secondary-700 hover:text-primary-700'}`}
             >
               Portfolio
             </Link>
             <Link
               to="/contact"
-              className={`font-medium transition-colors ${isActive('/contact') ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600'}`}
+              className={`font-medium transition-colors pb-0.5 ${isActive('/contact') ? 'text-primary-700 border-b-2 border-primary-700' : 'text-secondary-700 hover:text-primary-700'}`}
             >
               Contact
             </Link>

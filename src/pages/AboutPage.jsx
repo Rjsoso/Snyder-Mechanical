@@ -51,17 +51,21 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-32 pb-20">
-        <div className="container-custom text-center">
+      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
+        <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-8 h-px bg-white/60 flex-shrink-0" />
+              <span className="text-white/60 text-sm font-medium uppercase tracking-[0.18em]">About Us</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-4">
               {pageData.hero.title}
             </h1>
-            <p className="text-xl text-primary-200 max-w-2xl mx-auto">
+            <p className="text-lg text-white/75 max-w-xl">
               {pageData.hero.subtitle}
             </p>
           </motion.div>
@@ -71,7 +75,7 @@ const AboutPage = () => {
       {/* Company Background */}
       {section === 'company' && (
         <>
-          <section className="section-padding bg-secondary-50">
+          <section className="section-padding bg-white">
             <div className="container-custom">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
                 {/* Left: description */}
@@ -121,7 +125,7 @@ const AboutPage = () => {
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         className="flex items-start space-x-4"
                       >
-                        <div className="flex-shrink-0 w-20 h-20 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold">
+                        <div className="flex-shrink-0 w-20 h-14 rounded-lg bg-primary-900 text-white flex items-center justify-center font-black text-sm tracking-tight">
                           {item.year === 'current' ? new Date().getFullYear() : item.year}
                         </div>
                         <div className="flex-1 bg-white rounded-lg p-6 shadow-md">
@@ -172,7 +176,7 @@ const AboutPage = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: '-50px' }}
                       transition={{ duration: 0.5, delay: 0.1 }}
-                      className="bg-secondary-50 rounded-lg p-8"
+                      className="bg-secondary-100 rounded-lg p-8"
                     >
                       <h2 className="text-3xl font-bold text-secondary-900 text-center mb-6">
                         Associated Builders and Contractors, Inc. (ABC)
@@ -237,9 +241,9 @@ const AboutPage = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="flex items-start gap-5 p-6 rounded-2xl border border-secondary-100 bg-secondary-50 hover:shadow-md transition-shadow"
+                    className="flex items-start gap-5 p-6 rounded-lg border border-secondary-200 bg-white hover:shadow-md transition-shadow"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary-100 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center">
                       <Icon className="w-6 h-6 text-primary-700" />
                     </div>
                     <div>
@@ -269,8 +273,8 @@ const AboutPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                 {pageData.awards.map((award, index) => (
                   <Card key={index} className="text-center">
-                    <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
-                      <Award className="w-8 h-8 text-primary-600" />
+                    <div className="w-14 h-14 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center mx-auto mb-4">
+                      <Award className="w-7 h-7 text-primary-700" />
                     </div>
                     <p className="text-secondary-900 font-medium">{award}</p>
                   </Card>
@@ -283,8 +287,8 @@ const AboutPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {pageData.certifications.map((cert, index) => (
                   <Card key={index} className="text-center">
-                    <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle className="w-8 h-8 text-primary-600" />
+                    <div className="w-14 h-14 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle className="w-7 h-7 text-primary-700" />
                     </div>
                     <p className="text-secondary-900 font-medium">{cert}</p>
                   </Card>
@@ -293,7 +297,7 @@ const AboutPage = () => {
             </div>
           </section>
 
-          <section className="section-padding bg-secondary-50">
+          <section className="section-padding bg-white border-t border-secondary-100">
             <div className="container-custom">
               <h2 className="text-3xl font-bold text-secondary-900 text-center mb-12">
                 What Our Clients Say
@@ -332,7 +336,7 @@ const AboutPage = () => {
             </div>
           </section>
 
-          <section className="section-padding bg-secondary-50">
+          <section className="section-padding bg-white border-t border-secondary-100">
             <div className="container-custom">
               <h2 className="text-3xl font-bold text-secondary-900 text-center mb-12">
                 Why Work With Us
@@ -343,8 +347,8 @@ const AboutPage = () => {
                   
                   return (
                     <Card key={index} className="text-center">
-                      <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-4">
-                        <Icon className="w-8 h-8 text-primary-600" />
+                      <div className="w-14 h-14 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center mx-auto mb-4">
+                        <Icon className="w-7 h-7 text-primary-700" />
                       </div>
                       <h3 className="text-xl font-bold text-secondary-900 mb-2">
                         {benefit.title}
@@ -369,10 +373,10 @@ const AboutPage = () => {
                           {position.title}
                         </h3>
                         <div className="flex flex-wrap gap-2 mb-2">
-                          <span className="px-3 py-1 bg-primary-100 text-primary-700 text-sm rounded-full">
+                          <span className="px-3 py-1 bg-primary-50 border border-primary-100 text-primary-700 text-sm rounded-md">
                             {position.type}
                           </span>
-                          <span className="px-3 py-1 bg-secondary-100 text-secondary-700 text-sm rounded-full">
+                          <span className="px-3 py-1 bg-secondary-100 text-secondary-700 text-sm rounded-md">
                             {position.location}
                           </span>
                         </div>

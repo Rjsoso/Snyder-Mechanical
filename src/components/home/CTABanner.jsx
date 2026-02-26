@@ -26,14 +26,14 @@ const CTABanner = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href={`tel:${phone}`}
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-primary-700 hover:bg-primary-50 rounded-xl font-bold text-lg shadow-lg transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-primary-700 hover:bg-primary-50 rounded-md font-bold text-lg shadow-lg transition-all hover:-translate-y-0.5"
             >
               <Phone className="w-5 h-5" />
               Call {phone}
             </a>
             <Link
               to="/?modal=schedule"
-              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/10 hover:bg-white/20 border-2 border-white text-white rounded-xl font-semibold text-lg transition-all hover:scale-105"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold text-lg transition-all"
             >
               <CalendarCheck className="w-5 h-5" />
               Request Service

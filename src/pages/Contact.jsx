@@ -74,17 +74,21 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white py-20">
-        <div className="container-custom text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">{hero.title}</h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
+        <div className="container-custom">
+          <div className="flex items-center gap-3 mb-5">
+            <span className="w-8 h-px bg-white/60 flex-shrink-0" />
+            <span className="text-white/60 text-sm font-medium uppercase tracking-[0.18em]">Get In Touch</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-4">{hero.title}</h1>
+          <p className="text-lg text-white/75 max-w-xl">
             {hero.subtitle}
           </p>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="section-padding bg-secondary-50">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -114,7 +118,7 @@ const Contact = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData((d) => ({ ...d, name: e.target.value }))}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-secondary-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.namePlaceholder}
                   />
                 </div>
@@ -127,7 +131,7 @@ const Contact = () => {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData((d) => ({ ...d, email: e.target.value }))}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-secondary-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.emailPlaceholder}
                   />
                 </div>
@@ -139,7 +143,7 @@ const Contact = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData((d) => ({ ...d, phone: e.target.value }))}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-secondary-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.phonePlaceholder}
                   />
                 </div>
@@ -152,7 +156,7 @@ const Contact = () => {
                     rows="5"
                     value={formData.message}
                     onChange={(e) => setFormData((d) => ({ ...d, message: e.target.value }))}
-                    className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-secondary-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder={formSection.messagePlaceholder}
                   />
                 </div>
@@ -176,8 +180,8 @@ const Contact = () => {
 
               <Card>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                    <Phone className="w-6 h-6 text-primary-600" />
+                  <div className="flex-shrink-0 w-12 h-12 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center">
+                    <Phone className="w-6 h-6 text-primary-700" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Phone</h3>
@@ -191,8 +195,8 @@ const Contact = () => {
 
               <Card>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-primary-600" />
+                  <div className="flex-shrink-0 w-12 h-12 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center">
+                    <MapPin className="w-6 h-6 text-primary-700" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Location</h3>
@@ -204,8 +208,8 @@ const Contact = () => {
 
               <Card>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                    <Clock className="w-6 h-6 text-primary-600" />
+                  <div className="flex-shrink-0 w-12 h-12 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center">
+                    <Clock className="w-6 h-6 text-primary-700" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Business Hours</h3>
@@ -218,8 +222,8 @@ const Contact = () => {
 
               <Card>
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-primary-600" />
+                  <div className="flex-shrink-0 w-12 h-12 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-primary-700" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-secondary-900 mb-1">Email</h3>

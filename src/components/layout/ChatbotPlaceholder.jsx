@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Loader2, MessageSquarePlus, Paperclip, FileText } from "lucide-react";
+import { MessageSquare, X, Send, Loader2, MessageSquarePlus, Paperclip, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Use internal API proxy to avoid CORS issues with n8n
@@ -393,16 +393,19 @@ const ChatbotPlaceholder = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:max-w-md bg-white rounded-2xl shadow-2xl shadow-black/10 overflow-hidden border border-secondary-200/80 flex flex-col max-h-[36rem]"
+              className="mb-4 w-[calc(100vw-3rem)] max-w-sm md:max-w-md bg-white rounded-xl shadow-2xl shadow-black/15 overflow-hidden border border-secondary-200/80 flex flex-col max-h-[36rem]"
             >
-            <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-5 py-4 flex items-center justify-between flex-shrink-0 border-b border-primary-500/30">
+            <div className="bg-primary-900 text-white px-5 py-4 flex items-center justify-between flex-shrink-0 border-b border-white/10">
               <div className="flex items-center gap-3 min-w-0">
-                <MessageCircle className="w-6 h-6 flex-shrink-0 opacity-95" aria-hidden />
+                <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <MessageSquare className="w-5 h-5" aria-hidden />
+                </div>
                 <div className="min-w-0">
-                  <h3 className="font-semibold text-base tracking-tight">Chat with us</h3>
-                  <p className="text-primary-100 text-xs font-medium mt-0.5">
-                    We&apos;re here to help
-                  </p>
+                  <h3 className="font-bold text-sm tracking-tight">Snyder Mechanical</h3>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
+                    <p className="text-white/60 text-xs">Online — We&apos;re here to help</p>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -554,7 +557,7 @@ const ChatbotPlaceholder = () => {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={loading || attachedFiles.length >= MAX_FILES}
-                  className="p-2.5 rounded-xl border border-secondary-200 text-secondary-600 hover:bg-secondary-50 hover:border-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="p-2.5 rounded-md border border-secondary-200 text-secondary-600 hover:bg-secondary-50 hover:border-secondary-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                   aria-label="Attach files"
                   title="Attach files"
                 >
@@ -566,14 +569,14 @@ const ChatbotPlaceholder = () => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type a message..."
-                  className="flex-1 rounded-xl border border-secondary-200 px-4 py-2.5 text-sm placeholder:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-400 transition-shadow disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="flex-1 rounded-md border border-secondary-200 px-4 py-2.5 text-sm placeholder:text-secondary-400 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-400 transition-shadow disabled:opacity-60 disabled:cursor-not-allowed"
                   disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={() => sendMessage()}
                   disabled={loading || (!input.trim() && attachedFiles.length === 0)}
-                  className="bg-primary-600 text-white rounded-xl p-2.5 hover:bg-primary-700 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 transition-all duration-150"
+                  className="bg-primary-900 text-white rounded-md p-2.5 hover:bg-primary-800 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 transition-all duration-150"
                   aria-label="Send"
                 >
                   {loading ? (
@@ -592,16 +595,21 @@ const ChatbotPlaceholder = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        <motion.button
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg shadow-primary-900/20 ring-2 ring-primary-200/50 focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 flex items-center justify-center transition-all duration-200 hover:shadow-xl"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          aria-label={isOpen ? "Close chat" : "Open chat"}
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-        </motion.button>
+        <div className="relative">
+          {!isOpen && (
+            <span className="absolute inset-0 rounded-xl bg-primary-700 animate-ping opacity-20 pointer-events-none" />
+          )}
+          <motion.button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="relative w-14 h-14 bg-primary-900 hover:bg-primary-800 text-white rounded-xl shadow-lg shadow-primary-900/30 flex items-center justify-center transition-all duration-200 hover:shadow-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label={isOpen ? "Close chat" : "Open chat"}
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          </motion.button>
+        </div>
       </div>
     </div>
   );
@@ -618,7 +626,7 @@ function FloatingBubble() {
         ease: "easeInOut"
       }}
     >
-      <div className="bg-white shadow-lg shadow-black/5 rounded-full px-4 py-2.5 text-sm font-medium text-secondary-700 whitespace-nowrap border border-secondary-100">
+      <div className="bg-primary-900 shadow-lg shadow-black/20 rounded-lg px-4 py-2.5 text-sm font-semibold text-white whitespace-nowrap">
         Questions? Chat with us
       </div>
     </motion.div>
@@ -628,9 +636,12 @@ function FloatingBubble() {
 // Reusable pieces for "no webhook" branch
 function ChatHeader({ onClose }) {
   return (
-    <div className="bg-primary-600 text-white p-4 flex items-center justify-between">
-      <h3 className="font-semibold">Chat with us</h3>
-      <button type="button" onClick={onClose} className="hover:bg-primary-700 p-1 rounded transition-colors">
+    <div className="bg-primary-900 text-white p-4 flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <MessageSquare className="w-5 h-5 opacity-80" />
+        <h3 className="font-bold text-sm">Snyder Mechanical</h3>
+      </div>
+      <button type="button" onClick={onClose} className="hover:bg-white/10 p-1 rounded-md transition-colors">
         <X className="w-5 h-5" />
       </button>
     </div>
@@ -642,10 +653,10 @@ function ChatButton({ isOpen, onToggle }) {
     <button
       type="button"
       onClick={onToggle}
-      className="w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110"
+      className="w-14 h-14 bg-primary-900 hover:bg-primary-800 text-white rounded-xl shadow-lg flex items-center justify-center transition-all hover:scale-105"
       aria-label={isOpen ? "Close chat" : "Open chat"}
     >
-      {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+      {isOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
     </button>
   );
 }

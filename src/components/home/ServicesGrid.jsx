@@ -61,7 +61,7 @@ const ServicesGrid = () => {
                 transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <Link to={service.link} className="group block h-full">
-                  <div className="h-full rounded-2xl overflow-hidden border border-secondary-100 shadow-sm hover:shadow-lg transition-all duration-300 bg-white flex flex-col">
+                  <div className="h-full rounded-lg overflow-hidden border border-secondary-100 shadow-sm hover:shadow-lg transition-all duration-300 bg-white flex flex-col">
                     {/* Gradient header band */}
                     <div className="bg-gradient-to-br from-primary-800 to-primary-600 px-6 pt-8 pb-6">
                       <div className="w-14 h-14 rounded-xl bg-white/15 flex items-center justify-center mb-4">

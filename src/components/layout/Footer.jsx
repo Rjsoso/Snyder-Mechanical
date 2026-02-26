@@ -85,7 +85,7 @@ const Footer = () => {
 
           {/* About Links */}
           <div>
-            <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">About Us</h4>
+            <h4 className="text-white font-semibold text-xs uppercase tracking-[0.15em] mb-5">About Us</h4>
             <ul className="space-y-2.5">
               {aboutLinks.map((link, index) => (
                 <li key={index}>
@@ -102,7 +102,7 @@ const Footer = () => {
 
           {/* Services Links */}
           <div>
-            <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Services</h4>
+            <h4 className="text-white font-semibold text-xs uppercase tracking-[0.15em] mb-5">Services</h4>
             <ul className="space-y-2.5">
               {servicesLinks.map((link, index) => (
                 <li key={index}>
@@ -119,7 +119,7 @@ const Footer = () => {
 
           {/* Hours */}
           <div>
-            <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">{footer.hoursHeading}</h4>
+            <h4 className="text-white font-semibold text-xs uppercase tracking-[0.15em] mb-5">{footer.hoursHeading}</h4>
             <div className="space-y-3 text-primary-200 text-sm">
               <div className="flex items-start gap-2">
                 <Clock className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary-300" />
@@ -135,7 +135,7 @@ const Footer = () => {
             <div className="mt-6 pt-5 border-t border-primary-700">
               <Link
                 to="/contact"
-                className="inline-block w-full text-center py-2.5 px-4 bg-primary-600 hover:bg-primary-500 text-white rounded-lg font-semibold text-sm transition-colors"
+                className="inline-block w-full text-center py-2.5 px-4 bg-primary-600 hover:bg-primary-500 text-white rounded-md font-semibold text-sm transition-colors"
               >
                 Request Service
               </Link>

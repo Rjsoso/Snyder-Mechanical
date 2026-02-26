@@ -34,10 +34,14 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white py-20">
-        <div className="container-custom text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Portfolio</h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
+        <div className="container-custom">
+          <div className="flex items-center gap-3 mb-5">
+            <span className="w-8 h-px bg-white/60 flex-shrink-0" />
+            <span className="text-white/60 text-sm font-medium uppercase tracking-[0.18em]">Our Work</span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-4">Our Portfolio</h1>
+          <p className="text-lg text-white/75 max-w-xl">
             Explore our completed projects across northeastern Nevada
           </p>
         </div>
@@ -46,14 +50,14 @@ const Portfolio = () => {
       {/* Filter */}
       <section className="py-8 bg-white border-b border-secondary-200">
         <div className="container-custom">
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap gap-3">
             {categories.map(cat => (
               <button
                 key={cat.id}
                 onClick={() => setFilter(cat.id)}
-                className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-5 py-2 rounded-md font-medium text-sm transition-colors ${
                   filter === cat.id
-                    ? 'bg-primary-600 text-white'
+                    ? 'bg-primary-900 text-white'
                     : 'bg-secondary-100 text-secondary-700 hover:bg-secondary-200'
                 }`}
               >
@@ -65,7 +69,7 @@ const Portfolio = () => {
       </section>
 
       {/* Projects Grid */}
-      <section className="section-padding bg-secondary-50">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project, index) => (
@@ -76,11 +80,11 @@ const Portfolio = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Card hover className="h-full">
-                  <div className="aspect-video bg-secondary-200 rounded-lg mb-4 flex items-center justify-center">
+                  <div className="aspect-video bg-secondary-200 rounded-md mb-4 flex items-center justify-center">
                     <span className="text-secondary-400 text-sm">Project Image</span>
                   </div>
                   <div className="mb-2">
-                    <span className="inline-block px-3 py-1 bg-primary-100 text-primary-700 text-sm rounded-full">
+                    <span className="inline-block px-2.5 py-0.5 border border-primary-200 text-primary-700 text-xs rounded-md font-medium">
                       {project.category}
                     </span>
                   </div>

@@ -91,7 +91,7 @@ const ProcessSection = () => {
         >
           <Link
             to="/?modal=schedule"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-semibold transition-colors shadow-md hover:shadow-lg"
+            className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary-700 hover:bg-primary-800 text-white rounded-md font-semibold transition-colors shadow-md hover:shadow-lg"
           >
             <CalendarCheck className="w-5 h-5" />
             Schedule Your Service

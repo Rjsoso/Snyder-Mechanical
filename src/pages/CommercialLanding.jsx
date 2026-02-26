@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Building2, Wrench, Factory, Droplets, CheckCircle, Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Card from '../components/shared/Card';
-import Button from '../components/shared/Button';
 import { useCompanyData, useServiceCategories, useCommercialPageData } from '../hooks/useSanityData';
 
 // Icon mapping for Sanity data
@@ -92,43 +91,38 @@ const CommercialLanding = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-secondary-600 via-secondary-700 to-secondary-800 text-white py-20">
+      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
         <div className="container-custom">
           <motion.div
-            className="max-w-4xl"
+            className="max-w-3xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Link
-              to="/"
-              className="inline-flex items-center text-secondary-200 hover:text-white transition-colors mb-6 text-sm"
-            >
-              {hero.backLinkText}
-            </Link>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-8 h-px bg-white/60 flex-shrink-0" />
+              <span className="text-white/60 text-sm font-medium uppercase tracking-[0.18em]">Commercial Services</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-5 leading-tight">
               {hero.title}
             </h1>
-            <p className="text-xl text-secondary-100 mb-8 max-w-3xl">
+            <p className="text-lg text-white/75 mb-8 max-w-2xl">
               {hero.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={`tel:${phone}`}
-                className="flex items-center justify-center space-x-2 px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors text-lg"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-primary-900 hover:bg-primary-50 rounded-md font-bold transition-all shadow-lg hover:-translate-y-0.5"
               >
                 <Phone className="w-5 h-5" />
                 <span>{phone}</span>
               </a>
-              <Button
+              <Link
                 to="/?modal=estimate"
-                variant="outline"
-                size="lg"
-                className="border-2 border-white text-white hover:bg-white hover:text-secondary-700"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold transition-all"
               >
                 {hero.secondaryButtonText}
-              </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -164,10 +158,10 @@ const CommercialLanding = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="h-full border-t-4 border-secondary-600">
+                  <Card className="h-full border-t-2 border-primary-700">
                     <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-16 h-16 rounded-lg bg-secondary-100 flex items-center justify-center">
-                        <Icon className="w-8 h-8 text-secondary-700" />
+                      <div className="flex-shrink-0 w-14 h-14 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center">
+                        <Icon className="w-7 h-7 text-primary-700" />
                       </div>
                       <div>
                         <h3 className="text-xl font-bold text-secondary-900 mb-2">
@@ -187,7 +181,7 @@ const CommercialLanding = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="section-padding bg-secondary-50">
+      <section className="section-padding bg-white border-t border-secondary-100">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -202,15 +196,13 @@ const CommercialLanding = () => {
               <p className="text-lg text-secondary-600 mb-8">
                 {whyChooseSection.description}
               </p>
-              <Button
+              <Link
                 to="/portfolio"
-                variant="primary"
-                size="lg"
-                className="inline-flex items-center"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-md font-semibold transition-colors shadow-md"
               >
                 {whyChooseSection.buttonText}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </motion.div>
 
             <motion.div
@@ -226,7 +218,7 @@ const CommercialLanding = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {whyChooseSection.advantages.map((advantage, index) => (
                     <div key={index} className="flex items-start space-x-2">
-                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
                       <span className="text-secondary-700 text-sm">{advantage}</span>
                     </div>
                   ))}
@@ -245,7 +237,7 @@ const CommercialLanding = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Link to="/services/commercial">
-              <Card hover className="h-full border-t-4 border-secondary-600">
+              <Card hover className="h-full border-t-2 border-primary-700">
                 <div className="text-center p-4">
                   <Building2 className="w-16 h-16 mx-auto mb-4 text-secondary-600" />
                   <h3 className="text-2xl font-bold text-secondary-900 mb-3">
@@ -263,7 +255,7 @@ const CommercialLanding = () => {
             </Link>
 
             <Link to="/services/pumps-equipment">
-              <Card hover className="h-full border-t-4 border-secondary-600">
+              <Card hover className="h-full border-t-2 border-primary-700">
                 <div className="text-center p-4">
                   <Droplets className="w-16 h-16 mx-auto mb-4 text-secondary-600" />
                   <h3 className="text-2xl font-bold text-secondary-900 mb-3">
@@ -284,30 +276,28 @@ const CommercialLanding = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-secondary-700 to-secondary-900 text-white">
+      <section className="section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4">
             {ctaSection.heading}
           </h2>
-          <p className="text-xl text-secondary-200 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-white/75 mb-10 max-w-2xl mx-auto">
             {ctaSection.description}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href={`tel:${phone}`}
-              className="flex items-center justify-center space-x-2 px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors text-lg"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-900 hover:bg-primary-50 rounded-md font-bold text-lg transition-all shadow-lg hover:-translate-y-0.5"
             >
               <Phone className="w-5 h-5" />
               <span>{phone}</span>
             </a>
-            <Button
+            <Link
               to="/?modal=estimate"
-              variant="outline"
-              size="lg"
-              className="border-2 border-white text-white hover:bg-white hover:text-secondary-700"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold text-lg transition-all"
             >
               {ctaSection.secondaryButtonText}
-            </Button>
+            </Link>
           </div>
         </div>
       </section>

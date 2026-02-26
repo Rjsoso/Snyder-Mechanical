@@ -43,7 +43,7 @@ function FAQItem({ faq, index }) {
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-6 py-4 text-left bg-white hover:bg-secondary-50 transition-colors"
+        className="w-full flex items-center justify-between px-6 py-4 text-left bg-white hover:bg-secondary-100 transition-colors"
       >
         <span className="font-semibold text-secondary-900 pr-4">{faq.question}</span>
         <ChevronDown className={`w-5 h-5 text-primary-600 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
@@ -58,7 +58,7 @@ function FAQItem({ faq, index }) {
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <div className="px-6 py-4 bg-secondary-50 border-t border-secondary-200 text-secondary-600 leading-relaxed">
+            <div className="px-6 py-4 bg-white border-t border-secondary-200 text-secondary-600 leading-relaxed">
               {faq.answer}
             </div>
           </motion.div>
@@ -75,7 +75,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
   return (
     <div className="min-h-screen">
       {/* Hero — navy gradient matching rest of site */}
-      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-32 pb-20">
+      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
         <div className="container-custom">
           <motion.div
             className="max-w-3xl"
@@ -83,26 +83,27 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-primary-200 font-semibold text-sm uppercase tracking-wider mb-3">
-              Residential Services
-            </p>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-8 h-px bg-white/60 flex-shrink-0" />
+              <span className="text-white/60 text-sm font-medium uppercase tracking-[0.18em]">Residential Services</span>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-4 leading-tight">
               {service.hero.title}
             </h1>
-            <p className="text-xl text-primary-200 mb-8">
+            <p className="text-lg text-white/75 mb-8 max-w-xl">
               {service.hero.subtitle}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={`tel:${phone}`}
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold transition-all hover:scale-105 shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-primary-900 hover:bg-primary-50 rounded-md font-bold transition-all shadow-lg hover:-translate-y-0.5"
               >
                 <Phone className="w-5 h-5" />
                 Call {phone}
               </a>
               <Link
                 to="/?modal=schedule"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white/10 hover:bg-white/20 border-2 border-white text-white rounded-xl font-semibold transition-all"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold transition-all"
               >
                 <CalendarCheck className="w-5 h-5" />
                 Schedule Service
@@ -122,7 +123,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
       </section>
 
       {/* Services Grid */}
-      <section className="section-padding bg-secondary-50">
+      <section className="section-padding bg-white border-t border-secondary-100">
         <div className="container-custom">
           <motion.h2
             className="text-3xl font-bold text-secondary-900 mb-8"
@@ -146,7 +147,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
                   className="bg-white rounded-2xl p-6 border border-secondary-100 shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-primary-50 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-md bg-white border border-secondary-200 flex items-center justify-center flex-shrink-0">
                       <Icon className="w-6 h-6 text-primary-700" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -181,7 +182,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bg-primary-50 border border-primary-100 rounded-xl p-5"
+                className="bg-white border border-secondary-200 rounded-lg p-5"
               >
                 <h3 className="font-bold text-secondary-900 mb-1.5 flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
@@ -195,7 +196,7 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
       </section>
 
       {/* FAQ Accordion */}
-      <section className="section-padding bg-secondary-50">
+      <section className="section-padding bg-white border-t border-secondary-100">
         <div className="container-custom max-w-3xl">
           <motion.div
             className="text-center mb-10"
@@ -270,14 +271,14 @@ const ServiceDetailPage = ({ service, serviceKey }) => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href={`tel:${phone}`}
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold text-lg transition-all hover:scale-105 shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-900 hover:bg-primary-50 rounded-md font-bold text-lg transition-all shadow-lg hover:-translate-y-0.5"
               >
                 <Phone className="w-5 h-5" />
                 Call {phone}
               </a>
               <Link
                 to="/?modal=schedule"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 border-2 border-white text-white rounded-xl font-semibold text-lg transition-all"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold text-lg transition-all"
               >
                 <CalendarCheck className="w-5 h-5" />
                 Request Service Online
