@@ -28,7 +28,7 @@ const WhyChooseUs = () => {
   return (
     <section
       className="section-padding min-h-screen flex items-center text-white relative z-10 overflow-hidden"
-      style={{ background: 'rgb(2, 6, 23)' }}
+      style={{ background: 'rgba(2, 6, 23, 0.40)' }}
     >
       <div className="container-custom relative w-full">
         {/* Heading */}
