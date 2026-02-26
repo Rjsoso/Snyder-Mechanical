@@ -4,21 +4,25 @@ import { ShieldCheck, MapPin, ThumbsUp, Award } from 'lucide-react';
 const pillars = [
   {
     icon: ShieldCheck,
+    label: '01',
     title: 'Licensed & Insured',
     description: 'Fully licensed, bonded, and insured in Nevada. Your home and family are in safe, qualified hands.',
   },
   {
     icon: MapPin,
+    label: '02',
     title: 'Local & Family-Owned',
     description: 'Proudly serving Elko and Spring Creek since 1981. We live here too — your neighbors and your contractors.',
   },
   {
     icon: Award,
+    label: '03',
     title: '40+ Years of Experience',
     description: 'Decades of hands-on expertise across residential heating, cooling, and plumbing. We\'ve seen it all and fixed it all.',
   },
   {
     icon: ThumbsUp,
+    label: '04',
     title: '100% Satisfaction',
     description: 'We stand behind every job we do. If you\'re not satisfied, we\'ll make it right — no questions asked.',
   },
@@ -26,39 +30,70 @@ const pillars = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="section-padding bg-primary-900 text-white">
-      <div className="container-custom">
+    <section
+      className="section-padding text-white relative overflow-hidden"
+      style={{ background: 'radial-gradient(ellipse at 60% 0%, #1e293b 0%, #020617 65%)' }}
+    >
+      {/* Watermark year */}
+      <div
+        className="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none font-black text-white/[0.03] leading-none"
+        style={{ fontSize: 'clamp(10rem, 28vw, 28rem)' }}
+        aria-hidden="true"
+      >
+        1981
+      </div>
+
+      <div className="container-custom relative">
+        {/* Heading */}
         <motion.div
-          className="text-center mb-12"
+          className="mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-primary-300 font-semibold text-sm uppercase tracking-wider mb-2">Why Snyder Mechanical</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-8 h-px bg-amber-400/70 flex-shrink-0" />
+            <p className="text-amber-400/80 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-xl">
             The Trusted Choice in Northeastern Nevada
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {pillars.map((pillar, index) => {
             const Icon = pillar.icon;
             return (
               <motion.div
                 key={pillar.title}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6"
-                initial={{ opacity: 0, y: 24 }}
+                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-300 hover:bg-white/[0.07] hover:border-white/20"
+                initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(0,0,0,0.35)' }}
+                whileHover={{ y: -5, boxShadow: '0 24px 48px rgba(0,0,0,0.4)' }}
               >
-                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-white" />
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Large decorative number */}
+                <div
+                  className="absolute bottom-3 right-4 font-black text-white/[0.05] select-none pointer-events-none leading-none"
+                  style={{ fontSize: '5rem' }}
+                  aria-hidden="true"
+                >
+                  {pillar.label}
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{pillar.title}</h3>
-                <p className="text-primary-200 text-sm leading-relaxed">{pillar.description}</p>
+
+                {/* Icon */}
+                <div className="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center mb-5">
+                  <Icon className="w-5 h-5 text-amber-400" />
+                </div>
+
+                <h3 className="text-base font-bold text-white mb-2 tracking-tight">{pillar.title}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{pillar.description}</p>
               </motion.div>
             );
           })}
