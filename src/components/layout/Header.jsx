@@ -119,40 +119,29 @@ const Header = () => {
                 <ChevronDown className="w-4 h-4" />
               </button>
               {servicesDropdownOpen && (
-                <div className="absolute top-full left-0 mt-2 w-96 bg-white rounded-lg shadow-xl py-4 border border-secondary-100 z-50">
-                  <div className="grid grid-cols-2 gap-4 px-4">
-                    {/* For Homeowners */}
-                    <div>
-                      <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
-                        For Homeowners
-                      </div>
-                      {homeownersServices.map((item, index) => (
-                        <Link
-                          key={index}
-                          to={item.path}
-                          className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-
-                    {/* For Businesses */}
-                    <div className="border-l border-secondary-200 pl-4">
-                      <div className="text-xs font-bold text-secondary-500 uppercase tracking-wide mb-2 px-2">
-                        For Businesses
-                      </div>
-                      {businessServices.map((item, index) => (
-                        <Link
-                          key={index}
-                          to={item.path}
-                          className="block px-2 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors rounded"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
+                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg py-2 border border-secondary-100 z-50">
+                  {homeownersServices.map((item, index) => (
+                    <Link
+                      key={index}
+                      to={item.path}
+                      className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                  <div className="mx-4 my-1 border-t border-secondary-100" />
+                  <div className="px-4 pt-1 pb-1 text-xs font-bold text-secondary-400 uppercase tracking-wide">
+                    Commercial
                   </div>
+                  {businessServices.map((item, index) => (
+                    <Link
+                      key={index}
+                      to={item.path}
+                      className="block px-4 py-2 text-secondary-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
