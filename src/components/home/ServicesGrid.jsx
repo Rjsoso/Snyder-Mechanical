@@ -40,7 +40,7 @@ const ServicesGrid = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2">What We Do</p>
+          <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">What We Do</p>
           <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
             Residential Services
           </h2>
@@ -55,10 +55,10 @@ const ServicesGrid = () => {
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: index === 0 ? -30 : index === 2 ? 30 : 0, y: index === 1 ? 30 : 0 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 <Link to={service.link} className="group block h-full">
                   <div className="h-full rounded-2xl overflow-hidden border border-secondary-100 shadow-sm hover:shadow-lg transition-all duration-300 bg-white flex flex-col">

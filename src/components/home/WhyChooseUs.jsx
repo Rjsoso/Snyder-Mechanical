@@ -19,7 +19,7 @@ const pillars = [
   },
   {
     icon: ThumbsUp,
-    title: '100% Satisfaction Guarantee',
+    title: '100% Satisfaction',
     description: 'We stand behind every job we do. If you\'re not satisfied, we\'ll make it right — no questions asked.',
   },
 ];
@@ -35,7 +35,7 @@ const WhyChooseUs = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-amber-400 font-semibold text-sm uppercase tracking-wider mb-2">Why Snyder Mechanical</p>
+          <p className="text-primary-300 font-semibold text-sm uppercase tracking-wider mb-2">Why Snyder Mechanical</p>
           <h2 className="text-3xl md:text-4xl font-bold text-white">
             The Trusted Choice in Northeastern Nevada
           </h2>
@@ -47,14 +47,15 @@ const WhyChooseUs = () => {
             return (
               <motion.div
                 key={pillar.title}
-                className="bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl p-6 transition-colors duration-300"
+                className="bg-white/5 border border-white/10 rounded-2xl p-6"
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(0,0,0,0.35)' }}
               >
-                <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-amber-400" />
+                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+                  <Icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">{pillar.title}</h3>
                 <p className="text-primary-200 text-sm leading-relaxed">{pillar.description}</p>

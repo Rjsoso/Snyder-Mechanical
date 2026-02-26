@@ -18,14 +18,14 @@ const steps = [
   {
     number: '03',
     icon: CheckCircle2,
-    title: 'Fast, Clean, Guaranteed Fix',
+    title: 'Fast, Clean, Quality Work',
     description: 'We complete the work efficiently, clean up after ourselves, and make sure everything is working perfectly before we leave.',
   },
 ];
 
 const ProcessSection = () => {
   return (
-    <section className="section-padding bg-secondary-50">
+    <section className="section-padding bg-white">
       <div className="container-custom">
         <motion.div
           className="text-center mb-12"
@@ -34,7 +34,7 @@ const ProcessSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-amber-600 font-semibold text-sm uppercase tracking-wider mb-2">Simple Process</p>
+          <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">Simple Process</p>
           <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
             How It Works
           </h2>
@@ -55,16 +55,21 @@ const ProcessSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.15 }}
               >
-                {/* Connector line between steps */}
+                {/* Animated connector line between steps */}
                 {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-10 left-[calc(50%+2.5rem)] right-0 h-px bg-secondary-200 -z-0" />
+                  <motion.div
+                    className="hidden md:block absolute top-10 left-[calc(50%+2.5rem)] right-0 h-px bg-primary-700 origin-left -z-0"
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.15 + 0.4 }}
+                  />
                 )}
 
                 <div className="relative z-10">
-                  {/* Step number badge */}
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white border-2 border-primary-100 shadow-md mb-5 relative">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white border-2 border-secondary-200 shadow-md mb-5 relative">
                     <Icon className="w-8 h-8 text-primary-700" />
-                    <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-bold flex items-center justify-center shadow-sm">
+                    <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary-700 text-white text-xs font-bold flex items-center justify-center shadow-sm">
                       {step.number.slice(1)}
                     </span>
                   </div>

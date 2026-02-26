@@ -33,16 +33,16 @@ const Hero = () => {
       <div className="container-custom relative z-20 h-full flex flex-col justify-center">
         <div className="max-w-3xl pt-20 md:pt-24">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.65 }}
           >
             {/* Pill badges row */}
             <motion.div
               className="flex flex-wrap items-center gap-3 mb-5"
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.55, delay: 0.05 }}
             >
               <span className="inline-flex items-center gap-1.5 bg-primary-700/80 text-white text-sm font-semibold px-3.5 py-1 rounded-full">
                 <BadgeCheck className="w-4 h-4" />
@@ -60,27 +60,27 @@ const Hero = () => {
             {/* Headline */}
             <motion.h1
               className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.55, delay: 0.1 }}
             >
               {hero.title}
             </motion.h1>
 
             <motion.p
               className="text-xl md:text-2xl mb-3 text-white/95 font-medium"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
+              transition={{ duration: 0.55, delay: 0.15 }}
             >
               {hero.subtitle}
             </motion.p>
 
             <motion.p
               className="text-base md:text-lg mb-8 text-white/80 max-w-2xl leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.55, delay: 0.2 }}
             >
               {hero.description}
             </motion.p>
@@ -88,9 +88,9 @@ const Hero = () => {
             {/* Trust badges strip */}
             <motion.div
               className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-8 text-sm text-white/75"
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
+              transition={{ duration: 0.55, delay: 0.25 }}
             >
               {['Licensed & Insured', 'Free Estimates', 'Local & Family-Owned', 'Since 1981'].map((badge) => (
                 <span key={badge} className="flex items-center gap-1.5">
@@ -103,9 +103,9 @@ const Hero = () => {
             {/* CTA Buttons */}
             <motion.div
               className="flex flex-col sm:flex-row gap-3"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
+              transition={{ duration: 0.55, delay: 0.3 }}
             >
               {/* Primary: Call */}
               <a

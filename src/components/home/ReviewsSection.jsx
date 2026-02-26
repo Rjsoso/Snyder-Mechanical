@@ -15,18 +15,18 @@ const StarRow = ({ rating = 5, size = 'sm' }) => {
 };
 
 const ReviewCard = ({ review }) => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm border border-secondary-100 flex flex-col h-full">
-    <Quote className="w-7 h-7 text-primary-200 mb-3 flex-shrink-0" />
-    <p className="text-secondary-700 text-sm leading-relaxed flex-1 mb-5">
+  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col h-full">
+    <Quote className="w-7 h-7 text-white/20 mb-3 flex-shrink-0" />
+    <p className="text-secondary-300 text-sm leading-relaxed flex-1 mb-5">
       "{review.text}"
     </p>
-    <div className="flex items-center justify-between pt-4 border-t border-secondary-100">
+    <div className="flex items-center justify-between pt-4 border-t border-white/10">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold text-sm flex-shrink-0">
+        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
           {review.avatar}
         </div>
         <div>
-          <p className="font-semibold text-secondary-900 text-sm">{review.name}</p>
+          <p className="font-semibold text-white text-sm">{review.name}</p>
           <p className="text-secondary-400 text-xs">{review.location}</p>
         </div>
       </div>
@@ -44,7 +44,7 @@ const ReviewsSection = () => {
   const prevReview = () => setMobileIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
 
   return (
-    <section className="section-padding bg-secondary-50">
+    <section className="section-padding bg-secondary-900">
       <div className="container-custom">
         {/* Header */}
         <motion.div
@@ -66,10 +66,10 @@ const ReviewsSection = () => {
             <span className="text-secondary-500 text-sm">{reviewsData.stats.totalReviews} Google Reviews</span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-3">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3">
             What Our Customers Say
           </h2>
-          <p className="text-secondary-500">
+          <p className="text-secondary-400">
             {reviewsData.stats.fiveStarPercentage}% five-star ratings from your Elko &amp; Spring Creek neighbors
           </p>
         </motion.div>
@@ -103,7 +103,7 @@ const ReviewsSection = () => {
           <div className="flex items-center justify-center gap-4 mt-6">
             <button
               onClick={prevReview}
-              className="p-2 rounded-full bg-white border border-secondary-200 text-secondary-600 hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-colors shadow-sm"
+              className="p-2 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
               aria-label="Previous review"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -114,7 +114,7 @@ const ReviewsSection = () => {
                   key={i}
                   onClick={() => setMobileIndex(i)}
                   className={`h-1.5 rounded-full transition-all ${
-                    i === mobileIndex ? 'bg-primary-600 w-6' : 'bg-secondary-300 w-1.5'
+                    i === mobileIndex ? 'bg-white w-6' : 'bg-white/30 w-1.5'
                   }`}
                   aria-label={`Go to review ${i + 1}`}
                 />
@@ -122,7 +122,7 @@ const ReviewsSection = () => {
             </div>
             <button
               onClick={nextReview}
-              className="p-2 rounded-full bg-white border border-secondary-200 text-secondary-600 hover:bg-primary-50 hover:border-primary-200 hover:text-primary-700 transition-colors shadow-sm"
+              className="p-2 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-colors"
               aria-label="Next review"
             >
               <ChevronRight className="w-5 h-5" />
