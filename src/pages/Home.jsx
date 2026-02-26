@@ -1,5 +1,4 @@
 import Hero from '../components/home/Hero';
-import QuickServiceSelector from '../components/home/QuickServiceSelector';
 import ServicesGrid from '../components/home/ServicesGrid';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import ProcessSection from '../components/home/ProcessSection';
@@ -16,7 +15,6 @@ const Home = () => {
       {/* Spacer matches hero height so scroll length is correct; content scrolls over fixed hero */}
       <div className="h-screen" aria-hidden="true" />
       <div className="relative z-10 bg-white">
-        <QuickServiceSelector />
         <ServicesGrid />
         <WhyChooseUs />
         <ProcessSection />
