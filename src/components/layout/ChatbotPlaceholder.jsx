@@ -425,7 +425,7 @@ const ChatbotPlaceholder = () => {
                   <MessageSquare className="w-5 h-5" aria-hidden />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="font-bold text-sm tracking-tight">Snyder Mechanical</h3>
+                  <h3 className="font-bold text-sm tracking-tight text-white">Snyder Mechanical</h3>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                     <p className="text-white/60 text-xs">Online — We&apos;re here to help</p>
@@ -663,7 +663,7 @@ function ChatHeader({ onClose }) {
     <div className="bg-primary-900 text-white p-4 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <MessageSquare className="w-5 h-5 opacity-80" />
-        <h3 className="font-bold text-sm">Snyder Mechanical</h3>
+        <h3 className="font-bold text-sm text-white">Snyder Mechanical</h3>
       </div>
       <button type="button" onClick={onClose} className="hover:bg-white/10 p-1 rounded-md transition-colors">
         <X className="w-5 h-5" />
