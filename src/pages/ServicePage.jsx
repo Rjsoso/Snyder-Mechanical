@@ -55,6 +55,8 @@ const ServicePage = () => {
 
   return (
     <div className="min-h-screen">
+      <title>{service.title} | Snyder Mechanical – Elko, NV</title>
+      <meta name="description" content={service.description?.slice(0, 160) || `${service.title} from Snyder Mechanical – northeastern Nevada's preferred mechanical contractor.`} />
       {/* Hero */}
       <section className="bg-gradient-to-br from-secondary-500 via-primary-500 to-secondary-600 text-white py-20">
         <div className="container-custom text-center">

@@ -50,6 +50,8 @@ const AboutPage = () => {
 
   return (
     <div className="min-h-screen">
+      <title>{pageData.hero?.title} | Snyder Mechanical – Elko, NV</title>
+      <meta name="description" content={pageData.hero?.subtitle ? `${pageData.hero.subtitle} – Snyder Mechanical, northeastern Nevada's preferred mechanical contractor since 1981.` : "Learn more about Snyder Mechanical – northeastern Nevada's preferred mechanical contractor since 1981."} />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
         <div className="container-custom">

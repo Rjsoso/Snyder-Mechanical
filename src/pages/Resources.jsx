@@ -40,6 +40,8 @@ const Resources = () => {
 
   return (
     <div className="min-h-screen">
+      <title>Resources | Snyder Mechanical – Elko, NV</title>
+      <meta name="description" content="Helpful resources from Snyder Mechanical including maintenance tips, FAQs, and service guides for heating, cooling, and plumbing systems in Nevada." />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-500 via-primary-600 to-secondary-600 text-white py-20">
         <div className="container-custom text-center">

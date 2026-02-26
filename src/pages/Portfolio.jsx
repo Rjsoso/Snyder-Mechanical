@@ -33,6 +33,8 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen">
+      <title>Portfolio | Snyder Mechanical – Elko, NV</title>
+      <meta name="description" content="View Snyder Mechanical's project portfolio including residential, commercial, and industrial mechanical work across northeastern Nevada." />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
         <div className="container-custom">

@@ -73,6 +73,8 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen">
+      <title>Contact Us | Snyder Mechanical – Elko, NV</title>
+      <meta name="description" content="Contact Snyder Mechanical for heating, cooling, plumbing, and mechanical services in Elko and northeastern Nevada. Call (775) 738-5616 or send us a message." />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
         <div className="container-custom">
