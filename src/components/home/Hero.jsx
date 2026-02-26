@@ -19,7 +19,6 @@ const Hero = () => {
   };
 
   const phone = companyData?.phone || '(775) 738-5616';
-  const yearsInBusiness = new Date().getFullYear() - 1981;
 
   return (
     <section className="fixed inset-x-0 top-0 h-screen z-0 overflow-hidden">
@@ -103,7 +102,7 @@ const Hero = () => {
             </Link>
           </motion.div>
 
-          {/* Trust strip */}
+          {/* Trust strip + commercial link */}
           <motion.div
             className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/50 uppercase tracking-wider"
             initial={{ opacity: 0 }}
@@ -116,39 +115,19 @@ const Hero = () => {
                 {badge}
               </span>
             ))}
+            <span className="flex items-center gap-2">
+              <span className="w-px h-3 bg-white/20" />
+              <Link
+                to="/commercial"
+                className="inline-flex items-center gap-1 hover:text-white/80 transition-colors normal-case"
+              >
+                {hero.commercialLinkText}
+                <ArrowRight className="w-3 h-3" />
+              </Link>
+            </span>
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom-left floating stat strip — anchored under main content, clear of chatbot */}
-      <motion.div
-        className="absolute bottom-10 left-0 right-0 z-20 hidden lg:block"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.55 }}
-      >
-        <div className="container-custom">
-          <div className="inline-flex items-center gap-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg px-6 py-4">
-            <div className="text-center">
-              <div className="text-2xl font-black text-white leading-none">{yearsInBusiness}+</div>
-              <div className="text-[10px] text-white/50 uppercase tracking-wider mt-1">Years</div>
-            </div>
-            <div className="w-px h-8 bg-white/15" />
-            <div className="text-center">
-              <div className="text-2xl font-black text-white leading-none">5,000+</div>
-              <div className="text-[10px] text-white/50 uppercase tracking-wider mt-1">Projects</div>
-            </div>
-            <div className="w-px h-8 bg-white/15" />
-            <Link
-              to="/commercial"
-              className="inline-flex items-center gap-1 text-white/70 hover:text-white text-xs font-medium transition-colors"
-            >
-              {hero.commercialLinkText}
-              <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 };
