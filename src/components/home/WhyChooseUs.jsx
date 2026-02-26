@@ -76,7 +76,7 @@ const WhyChooseUs = () => {
   return (
     <section
       ref={sectionRef}
-      className="section-padding text-white relative overflow-hidden"
+      className="section-padding min-h-screen flex items-center text-white relative overflow-hidden"
       style={{ background: 'radial-gradient(ellipse at 60% 0%, #1e293b 0%, #020617 65%)' }}
     >
       {/* Watermark year */}
@@ -88,7 +88,7 @@ const WhyChooseUs = () => {
         1981
       </div>
 
-      <div className="container-custom relative">
+      <div className="container-custom relative w-full">
         {/* Heading */}
         <div ref={headingRef} className="mb-16">
           <div className="flex items-center gap-3 mb-4">
