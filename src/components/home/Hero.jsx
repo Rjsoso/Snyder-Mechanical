@@ -120,31 +120,33 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom-right floating stat card */}
+      {/* Bottom-left floating stat strip — anchored under main content, clear of chatbot */}
       <motion.div
-        className="absolute bottom-10 right-8 z-20 hidden lg:flex items-center gap-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg px-6 py-4"
+        className="absolute bottom-10 left-0 right-0 z-20 hidden lg:block"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.55 }}
       >
-        <div className="text-center">
-          <div className="text-2xl font-black text-white leading-none">{yearsInBusiness}+</div>
-          <div className="text-[10px] text-white/50 uppercase tracking-wider mt-1">Years</div>
-        </div>
-        <div className="w-px h-8 bg-white/15" />
-        <div className="text-center">
-          <div className="text-2xl font-black text-white leading-none">5,000+</div>
-          <div className="text-[10px] text-white/50 uppercase tracking-wider mt-1">Projects</div>
-        </div>
-        <div className="w-px h-8 bg-white/15" />
-        <div className="text-center">
-          <Link
-            to="/commercial"
-            className="inline-flex items-center gap-1 text-white/70 hover:text-white text-xs font-medium transition-colors"
-          >
-            {hero.commercialLinkText}
-            <ArrowRight className="w-3 h-3" />
-          </Link>
+        <div className="container-custom">
+          <div className="inline-flex items-center gap-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg px-6 py-4">
+            <div className="text-center">
+              <div className="text-2xl font-black text-white leading-none">{yearsInBusiness}+</div>
+              <div className="text-[10px] text-white/50 uppercase tracking-wider mt-1">Years</div>
+            </div>
+            <div className="w-px h-8 bg-white/15" />
+            <div className="text-center">
+              <div className="text-2xl font-black text-white leading-none">5,000+</div>
+              <div className="text-[10px] text-white/50 uppercase tracking-wider mt-1">Projects</div>
+            </div>
+            <div className="w-px h-8 bg-white/15" />
+            <Link
+              to="/commercial"
+              className="inline-flex items-center gap-1 text-white/70 hover:text-white text-xs font-medium transition-colors"
+            >
+              {hero.commercialLinkText}
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
       </motion.div>
     </section>
