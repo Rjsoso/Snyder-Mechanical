@@ -90,9 +90,10 @@ const CommercialLanding = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <>
       <title>Commercial Services | Snyder Mechanical – Elko, NV</title>
       <meta name="description" content="Snyder Mechanical is the area's preferred mechanical contractor for commercial design/build projects. Serving businesses and industrial facilities in northeastern Nevada." />
+    <div className="min-h-screen">
 
       {/* Hero */}
       <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-24 overflow-hidden">
@@ -312,6 +313,7 @@ const CommercialLanding = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
