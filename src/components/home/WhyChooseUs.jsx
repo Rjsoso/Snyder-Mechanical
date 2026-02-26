@@ -78,7 +78,7 @@ const WhyChooseUs = () => {
     <section
       ref={sectionRef}
       className="section-padding min-h-screen flex items-center text-white relative overflow-hidden"
-      style={{ background: 'rgba(2, 6, 23, 0.75)' }}
+      style={{ background: 'rgba(2, 6, 23, 0.90)' }}
     >
       <div className="container-custom relative w-full">
         {/* Heading */}
