@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Wrench, Factory, Droplets, Check, Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -16,6 +17,11 @@ const DOT_PATTERN = {
 };
 
 const CommercialLanding = () => {
+  useEffect(() => {
+    document.title = 'Commercial Services | Snyder Mechanical – Elko, NV';
+    return () => { document.title = 'Snyder Mechanical'; };
+  }, []);
+
   const { data: companyData } = useCompanyData();
   const { data: servicesData } = useServiceCategories();
   const { data: commercialPageData } = useCommercialPageData();
@@ -90,9 +96,6 @@ const CommercialLanding = () => {
   };
 
   return (
-    <>
-      <title>Commercial Services | Snyder Mechanical – Elko, NV</title>
-      <meta name="description" content="Snyder Mechanical is the area's preferred mechanical contractor for commercial design/build projects. Serving businesses and industrial facilities in northeastern Nevada." />
     <div className="min-h-screen">
 
       {/* Hero */}
@@ -313,7 +316,6 @@ const CommercialLanding = () => {
         </div>
       </section>
     </div>
-    </>
   );
 };
 

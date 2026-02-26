@@ -1,5 +1,28 @@
+import { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+
+class ErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
+  static getDerivedStateFromError(error) { return { hasError: true, error }; }
+  componentDidCatch(error, info) { console.error('App error:', error, info); }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-white">
+          <div className="text-center px-6">
+            <h1 className="text-2xl font-bold text-secondary-900 mb-3">Something went wrong</h1>
+            <p className="text-secondary-500 mb-6">Please reload the page to continue.</p>
+            <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary-900 text-white rounded-md font-semibold hover:bg-primary-800 transition-colors">
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 import ScrollToTop from './components/layout/ScrollToTop';
 import Home from './pages/Home';
 import ServicePage from './pages/ServicePage';
@@ -15,6 +38,7 @@ import InvoiceSyncDashboard from './pages/admin/InvoiceSyncDashboard';
 
 function App() {
   return (
+    <ErrorBoundary>
     <Router>
       <ScrollToTop />
       <Layout>
@@ -58,6 +82,7 @@ function App() {
         </Routes>
       </Layout>
     </Router>
+    </ErrorBoundary>
   );
 }
 
