@@ -1,15 +1,18 @@
 import { motion } from 'framer-motion';
-import { Building2, Wrench, Factory, Droplets, CheckCircle, Phone, ArrowRight } from 'lucide-react';
+import { Building2, Wrench, Factory, Droplets, Check, Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Card from '../components/shared/Card';
 import { useCompanyData, useServiceCategories, useCommercialPageData } from '../hooks/useSanityData';
 
-// Icon mapping for Sanity data
 const iconMap = {
   'Building2': Building2,
   'Wrench': Wrench,
   'Factory': Factory,
   'Droplets': Droplets
+};
+
+const DOT_PATTERN = {
+  backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
+  backgroundSize: '24px 24px',
 };
 
 const CommercialLanding = () => {
@@ -27,11 +30,9 @@ const CommercialLanding = () => {
   };
   const phone = companyData?.phone || '(775) 738-5616';
 
-  // Fallback content if Sanity data is not available
   const hero = commercialPageData?.hero || {
     title: 'Commercial Mechanical Contracting Excellence',
     description: 'Trusted by businesses across Northeastern Nevada for over 45 years. From design/build projects to ongoing maintenance, we deliver professional commercial mechanical solutions.',
-    backLinkText: '← Back to Home',
     primaryButtonText: 'Call Now',
     secondaryButtonText: 'Request Project Bid'
   };
@@ -92,15 +93,24 @@ const CommercialLanding = () => {
     <div className="min-h-screen">
       <title>Commercial Services | Snyder Mechanical – Elko, NV</title>
       <meta name="description" content="Snyder Mechanical is the area's preferred mechanical contractor for commercial design/build projects. Serving businesses and industrial facilities in northeastern Nevada." />
+
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-20">
-        <div className="container-custom">
+      <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-24 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04]" style={DOT_PATTERN} />
+        <div className="container-custom relative z-10">
           <motion.div
             className="max-w-3xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            <Link
+              to="/"
+              className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-xs font-medium uppercase tracking-widest mb-6 transition-colors"
+            >
+              <ArrowRight className="w-3 h-3 rotate-180" />
+              Home
+            </Link>
             <div className="flex items-center gap-3 mb-5">
               <span className="w-8 h-px bg-white/60 flex-shrink-0" />
               <span className="text-white/60 text-sm font-medium uppercase tracking-[0.18em]">Commercial Services</span>
@@ -131,7 +141,7 @@ const CommercialLanding = () => {
       </section>
 
       {/* Core Capabilities */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-secondary-50/60">
         <div className="container-custom">
           <motion.div
             className="text-center mb-12"
@@ -143,15 +153,14 @@ const CommercialLanding = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
               {capabilitiesSection.heading}
             </h2>
-            <p className="text-lg text-secondary-600 max-w-3xl mx-auto">
+            <p className="text-lg text-secondary-500 max-w-3xl mx-auto">
               {capabilitiesSection.description}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {capabilitiesSection.capabilities.map((capability, index) => {
               const Icon = iconMap[capability.icon] || Building2;
-              
               return (
                 <motion.div
                   key={index}
@@ -159,22 +168,24 @@ const CommercialLanding = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative overflow-hidden bg-white border border-secondary-200 border-l-2 border-l-primary-700 rounded-lg shadow-sm hover:shadow-md transition-shadow p-6"
                 >
-                  <Card className="h-full border-t-2 border-primary-700">
-                    <div className="flex items-start space-x-4">
-                      <div className="flex-shrink-0 w-14 h-14 rounded-md bg-primary-50 border border-primary-100 flex items-center justify-center">
-                        <Icon className="w-7 h-7 text-primary-700" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold text-secondary-900 mb-2">
-                          {capability.title}
-                        </h3>
-                        <p className="text-secondary-600">
-                          {capability.description}
-                        </p>
-                      </div>
+                  <div className="absolute -top-3 -right-2 text-6xl font-black text-primary-900/[0.05] leading-none select-none pointer-events-none">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-primary-900/5 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-primary-700" />
                     </div>
-                  </Card>
+                    <div>
+                      <h3 className="text-lg font-bold text-secondary-900 mb-1.5">
+                        {capability.title}
+                      </h3>
+                      <p className="text-secondary-500 text-sm leading-relaxed">
+                        {capability.description}
+                      </p>
+                    </div>
+                  </div>
                 </motion.div>
               );
             })}
@@ -183,9 +194,9 @@ const CommercialLanding = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="section-padding bg-white border-t border-secondary-100">
+      <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -195,15 +206,15 @@ const CommercialLanding = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-6">
                 {whyChooseSection.heading}
               </h2>
-              <p className="text-lg text-secondary-600 mb-8">
+              <p className="text-lg text-secondary-500 mb-8 leading-relaxed">
                 {whyChooseSection.description}
               </p>
               <Link
                 to="/portfolio"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-md font-semibold transition-colors shadow-md"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-900 hover:bg-primary-800 text-white rounded-md font-semibold transition-colors shadow-md"
               >
                 {whyChooseSection.buttonText}
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
 
@@ -212,78 +223,78 @@ const CommercialLanding = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              className="bg-secondary-50 rounded-xl p-8"
             >
-              <Card className="bg-white">
-                <h3 className="text-xl font-bold text-secondary-900 mb-6">
-                  Commercial Advantages
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {whyChooseSection.advantages.map((advantage, index) => (
-                    <div key={index} className="flex items-start space-x-2">
-                      <CheckCircle className="w-5 h-5 text-primary-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-secondary-700 text-sm">{advantage}</span>
-                    </div>
-                  ))}
-                </div>
-              </Card>
+              <h3 className="text-sm font-semibold text-secondary-500 uppercase tracking-widest mb-6">
+                Commercial Advantages
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {whyChooseSection.advantages.map((advantage, index) => (
+                  <div key={index} className="flex items-start gap-2.5">
+                    <Check className="w-4 h-4 text-primary-700 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm font-medium text-secondary-800">{advantage}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Service Links */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-secondary-50/60">
         <div className="container-custom">
-          <h2 className="text-3xl font-bold text-secondary-900 mb-8 text-center">
-            Explore Our Commercial Services
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Link to="/services/commercial">
-              <Card hover className="h-full border-t-2 border-primary-700">
-                <div className="text-center p-4">
-                  <Building2 className="w-16 h-16 mx-auto mb-4 text-secondary-600" />
-                  <h3 className="text-2xl font-bold text-secondary-900 mb-3">
-                    {commercialService.title}
-                  </h3>
-                  <p className="text-secondary-600 mb-4">
-                    {commercialService.description}
-                  </p>
-                  <div className="flex items-center justify-center text-primary-600 font-medium">
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2" />
+          <motion.div
+            className="text-center mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-bold text-secondary-900 mb-3">
+              Explore Our Commercial Services
+            </h2>
+            <p className="text-secondary-500">Detailed information on every service we offer</p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              { to: '/services/commercial', service: commercialService, Icon: Building2 },
+              { to: '/services/pumps-equipment', service: pumpsService, Icon: Droplets },
+            ].map(({ to, service, Icon }, i) => (
+              <motion.div
+                key={to}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+              >
+                <Link
+                  to={to}
+                  className="group flex items-start gap-5 p-6 bg-white border border-secondary-200 rounded-xl hover:border-primary-300 hover:shadow-md transition-all"
+                >
+                  <div className="w-11 h-11 rounded-lg bg-primary-50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary-100 transition-colors">
+                    <Icon className="w-5 h-5 text-primary-700" />
                   </div>
-                </div>
-              </Card>
-            </Link>
-
-            <Link to="/services/pumps-equipment">
-              <Card hover className="h-full border-t-2 border-primary-700">
-                <div className="text-center p-4">
-                  <Droplets className="w-16 h-16 mx-auto mb-4 text-secondary-600" />
-                  <h3 className="text-2xl font-bold text-secondary-900 mb-3">
-                    {pumpsService.title}
-                  </h3>
-                  <p className="text-secondary-600 mb-4">
-                    {pumpsService.description}
-                  </p>
-                  <div className="flex items-center justify-center text-primary-600 font-medium">
-                    <span>Learn More</span>
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-secondary-900 mb-1 group-hover:text-primary-700 transition-colors">{service.title}</h3>
+                    <p className="text-sm text-secondary-500 leading-relaxed">{service.description}</p>
                   </div>
-                </div>
-              </Card>
-            </Link>
+                  <ArrowRight className="w-4 h-4 text-secondary-400 group-hover:text-primary-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" />
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white">
-        <div className="container-custom text-center">
+      <section className="relative section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04]" style={DOT_PATTERN} />
+        <div className="container-custom text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4">
             {ctaSection.heading}
           </h2>
-          <p className="text-lg text-white/75 mb-10 max-w-2xl mx-auto">
+          <p className="text-lg text-white/75 mb-8 max-w-2xl mx-auto">
             {ctaSection.description}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
