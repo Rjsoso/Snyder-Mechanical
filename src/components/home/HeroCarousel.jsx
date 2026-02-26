@@ -30,15 +30,15 @@ const HeroCarousel = ({ images }) => {
         {images.map((image, index) => {
           if (index !== currentIndex) return null;
 
-          const imageUrl = image.asset?.url 
+          const imageUrl = image.asset
             ? urlFor(image.asset).width(1920).height(1080).quality(85).url()
-            : null;
+            : image.assetUrl || null;
 
           if (!imageUrl) return null;
 
           return (
             <motion.div
-              key={`${image.asset._id}-${index}`}
+              key={`${image.asset?._ref || index}-${index}`}
               className="absolute inset-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

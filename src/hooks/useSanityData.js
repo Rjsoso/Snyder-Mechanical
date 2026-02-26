@@ -322,10 +322,8 @@ export function useHomePageData() {
         hero {
           ...,
           backgroundImages[] {
-            asset->{
-              _id,
-              url
-            },
+            asset,
+            "assetUrl": asset->url,
             alt,
             hotspot
           }
