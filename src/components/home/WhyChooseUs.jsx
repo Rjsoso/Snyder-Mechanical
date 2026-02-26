@@ -1,5 +1,10 @@
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, MapPin, ThumbsUp, Award } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const pillars = [
   {
@@ -25,8 +30,52 @@ const pillars = [
 ];
 
 const WhyChooseUs = () => {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const cardsRef = useRef([]);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const heading = headingRef.current;
+    const cards = cardsRef.current;
+
+    // Set initial hidden state
+    gsap.set(heading, { opacity: 0, y: 60 });
+    gsap.set(cards, { opacity: 0, y: 80 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top top',
+        end: '+=150%',
+        pin: true,
+        pinSpacing: true,
+        scrub: 0.8,
+      },
+    });
+
+    tl.to(heading, { opacity: 1, y: 0, duration: 1, ease: 'power2.out' })
+      .to(
+        cards,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power2.out',
+          stagger: 0.15,
+        },
+        '-=0.5'
+      );
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       className="section-padding text-white relative overflow-hidden"
       style={{ background: 'radial-gradient(ellipse at 60% 0%, #1e293b 0%, #020617 65%)' }}
     >
@@ -41,13 +90,7 @@ const WhyChooseUs = () => {
 
       <div className="container-custom relative">
         {/* Heading */}
-        <motion.div
-          className="mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+        <div ref={headingRef} className="mb-16">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-px bg-white/25 flex-shrink-0" />
             <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
@@ -55,7 +98,7 @@ const WhyChooseUs = () => {
           <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-xl">
             The Trusted Choice in Northeastern Nevada
           </h2>
-        </motion.div>
+        </div>
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -64,11 +107,8 @@ const WhyChooseUs = () => {
             return (
               <motion.div
                 key={pillar.title}
+                ref={(el) => (cardsRef.current[index] = el)}
                 className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-300 hover:bg-white/[0.07] hover:border-white/20"
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -5, boxShadow: '0 24px 48px rgba(0,0,0,0.4)' }}
               >
                 {/* Top accent line */}
