@@ -3,13 +3,33 @@ import { Star, Quote } from 'lucide-react';
 import reviewsData from '../../data/reviews.json';
 import LogoLoop from './LogoLoop';
 
-const StarRow = ({ rating = 5 }) => (
-  <div className="flex gap-0.5">
-    {[...Array(rating)].map((_, i) => (
-      <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-    ))}
-  </div>
-);
+// Renders exactly `rating` stars with partial fill support (e.g. 3.9 → 3 full + 1 partial + 1 empty)
+const StarRow = ({ rating = 5, size = 'sm' }) => {
+  const cls = size === 'sm' ? 'w-4 h-4' : 'w-5 h-5';
+  return (
+    <div className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => {
+        const fill = Math.min(1, Math.max(0, rating - (star - 1)));
+        const pct = Math.round(fill * 100);
+        return (
+          <span key={star} className="relative inline-block">
+            {/* Empty star (background) */}
+            <Star className={`${cls} text-secondary-600`} />
+            {/* Filled portion clipped to percentage */}
+            {pct > 0 && (
+              <span
+                className="absolute inset-0 overflow-hidden"
+                style={{ width: `${pct}%` }}
+              >
+                <Star className={`${cls} fill-amber-400 text-amber-400`} />
+              </span>
+            )}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
 
 const ReviewCard = ({ review }) => (
   <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col w-80 h-full">
@@ -47,11 +67,7 @@ const ReviewsSection = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="inline-flex items-center gap-2 bg-white border border-secondary-200 rounded-full px-4 py-2 shadow-sm mb-5">
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-              ))}
-            </div>
+            <StarRow rating={reviewsData.stats.averageRating} />
             <span className="font-bold text-secondary-900 text-sm">{reviewsData.stats.averageRating}</span>
             <span className="text-secondary-400 text-sm">·</span>
             <span className="text-secondary-500 text-sm">{reviewsData.stats.totalReviews} Google Reviews</span>
