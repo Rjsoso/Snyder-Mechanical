@@ -104,19 +104,19 @@ const Hero = () => {
 
           {/* Trust strip + commercial link */}
           <motion.div
-            className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/50 uppercase tracking-wider"
+            className="flex flex-wrap items-center gap-x-8 gap-y-2 text-sm text-white/60 uppercase tracking-widest font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.45 }}
           >
             {['Licensed & Insured', 'Free Estimates', 'Local & Family-Owned'].map((badge, i) => (
               <span key={badge} className="flex items-center gap-2">
-                {i > 0 && <span className="w-px h-3 bg-white/20" />}
+                {i > 0 && <span className="w-px h-4 bg-white/25" />}
                 {badge}
               </span>
             ))}
             <span className="flex items-center gap-2">
-              <span className="w-px h-3 bg-white/20" />
+              <span className="w-px h-4 bg-white/25" />
               <Link
                 to="/commercial"
                 className="inline-flex items-center gap-1 hover:text-white/80 transition-colors normal-case"
