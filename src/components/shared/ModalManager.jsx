@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { X, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ServiceRequestForm from '../forms/ServiceRequestForm';
 import QuickEstimateForm from '../forms/QuickEstimateForm';
+
+const PHONE = '(775) 738-5616';
 
 const ModalManager = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  // Derive active modal from location instead of storing in state
   const params = new URLSearchParams(location.search);
   const activeModal = params.get('modal');
 
@@ -50,7 +50,7 @@ const ModalManager = () => {
 
           {/* Modal Content */}
           <motion.div
-            className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             initial={{ scale: 0.9, y: 20 }}
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.9, y: 20 }}
@@ -59,11 +59,28 @@ const ModalManager = () => {
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-secondary-100 hover:bg-secondary-200 transition-colors"
+              className="absolute top-4 right-4 z-10 p-2 rounded-md bg-white/80 hover:bg-secondary-100 transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5 text-secondary-700" />
             </button>
+
+            {/* Call strip — shown on schedule modal */}
+            {activeModal === 'schedule' && (
+              <div className="bg-primary-900 rounded-t-xl px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div>
+                  <p className="text-white/60 text-xs uppercase tracking-[0.15em] font-medium mb-0.5">Prefer to talk?</p>
+                  <p className="text-white font-semibold text-sm">Call us and we'll get you booked right away.</p>
+                </div>
+                <a
+                  href={`tel:${PHONE.replace(/[^0-9]/g, '')}`}
+                  className="inline-flex items-center gap-2 bg-white text-primary-900 hover:bg-primary-50 px-5 py-2.5 rounded-md font-bold text-sm transition-colors flex-shrink-0 shadow"
+                >
+                  <Phone className="w-4 h-4" />
+                  {PHONE}
+                </a>
+              </div>
+            )}
 
             {/* Form Content */}
             <div className="p-8">
