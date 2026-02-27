@@ -66,7 +66,7 @@ const WhyChooseUs = ({ scrollProgress }) => {
 
   return (
     <section
-      className="section-padding h-screen flex items-center text-white relative z-10 overflow-hidden"
+      className="section-padding h-screen max-h-screen flex items-center text-white relative z-10 overflow-hidden"
       style={{ background: 'rgba(2, 6, 23, 0.20)' }}
     >
       <div
