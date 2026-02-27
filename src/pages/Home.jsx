@@ -7,6 +7,7 @@ import WhyChooseUs from '../components/home/WhyChooseUs';
 import ReviewsSection from '../components/home/ReviewsSection';
 import ProcessSection from '../components/home/ProcessSection';
 import CTABanner from '../components/home/CTABanner';
+import LocationSection from '../components/home/LocationSection';
 import Footer from '../components/layout/Footer';
 
 const Home = () => {
@@ -46,6 +47,7 @@ const Home = () => {
         <ReviewsSection />
         <ProcessSection />
         <CTABanner />
+        <LocationSection />
         <Footer />
       </div>
     </>

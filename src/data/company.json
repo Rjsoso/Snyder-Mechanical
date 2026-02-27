@@ -5,11 +5,11 @@
   "phone": "(775) 738-5616",
   "email": "info@snydermechanical.com",
   "address": {
-    "street": "",
+    "street": "4745 Manzanita Dr",
     "city": "Elko",
     "state": "NV",
-    "zip": "",
-    "display": "Elko, Spring Creek, NV"
+    "zip": "89801",
+    "display": "4745 Manzanita Dr, Elko, NV 89801"
   },
   "serviceArea": "Northeastern Nevada",
   "hours": {
