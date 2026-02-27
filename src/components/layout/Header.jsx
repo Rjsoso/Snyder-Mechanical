@@ -23,7 +23,7 @@ const DEFAULT_BUSINESS_SERVICES = [
 
 const NAV_LINK = 'text-[11px] font-bold uppercase tracking-[0.14em] transition-colors pb-0.5';
 const NAV_ACTIVE = 'text-white border-b border-white';
-const NAV_IDLE = 'text-white/60 hover:text-white';
+const NAV_IDLE = 'text-white/85 hover:text-white';
 
 const DROPDOWN_ITEM = 'block px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-secondary-600 hover:bg-secondary-50 hover:text-primary-900 transition-colors';
 
@@ -68,12 +68,12 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-[#111111] shadow-md border-b border-white/10 fixed top-0 left-0 right-0 z-50 overflow-visible">
+    <header className="bg-black shadow-md border-b border-white/20 fixed top-0 left-0 right-0 z-50 overflow-visible">
       <nav className="container-custom">
         <div className="flex items-start justify-between h-[68px]">
           {/* Logo — white badge box with top margin so the dark bar is visible above */}
           <Link to="/" className="flex-shrink-0 mr-8">
-            <div className="bg-white rounded-2xl shadow-xl px-5 pt-2 pb-4 mt-2">
+            <div className="bg-white rounded-none shadow-xl px-5 pt-2 pb-4 mt-2">
               <img
                 src="/logo.png"
                 alt="Snyder Mechanical"
@@ -170,7 +170,7 @@ const Header = () => {
             {/* Phone Number */}
             <a
               href={`tel:${phone}`}
-              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white/60 hover:text-white transition-colors"
+              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white/85 hover:text-white transition-colors"
             >
               <Phone className="w-3.5 h-3.5 flex-shrink-0" />
               <span className="hidden xl:inline">{phone}</span>
@@ -180,7 +180,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden self-center p-2 text-white/70 hover:text-white transition-colors"
+            className="lg:hidden self-center p-2 text-white/85 hover:text-white transition-colors"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -192,7 +192,7 @@ const Header = () => {
             <div className="flex flex-col gap-5">
               <Link
                 to="/"
-                className={`${NAV_LINK} ${isActive('/') ? 'text-white' : 'text-white/60'}`}
+                className={`${NAV_LINK} ${isActive('/') ? 'text-white' : 'text-white/85'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
@@ -200,12 +200,12 @@ const Header = () => {
 
               {/* About Submenu */}
               <div className="space-y-2">
-                <div className={`${NAV_LINK} text-white/80`}>About</div>
+                <div className={`${NAV_LINK} text-white/85`}>About</div>
                 {aboutDropdown.map((item, index) => (
                   <Link
                     key={index}
                     to={item.path}
-                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 hover:text-white"
+                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75 hover:text-white"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -215,24 +215,24 @@ const Header = () => {
 
               {/* Services Submenu */}
               <div className="space-y-2">
-                <div className={`${NAV_LINK} text-white/80`}>Services</div>
-                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/30 pl-4 mt-2">Homeowners</div>
+                <div className={`${NAV_LINK} text-white/85`}>Services</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/50 pl-4 mt-2">Homeowners</div>
                 {homeownersServices.map((item, index) => (
                   <Link
                     key={index}
                     to={item.path}
-                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 hover:text-white"
+                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75 hover:text-white"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
                 ))}
-                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/30 pl-4 mt-3">Commercial</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/50 pl-4 mt-3">Commercial</div>
                 {businessServices.map((item, index) => (
                   <Link
                     key={index}
                     to={item.path}
-                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 hover:text-white"
+                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75 hover:text-white"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -242,7 +242,7 @@ const Header = () => {
 
               <Link
                 to="/portfolio"
-                className={`${NAV_LINK} ${isActive('/portfolio') ? 'text-white' : 'text-white/60'}`}
+                className={`${NAV_LINK} ${isActive('/portfolio') ? 'text-white' : 'text-white/85'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Portfolio
@@ -250,7 +250,7 @@ const Header = () => {
 
               <Link
                 to="/contact"
-                className={`${NAV_LINK} ${isActive('/contact') ? 'text-white' : 'text-white/60'}`}
+                className={`${NAV_LINK} ${isActive('/contact') ? 'text-white' : 'text-white/85'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
@@ -266,7 +266,7 @@ const Header = () => {
 
               <a
                 href={`tel:${phone}`}
-                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em] text-white/60 hover:text-white py-1"
+                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em] text-white/85 hover:text-white py-1"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Phone className="w-4 h-4" />
