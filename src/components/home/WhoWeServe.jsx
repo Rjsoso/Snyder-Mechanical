@@ -122,8 +122,8 @@ const WhoWeServe = () => {
 
         {/* Residential Panel */}
         <motion.div
-          className={`relative overflow-hidden cursor-pointer transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] min-h-[320px] md:min-h-0 ${
-            showServices ? 'flex-[1.15]' : 'flex-1 md:hover:flex-[1.1]'
+          className={`relative overflow-hidden cursor-pointer min-h-[320px] md:min-h-0 ${
+            showServices ? 'flex-[1.15]' : 'flex-1'
           }`}
           style={{ background: showServices ? '#f5f3ef' : '#faf9f7' }}
           initial={{ opacity: 0, x: -30 }}
@@ -202,7 +202,7 @@ const WhoWeServe = () => {
 
         {/* Commercial Panel */}
         <motion.div
-          className="relative flex-1 md:hover:flex-[1.1] transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
+          className="relative flex-1 overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}

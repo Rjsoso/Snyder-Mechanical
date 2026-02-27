@@ -14,7 +14,7 @@ const CTABanner = () => {
   const phone = companyData?.phone || '(775) 738-5616';
 
   return (
-    <section className="relative overflow-hidden bg-primary-900">
+    <section className="relative overflow-hidden" style={{ background: 'rgba(2, 6, 23, 0.20)' }}>
       {/* Single texture layer */}
       <div
         className="absolute inset-0 pointer-events-none bg-grid-subtle"
