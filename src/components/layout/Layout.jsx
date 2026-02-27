@@ -2,7 +2,6 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 import ChatbotPlaceholder from './ChatbotPlaceholder';
-import QuickActionBar from '../mobile/QuickActionBar';
 import ModalManager from '../shared/ModalManager';
 
 const Layout = ({ children }) => {
@@ -13,7 +12,7 @@ const Layout = ({ children }) => {
       <div className="flex-shrink-0">
         <Header />
       </div>
-      <main className="flex-shrink-0 pb-20 lg:pb-0 pt-24 md:pt-28 bg-white">
+      <main className="flex-shrink-0 pt-24 md:pt-28 bg-white">
         {children}
       </main>
       {location.pathname !== '/' && (
@@ -22,7 +21,6 @@ const Layout = ({ children }) => {
         </div>
       )}
       <ChatbotPlaceholder />
-      <QuickActionBar />
       <ModalManager />
     </div>
   );
