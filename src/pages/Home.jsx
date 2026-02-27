@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { useScroll, useSpring } from 'framer-motion';
 import Hero from '../components/home/Hero';
 import StatsBar from '../components/home/StatsBar';
-import PainPoints from '../components/home/PainPoints';
 import WhoWeServe from '../components/home/WhoWeServe';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import ReviewsSection from '../components/home/ReviewsSection';
@@ -31,9 +30,6 @@ const Home = () => {
       <div className="relative z-20">
         {/* Dark stats — immediate contrast after hero */}
         <StatsBar />
-
-        {/* Shared pain points — universal before the audience split */}
-        <PainPoints />
 
         {/* Residential / Commercial split — click residential to reveal all services inline */}
         <WhoWeServe />
