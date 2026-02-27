@@ -118,12 +118,12 @@ const WhoWeServe = () => {
       </motion.div>
 
       {/* Split panels */}
-      <div className="flex flex-col md:flex-row min-h-[520px]">
+      <div className="group/panels flex flex-col md:flex-row min-h-[520px]">
 
         {/* Residential Panel */}
         <motion.div
-          className={`relative overflow-hidden cursor-pointer transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] min-h-[320px] md:min-h-0 ${
-            showServices ? 'flex-[1.15]' : 'flex-1 md:hover:flex-[1.1]'
+          className={`relative overflow-hidden cursor-pointer transition-[flex,filter] ease-[cubic-bezier(0.4,0,0.2,1)] duration-[600ms] min-h-[320px] md:min-h-0 md:group-hover/panels:brightness-95 md:hover:brightness-100 ${
+            showServices ? 'flex-[1.15]' : 'flex-1 md:hover:flex-[1.12]'
           }`}
           style={{ background: showServices ? '#f5f3ef' : '#faf9f7' }}
           initial={{ opacity: 0, x: -30 }}
@@ -202,7 +202,7 @@ const WhoWeServe = () => {
 
         {/* Commercial Panel */}
         <motion.div
-          className="relative flex-1 md:hover:flex-[1.1] transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
+          className="relative flex-1 md:hover:flex-[1.12] md:group-hover/panels:brightness-95 md:hover:brightness-100 transition-[flex,filter] ease-[cubic-bezier(0.4,0,0.2,1)] duration-[600ms] overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
