@@ -355,36 +355,36 @@ const ChatbotPlaceholder = () => {
   // No webhook configured: keep "Coming Soon" behavior
   if (!webhookUrl) {
     return (
-      <div className="fixed bottom-20 right-6 z-50 lg:bottom-6 flex items-center gap-3">
-        <AnimatePresence>
-          {!isOpen && (
-            <motion.div
-              key="chat-bubble"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0 } }}
-              transition={{ delay: 0.25, duration: 0.15 }}
-            >
-              <FloatingBubble />
-            </motion.div>
-          )}
-        </AnimatePresence>
-        <div className="flex flex-col items-end">
-          {isOpen && (
-            <div className="mb-4 w-80 md:w-96 bg-white rounded-lg shadow-2xl overflow-hidden">
-              <ChatHeader onClose={() => setIsOpen(false)} />
-              <div className="p-6 h-96 flex items-center justify-center bg-secondary-50">
-                <div className="text-center text-secondary-600">
-                  <MessageCircle className="w-16 h-16 mx-auto mb-4 text-secondary-400" />
-                  <p className="mb-2">AI Chatbot Coming Soon!</p>
-                  <p className="text-sm">For now, please call us or use our contact form.</p>
-                </div>
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            key="chat-bubble"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0 } }}
+            transition={{ delay: 0.25, duration: 0.15 }}
+          >
+            <FloatingBubble />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className="flex flex-col items-end">
+        {isOpen && (
+          <div className="mb-4 w-80 md:w-96 bg-white rounded-lg shadow-2xl overflow-hidden">
+            <ChatHeader onClose={() => setIsOpen(false)} />
+            <div className="p-6 h-96 flex items-center justify-center bg-secondary-50">
+              <div className="text-center text-secondary-600">
+                <MessageCircle className="w-16 h-16 mx-auto mb-4 text-secondary-400" />
+                <p className="mb-2">AI Chatbot Coming Soon!</p>
+                <p className="text-sm">For now, please call us or use our contact form.</p>
               </div>
             </div>
-          )}
-          <ChatButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
-        </div>
+          </div>
+        )}
+        <ChatButton isOpen={isOpen} onToggle={() => setIsOpen(!isOpen)} />
       </div>
+    </div>
     );
   }
 
@@ -394,7 +394,7 @@ const ChatbotPlaceholder = () => {
     !loading;
 
   return (
-    <div className="fixed bottom-20 right-6 z-50 lg:bottom-6 flex items-center gap-3">
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
       <AnimatePresence>
         {!isOpen && (
           <motion.div
