@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useScroll, useSpring } from 'framer-motion';
 import Hero from '../components/home/Hero';
 import StatsBar from '../components/home/StatsBar';
+import PainPoints from '../components/home/PainPoints';
 import WhoWeServe from '../components/home/WhoWeServe';
-import ServicesGrid from '../components/home/ServicesGrid';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import ReviewsSection from '../components/home/ReviewsSection';
 import ProcessSection from '../components/home/ProcessSection';
@@ -25,22 +25,21 @@ const Home = () => {
   return (
     <>
       <Hero />
-      {/* Spacer matches hero height so scroll length is correct; content scrolls over fixed hero */}
+      {/* Spacer matches hero height so content scrolls over the fixed hero */}
       <div className="h-screen" aria-hidden="true" />
 
-      {/* Post-hero content layer — scrolls over the fixed hero */}
       <div className="relative z-20">
-        {/* Dark stats bar — immediate visual contrast after light hero */}
+        {/* Dark stats — immediate contrast after hero */}
         <StatsBar />
 
-        {/* Residential / Commercial split — no wrapper background, panels own their bg */}
-        <WhoWeServe />
+        {/* Shared pain points — universal before the audience split */}
+        <PainPoints />
 
-        {/* Residential services — light background */}
-        <ServicesGrid />
+        {/* Residential / Commercial split — click residential to reveal all services inline */}
+        <WhoWeServe />
       </div>
 
-      {/* Sticky wrapper: 300vh gives 200vh of pinned scroll for the content to animate in */}
+      {/* Sticky WhyChooseUs: 300vh gives 200vh of pinned scroll */}
       <div ref={whyWrapperRef} className="relative z-10" style={{ height: '300vh' }}>
         <div className="sticky top-0 h-screen">
           <WhyChooseUs scrollProgress={smoothProgress} />
