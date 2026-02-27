@@ -20,9 +20,9 @@ const LocationSection = () => {
 
           {/* Left — info */}
           <motion.div
-            className="flex-shrink-0 lg:w-72"
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            className="flex-shrink-0 w-full lg:w-72"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, ease: EASE }}
           >
@@ -49,7 +49,7 @@ const LocationSection = () => {
               href={DIRECTIONS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[6px] bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5"
+              className="flex justify-center lg:inline-flex items-center gap-2.5 px-5 py-3.5 rounded-[6px] bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 w-full lg:w-auto"
             >
               <Navigation className="w-4 h-4" />
               Get Directions
@@ -58,9 +58,9 @@ const LocationSection = () => {
 
           {/* Right — map */}
           <motion.div
-            className="w-full flex-1 min-h-[340px] md:min-h-[400px] rounded-xl overflow-hidden border border-white/10 shadow-2xl"
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            className="w-full flex-1 rounded-xl overflow-hidden border border-white/10 shadow-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1, ease: EASE }}
           >
@@ -69,7 +69,7 @@ const LocationSection = () => {
               src={EMBED_URL}
               width="100%"
               height="100%"
-              style={{ minHeight: '340px', border: 0, display: 'block' }}
+              style={{ minHeight: '280px', height: '380px', border: 0, display: 'block' }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
