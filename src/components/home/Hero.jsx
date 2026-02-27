@@ -10,7 +10,7 @@ const Hero = () => {
   const { data: homePageData } = useHomePageData();
 
   const hero = homePageData?.hero || {
-    title: 'Comfort & Reliability For Your Home',
+    title: "Northeastern Nevada's Premier Mechanical Contractor Since 1981",
     subtitle: 'Expert HVAC & Plumbing Services in Northeastern Nevada',
     description: 'Trusted by homeowners across Elko and Spring Creek since 1981. From installations to repairs, we keep your home comfortable year-round.',
     commercialLinkText: 'Looking for commercial services?',
@@ -65,12 +65,14 @@ const Hero = () => {
 
           {/* Headline — large, white, sharp */}
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.02] mb-6 tracking-tight"
+            className="text-5xl md:text-6xl lg:text-7xl text-white leading-[1.05] mb-6 tracking-tight"
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
           >
-            {hero.title}
+            <span className="block font-light">Northeastern Nevada&rsquo;s Premier</span>
+            <span className="block font-black">Mechanical Contractor</span>
+            <span className="block font-black">Since 1981</span>
           </motion.h1>
 
           {/* Subtitle */}
