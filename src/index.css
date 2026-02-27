@@ -37,6 +37,22 @@
   --color-accent-800: #0f172a;
   --color-accent-900: #020617;
 
+  /* Copper — warm industrial accent */
+  --color-copper-100: #f5e6d3;
+  --color-copper-200: #e8c9a0;
+  --color-copper-300: #d9a96e;
+  --color-copper-400: #cd8b5a;
+  --color-copper-500: #b87333;
+  --color-copper-600: #9e6429;
+  --color-copper-700: #7d4e20;
+  --color-copper-800: #5c3a18;
+  --color-copper-900: #3d2610;
+
+  /* Stone — warm residential neutrals */
+  --color-stone-50: #faf9f7;
+  --color-stone-100: #f5f2ee;
+  --color-stone-200: #e8e3dc;
+
   /* Amber — emergency/CTA highlights */
   --color-amber-50: #fffbeb;
   --color-amber-100: #fef3c7;
@@ -193,5 +209,72 @@
     100% {
       left: 100%;
     }
+  }
+
+  /* Section divider — thin geometric rule */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, #e2e8f0 20%, #e2e8f0 80%, transparent 100%);
+  }
+
+  .section-divider-dark {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.10) 20%, rgba(255,255,255,0.10) 80%, transparent 100%);
+  }
+
+  /* Copper accent line */
+  .copper-rule {
+    width: 2rem;
+    height: 2px;
+    background-color: var(--color-copper-500);
+    flex-shrink: 0;
+  }
+
+  /* Scroll reveal — base state, toggled by IntersectionObserver or Framer Motion */
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .reveal-up {
+    animation: reveal-up 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  /* Nav link slide-underline */
+  .nav-underline {
+    position: relative;
+  }
+
+  .nav-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: white;
+    transition: width 0.25s ease;
+  }
+
+  .nav-underline:hover::after {
+    width: 100%;
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.35;
   }
 }

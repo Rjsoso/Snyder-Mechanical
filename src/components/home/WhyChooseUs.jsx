@@ -6,21 +6,25 @@ const pillars = [
     icon: ShieldCheck,
     title: 'Licensed & Insured',
     description: 'Fully licensed, bonded, and insured in Nevada. Your home and family are in safe, qualified hands.',
+    copper: false,
   },
   {
     icon: MapPin,
     title: 'Local & Family-Owned',
     description: 'Proudly serving Elko and Spring Creek since 1981. We live here too — your neighbors and your contractors.',
+    copper: false,
   },
   {
     icon: Award,
     title: '40+ Years of Experience',
     description: 'Decades of hands-on expertise across residential heating, cooling, and plumbing. We\'ve seen it all and fixed it all.',
+    copper: true,
   },
   {
     icon: ThumbsUp,
     title: '100% Satisfaction',
     description: 'We stand behind every job we do. If you\'re not satisfied, we\'ll make it right — no questions asked.',
+    copper: false,
   },
 ];
 
@@ -58,8 +62,16 @@ const WhyChooseUs = ({ scrollProgress }) => {
   return (
     <section
       className="section-padding h-screen flex items-center text-white relative z-10 overflow-hidden"
-      style={{ background: 'rgba(2, 6, 23, 0.40)' }}
+      style={{ background: 'rgba(2, 6, 23, 0.72)' }}
     >
+      {/* Subtle texture overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(184,115,51,0.04) 0%, transparent 60%)`,
+        }}
+        aria-hidden="true"
+      />
       <div className="container-custom relative w-full">
         {/* Heading */}
         <div className="mb-16">
@@ -87,13 +99,25 @@ const WhyChooseUs = ({ scrollProgress }) => {
               <motion.div
                 key={pillar.title}
                 style={{ opacity: cardOpacity[index], y: cardY[index], willChange: 'transform, opacity' }}
-                className="group relative bg-white/[0.04] border border-white/10 rounded-2xl p-6 overflow-hidden transition-colors duration-200 hover:bg-white/[0.07] hover:border-white/20"
+                className={`group relative rounded-2xl p-6 overflow-hidden transition-colors duration-200 ${
+                  pillar.copper
+                    ? 'bg-copper-500/10 border border-copper-500/25 hover:bg-copper-500/15 hover:border-copper-500/40'
+                    : 'bg-white/[0.04] border border-white/10 hover:bg-white/[0.07] hover:border-white/20'
+                }`}
                 whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: 'easeOut' } }}
               >
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className={`absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                  pillar.copper
+                    ? 'bg-gradient-to-r from-transparent via-copper-400/40 to-transparent'
+                    : 'bg-gradient-to-r from-transparent via-white/15 to-transparent'
+                }`} />
 
-                <div className="w-11 h-11 rounded-xl bg-white/8 border border-white/15 flex items-center justify-center mb-5">
-                  <Icon className="w-5 h-5 text-white/70" />
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 ${
+                  pillar.copper
+                    ? 'bg-copper-500/15 border border-copper-500/30'
+                    : 'bg-white/8 border border-white/15'
+                }`}>
+                  <Icon className={`w-5 h-5 ${pillar.copper ? 'text-copper-400' : 'text-white/70'}`} />
                 </div>
 
                 <h3 className="text-base font-bold text-white mb-2 tracking-tight">{pillar.title}</h3>

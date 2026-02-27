@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useScroll, useSpring } from 'framer-motion';
 import Hero from '../components/home/Hero';
 import StatsBar from '../components/home/StatsBar';
+import WhoWeServe from '../components/home/WhoWeServe';
 import ServicesGrid from '../components/home/ServicesGrid';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import ReviewsSection from '../components/home/ReviewsSection';
@@ -26,17 +27,27 @@ const Home = () => {
       <Hero />
       {/* Spacer matches hero height so scroll length is correct; content scrolls over fixed hero */}
       <div className="h-screen" aria-hidden="true" />
-      <div className="relative z-20 bg-white">
+
+      {/* Post-hero content layer — scrolls over the fixed hero */}
+      <div className="relative z-20">
+        {/* Dark stats bar — immediate visual contrast after light hero */}
         <StatsBar />
+
+        {/* Residential / Commercial split — no wrapper background, panels own their bg */}
+        <WhoWeServe />
+
+        {/* Residential services — light background */}
         <ServicesGrid />
       </div>
+
       {/* Sticky wrapper: 300vh gives 200vh of pinned scroll for the content to animate in */}
       <div ref={whyWrapperRef} className="relative z-10" style={{ height: '300vh' }}>
         <div className="sticky top-0 h-screen">
           <WhyChooseUs scrollProgress={smoothProgress} />
         </div>
       </div>
-      <div className="relative z-20 bg-white">
+
+      <div className="relative z-20">
         <ReviewsSection />
         <ProcessSection />
         <CTABanner />

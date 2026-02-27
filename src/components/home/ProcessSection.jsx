@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { PhoneCall, CalendarCheck, CheckCircle2 } from 'lucide-react';
+import { PhoneCall, CalendarCheck, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const steps = [
@@ -25,75 +25,117 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section className="section-padding bg-white">
-      <div className="container-custom">
+    <section className="section-padding bg-primary-900 relative overflow-hidden">
+      {/* Background industrial grid */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
+          `,
+          backgroundSize: '64px 64px',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Copper diagonal gradient */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'linear-gradient(135deg, rgba(184,115,51,0.06) 0%, transparent 55%)' }}
+        aria-hidden="true"
+      />
+
+      <div className="container-custom relative">
+
+        {/* Section header */}
         <motion.div
-          className="text-center mb-12"
+          className="mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
-            How It Works
+          <div className="flex items-center gap-3 mb-4">
+            <span className="copper-rule" />
+            <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">The Process</p>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-lg">
+            Simple From<br />Start to Finish
           </h2>
-          <p className="text-lg text-secondary-500 max-w-xl mx-auto">
-            Getting your home comfortable again is straightforward with Snyder Mechanical.
-          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {/* Steps */}
+        <div className="space-y-0">
           {steps.map((step, index) => {
             const Icon = step.icon;
             return (
               <motion.div
                 key={step.number}
-                className="relative text-center"
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="relative flex flex-col md:flex-row md:items-start gap-0 md:gap-8 py-10 border-b border-white/[0.07] last:border-b-0"
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
+                transition={{ duration: 0.55, delay: index * 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                {/* Animated connector line between steps */}
-                {index < steps.length - 1 && (
-                  <motion.div
-                    className="hidden md:block absolute top-10 left-[calc(50%+2.5rem)] right-0 h-px bg-primary-700 origin-left -z-0"
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.15 + 0.4 }}
-                  />
-                )}
+                {/* Large watermark number */}
+                <div
+                  className="absolute right-0 top-1/2 -translate-y-1/2 select-none pointer-events-none font-black leading-none text-white/[0.035] hidden md:block"
+                  style={{ fontSize: 'clamp(5rem, 10vw, 9rem)' }}
+                  aria-hidden="true"
+                >
+                  {step.number}
+                </div>
 
-                <div className="relative z-10">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white border-2 border-secondary-200 shadow-md mb-5 relative">
-                    <Icon className="w-8 h-8 text-primary-700" />
-                    <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary-700 text-white text-xs font-bold flex items-center justify-center shadow-sm">
-                      {step.number.slice(1)}
-                    </span>
+                {/* Step number badge */}
+                <div className="flex-shrink-0 flex items-center gap-4 md:block md:w-16">
+                  <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(184,115,51,0.12)', border: '1px solid rgba(184,115,51,0.25)' }}>
+                    <Icon className="w-4.5 h-4.5" style={{ color: '#cd8b5a' }} />
                   </div>
+                  <span className="text-white/20 font-black text-sm tracking-widest md:hidden">{step.number}</span>
+                </div>
 
-                  <h3 className="text-lg font-bold text-secondary-900 mb-2">{step.title}</h3>
-                  <p className="text-secondary-500 text-sm leading-relaxed">{step.description}</p>
+                {/* Content */}
+                <div className="relative flex-1 md:max-w-xl">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-white/25 font-black text-xs tracking-widest hidden md:block">{step.number}</span>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-black text-white mb-3 tracking-tight">{step.title}</h3>
+                  <p
+                    className="text-white/55 text-base leading-relaxed pl-4"
+                    style={{ borderLeft: '2px solid rgba(184,115,51,0.45)' }}
+                  >
+                    {step.description}
+                  </p>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
+        {/* CTA */}
         <motion.div
-          className="text-center mt-12"
+          className="mt-14"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.45 }}
         >
           <Link
             to="/?modal=schedule"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-primary-700 hover:bg-primary-800 text-white rounded-md font-semibold transition-colors shadow-md hover:shadow-lg"
+            className="inline-flex items-center gap-3 px-8 py-4 font-bold text-sm rounded-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+            style={{
+              background: 'rgba(184,115,51,1)',
+              color: 'white',
+              boxShadow: '0 0 0 0 rgba(184,115,51,0)',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = '#9e6429'}
+            onMouseLeave={e => e.currentTarget.style.background = 'rgba(184,115,51,1)'}
           >
             <CalendarCheck className="w-5 h-5" />
             Schedule Your Service
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
       </div>
