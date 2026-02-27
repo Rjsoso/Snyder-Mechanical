@@ -83,14 +83,14 @@ const Header = () => {
           : 'bg-black border-b border-white/20 shadow-md'
       }`}
     >
-      <nav className="container-custom py-4">
+      <nav className="container-custom py-2">
         <div className="flex items-center justify-between">
           {/* Logo — sits cleanly inside the black bar */}
           <Link to="/" className="flex-shrink-0 mr-8">
             <img
               src="/logo.png"
               alt="Snyder Mechanical"
-              className="h-[52px] md:h-[60px] w-auto object-contain"
+              className="h-[60px] md:h-[68px] w-auto object-contain"
             />
           </Link>
 
