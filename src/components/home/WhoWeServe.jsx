@@ -1,23 +1,14 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Home, Building2, ArrowRight, ArrowUp,
-  Thermometer, Wrench, Wind,
-  HardHat, Settings, Zap,
-  Flame, Droplets,
-} from 'lucide-react';
+import { ArrowRight, ArrowUp, Flame, Wind, Droplets } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const residentialFeatures = [
-  { icon: Thermometer, label: 'Heating & Cooling' },
-  { icon: Wrench, label: 'Plumbing Services' },
-  { icon: Wind, label: 'Indoor Air Quality' },
-];
+const residentialTags = ['Heating & Cooling', 'Plumbing', 'Indoor Air Quality'];
 
-const commercialFeatures = [
-  { icon: HardHat, label: 'Design/Build Projects' },
-  { icon: Settings, label: 'Commercial HVAC' },
-  { icon: Zap, label: 'Pumps & Equipment' },
+const commercialServices = [
+  { number: '01', label: 'Design/Build Projects' },
+  { number: '02', label: 'Commercial HVAC' },
+  { number: '03', label: 'Pumps & Equipment' },
 ];
 
 const residentialServices = [
@@ -49,22 +40,22 @@ const residentialServices = [
 
 const ServiceCard = ({ service, index }) => {
   const Icon = service.icon;
+  const offsets = ['mt-0', 'mt-4', 'mt-8'];
   return (
     <motion.div
+      className={offsets[index] || 'mt-0'}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.4, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link to={service.link} className="group block h-full">
-        <div className="relative h-full bg-white border border-secondary-200 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-secondary-200/70">
-          {/* Dark top accent on hover */}
+        <div className="relative h-full bg-white border border-secondary-200 rounded-[10px] overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-secondary-200/70">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary-900/0 group-hover:bg-primary-900 transition-all duration-300" />
 
           <div className="p-7 flex flex-col flex-1">
-            {/* Icon + number */}
             <div className="flex items-start justify-between mb-5">
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center"
+                className="w-11 h-11 rounded-[10px] flex items-center justify-center"
                 style={{
                   background: 'rgba(0,0,0,0.05)',
                   border: '1px solid rgba(0,0,0,0.10)',
@@ -72,12 +63,6 @@ const ServiceCard = ({ service, index }) => {
               >
                 <Icon className="w-5 h-5 text-primary-700" />
               </div>
-              <span
-                className="text-[52px] leading-none font-black select-none -mt-1 text-secondary-200"
-                aria-hidden="true"
-              >
-                0{index + 1}
-              </span>
             </div>
 
             <h3 className="text-lg font-black text-primary-900 mb-2 tracking-tight">{service.title}</h3>
@@ -119,11 +104,12 @@ const WhoWeServe = () => {
     <section className="relative overflow-hidden" aria-label="Who We Serve">
       {/* Section label */}
       <motion.div
-        className="bg-secondary-100 py-5 border-b border-secondary-200"
+        className="py-5 border-b border-secondary-200"
+        style={{ background: '#f5f3ef' }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="container-custom flex items-center gap-3">
           <span className="accent-rule-dark" />
@@ -131,69 +117,67 @@ const WhoWeServe = () => {
         </div>
       </motion.div>
 
-      {/* ── Split panels ── */}
+      {/* Split panels */}
       <div className="flex flex-col md:flex-row min-h-[520px]">
 
         {/* Residential Panel */}
         <motion.div
-          className={`relative overflow-hidden cursor-pointer transition-[flex] duration-500 ease-in-out ${
+          className={`relative overflow-hidden cursor-pointer transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] min-h-[320px] md:min-h-0 ${
             showServices ? 'flex-[1.15]' : 'flex-1 md:hover:flex-[1.1]'
           }`}
-          style={{ background: showServices ? '#f5f5f5' : '#fafafa' }}
+          style={{ background: showServices ? '#f5f3ef' : '#faf9f7' }}
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           onClick={handleResidentialClick}
         >
-          {/* Subtle corner shadow */}
+          {/* Warm corner accent */}
           <div
             className="absolute bottom-0 right-0 w-80 h-80 rounded-full pointer-events-none"
             style={{
-              background: 'radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(217,119,6,0.05) 0%, transparent 70%)',
               transform: 'translate(30%, 30%)',
             }}
             aria-hidden="true"
           />
 
-          <div className="group p-10 md:p-14 flex flex-col justify-between relative z-10 h-full">
+          <div className="p-8 md:p-14 flex flex-col justify-between relative z-10 h-full gap-8">
             <div>
-              {/* Icon + eyebrow */}
-              <div className="flex items-center gap-3 mb-8">
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center border"
-                  style={{ background: 'rgba(0,0,0,0.06)', borderColor: 'rgba(0,0,0,0.12)' }}
-                >
-                  <Home className="w-5 h-5 text-primary-700" />
-                </div>
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-secondary-400">Homeowners</span>
+              {/* Eyebrow */}
+              <div className="mb-8">
+                <span className="text-xs font-black uppercase tracking-[0.22em] text-secondary-400">Homeowners</span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl font-black text-primary-900 leading-tight tracking-tight mb-4">
+              <h2 className="text-3xl md:text-4xl font-black text-primary-900 leading-tight tracking-tight mb-5">
                 Comfort<br />for Your Home
               </h2>
 
-              <p className="text-secondary-500 text-base leading-relaxed max-w-sm mb-8">
-                Trusted HVAC and plumbing for Elko &amp; Spring Creek families. Fast, clean, done right the first time — since 1981.
-              </p>
+              {/* Editorial copy with subtle warm left-border */}
+              <div
+                className="pl-4 mb-8"
+                style={{ borderLeft: '2px solid rgba(217,119,6,0.25)' }}
+              >
+                <p className="text-secondary-600 text-base leading-relaxed">
+                  Trusted HVAC and plumbing for Elko &amp; Spring Creek families. Fast, clean, done right the first time — since 1981.
+                </p>
+              </div>
 
-              <ul className="space-y-3 mb-10">
-                {residentialFeatures.map(({ icon: Icon, label }) => (
-                  <li key={label} className="flex items-center gap-3 text-sm font-medium text-secondary-600">
-                    <span
-                      className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(0,0,0,0.05)' }}
-                    >
-                      <Icon className="w-3.5 h-3.5 text-primary-600" />
-                    </span>
-                    {label}
-                  </li>
+              {/* Service tags — badges, not icon rows */}
+              <div className="flex flex-wrap gap-2">
+                {residentialTags.map(tag => (
+                  <span
+                    key={tag}
+                    className="text-xs font-semibold text-secondary-600 bg-white border border-secondary-200 rounded-full px-3 py-1.5"
+                  >
+                    {tag}
+                  </span>
                 ))}
-              </ul>
+              </div>
             </div>
 
             {/* Toggle CTA */}
-            <div className="flex items-center gap-3 text-sm font-bold text-primary-800 hover:text-primary-900 transition-colors select-none">
+            <div className="flex items-center gap-3 text-sm font-bold text-primary-800 hover:text-primary-900 transition-colors duration-200 select-none">
               {showServices ? (
                 <>
                   <span>Hide Services</span>
@@ -202,7 +186,7 @@ const WhoWeServe = () => {
               ) : (
                 <>
                   <span>Explore Residential Services</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 hover:translate-x-1" />
                 </>
               )}
             </div>
@@ -218,61 +202,44 @@ const WhoWeServe = () => {
 
         {/* Commercial Panel */}
         <motion.div
-          className="relative flex-1 md:hover:flex-[1.1] transition-[flex] duration-500 ease-in-out overflow-hidden cursor-pointer bg-primary-800"
+          className="relative flex-1 md:hover:flex-[1.1] transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Industrial grid */}
+          {/* Subtle grid */}
           <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)
-              `,
-              backgroundSize: '48px 48px',
-            }}
+            className="absolute inset-0 pointer-events-none bg-grid-subtle"
             aria-hidden="true"
           />
 
-          <Link to="/commercial" className="group block h-full p-10 md:p-14 flex flex-col justify-between relative z-10">
+          <Link to="/commercial" className="group block h-full p-8 md:p-14 flex flex-col justify-between relative z-10">
             <div>
-              <div className="flex items-center gap-3 mb-8">
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center border"
-                  style={{ background: 'rgba(255,255,255,0.10)', borderColor: 'rgba(255,255,255,0.18)' }}
-                >
-                  <Building2 className="w-5 h-5 text-white/70" />
-                </div>
-                <span className="text-xs font-black uppercase tracking-[0.2em] text-white/40">Commercial</span>
+              <div className="mb-8">
+                <span className="text-xs font-black uppercase tracking-[0.22em] text-white/40">Commercial</span>
               </div>
 
-              <h2 className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-4">
+              <h2 className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-5">
                 Built for<br />Business Scale
               </h2>
 
-              <p className="text-white/60 text-base leading-relaxed max-w-sm mb-8">
+              <p className="text-white/70 text-base leading-relaxed max-w-sm mb-10">
                 Design/build expertise, commercial HVAC systems, and mechanical contracting for businesses across Northeastern Nevada.
               </p>
 
-              <ul className="space-y-3 mb-10">
-                {commercialFeatures.map(({ icon: Icon, label }) => (
-                  <li key={label} className="flex items-center gap-3 text-sm font-medium text-white/70">
-                    <span
-                      className="w-7 h-7 rounded flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
-                    >
-                      <Icon className="w-3.5 h-3.5 text-white/60" />
-                    </span>
-                    {label}
+              {/* Indexed service list — text-only, no icons */}
+              <ul className="space-y-4">
+                {commercialServices.map(({ number, label }) => (
+                  <li key={number} className="flex items-baseline gap-4">
+                    <span className="font-mono text-xs text-white/25 flex-shrink-0 w-6">{number}</span>
+                    <span className="text-sm font-medium text-white/80">{label}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="flex items-center gap-3 text-sm font-bold text-white/80 group-hover:text-white transition-colors">
+            <div className="flex items-center gap-3 text-sm font-bold text-white/80 group-hover:text-white transition-colors duration-200 mt-10">
               <span>View Commercial Services</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
             </div>
@@ -280,7 +247,7 @@ const WhoWeServe = () => {
         </motion.div>
       </div>
 
-      {/* ── Inline service drawer ── */}
+      {/* Inline service drawer */}
       <AnimatePresence>
         {showServices && (
           <motion.div
@@ -288,31 +255,31 @@ const WhoWeServe = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="overflow-hidden"
-            style={{ background: '#fafafa', borderTop: '1px solid rgba(0,0,0,0.08)' }}
+            style={{ background: '#faf9f7', borderTop: '1px solid rgba(0,0,0,0.07)' }}
           >
-            <div className="container-custom py-10">
+            <div className="container-custom py-12">
               {/* Drawer header */}
-              <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-3 mb-10">
                 <span className="accent-rule-dark" />
                 <p className="text-secondary-500 font-semibold text-xs uppercase tracking-[0.2em]">
                   Residential Services
                 </p>
               </div>
 
-              {/* Service cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              {/* Service cards with staggered vertical offset */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 items-start">
                 {residentialServices.map((service, index) => (
                   <ServiceCard key={service.id} service={service} index={index} />
                 ))}
               </div>
 
-              {/* Close affordance */}
-              <div className="mt-8 flex justify-center">
+              {/* Collapse affordance */}
+              <div className="mt-10 flex justify-center">
                 <button
                   onClick={e => { e.stopPropagation(); setShowServices(false); }}
-                  className="flex items-center gap-2 text-xs font-semibold text-secondary-400 hover:text-secondary-600 uppercase tracking-widest transition-colors"
+                  className="flex items-center gap-2 text-xs font-semibold text-secondary-400 hover:text-secondary-600 uppercase tracking-widest transition-colors duration-200 py-2 px-4"
                 >
                   <ArrowUp className="w-3.5 h-3.5" />
                   Collapse

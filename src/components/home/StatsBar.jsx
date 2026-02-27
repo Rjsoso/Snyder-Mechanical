@@ -16,6 +16,7 @@ const StatsBar = () => {
       separator: '',
     },
     {
+      from: 3500,
       to: 5000,
       suffix: '+',
       label: 'Projects Completed',
@@ -30,7 +31,7 @@ const StatsBar = () => {
   ];
 
   return (
-    <section className="bg-primary-900 py-14 relative overflow-hidden">
+    <section className="bg-primary-900 py-12 relative overflow-hidden">
       {/* Subtle background geometry */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="absolute right-0 top-0 w-1/2 h-full"
@@ -46,7 +47,7 @@ const StatsBar = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-center gap-3 mb-3">
               <span className="accent-rule" />
@@ -69,11 +70,11 @@ const StatsBar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="text-4xl md:text-5xl font-black text-white leading-none tracking-tight mb-2">
                   <CountUp
-                    from={0}
+                    from={stat.from ?? 0}
                     to={stat.to}
                     separator={stat.separator}
                     duration={1.8}

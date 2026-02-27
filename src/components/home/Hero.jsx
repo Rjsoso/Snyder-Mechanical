@@ -55,7 +55,7 @@ const Hero = () => {
             className="flex items-center gap-3 mb-6"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.55, delay: 0.05 }}
+            transition={{ duration: 0.4, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="w-8 h-px bg-white/60 flex-shrink-0" />
             <span className="text-white/70 text-sm font-medium uppercase tracking-[0.18em]">
@@ -66,9 +66,9 @@ const Hero = () => {
           {/* Headline — large, white, sharp */}
           <motion.h1
             className="text-5xl md:text-6xl lg:text-7xl text-white leading-[1.05] mb-6 tracking-tight"
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
+            transition={{ duration: 0.5, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="block font-light">Northeastern Nevada&rsquo;s Premier</span>
             <span className="block font-black">Mechanical Contractor</span>
@@ -78,9 +78,9 @@ const Hero = () => {
           {/* Subtitle */}
           <motion.p
             className="text-lg md:text-xl text-white/80 font-medium mb-8 max-w-lg leading-relaxed"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.22 }}
+            transition={{ duration: 0.4, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
           >
             {hero.description}
           </motion.p>
@@ -88,13 +88,13 @@ const Hero = () => {
           {/* CTA Buttons — sharper radius */}
           <motion.div
             className="flex flex-col sm:flex-row gap-3 mb-10"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.32 }}
+            transition={{ duration: 0.4, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
           >
             <a
-              href={`tel:${phone}`}
-              className="inline-flex items-center justify-center gap-3 px-7 py-4 bg-white text-primary-900 hover:bg-primary-50 rounded-md font-bold text-base shadow-lg transition-all hover:shadow-xl hover:-translate-y-0.5"
+            href={`tel:${phone}`}
+            className="inline-flex items-center justify-center gap-3 px-7 py-4 bg-white text-primary-900 hover:bg-primary-50 rounded-[6px] font-bold text-base shadow-lg transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-xl hover:-translate-y-0.5 min-h-[52px]"
             >
               <Phone className="w-5 h-5 flex-shrink-0" />
               <div className="text-left">
@@ -105,7 +105,7 @@ const Hero = () => {
 
             <Link
               to="/?modal=schedule"
-              className="inline-flex items-center justify-center gap-2 px-7 py-4 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold text-base transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center gap-2 px-7 py-4 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-[6px] font-semibold text-base transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 min-h-[52px]"
             >
               <Calendar className="w-5 h-5" />
               {hero.scheduleButtonText}
@@ -117,7 +117,7 @@ const Hero = () => {
             className="flex flex-wrap items-center gap-x-8 gap-y-2 text-sm text-white/60 uppercase tracking-widest font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
+            transition={{ duration: 0.4, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
             {['Licensed & Insured', 'Free Estimates', 'Local & Family-Owned'].map((badge, i) => (
               <span key={badge} className="flex items-center gap-2">
@@ -132,7 +132,7 @@ const Hero = () => {
             className="mt-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.55 }}
+            transition={{ duration: 0.4, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
             <Link
               to="/commercial"

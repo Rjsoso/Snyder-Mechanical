@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Wrench, Factory, Droplets, Check, Phone, ArrowRight } from 'lucide-react';
+import { Building2, Wrench, Factory, Droplets, Phone, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCompanyData, useServiceCategories, useCommercialPageData } from '../hooks/useSanityData';
 
@@ -11,10 +11,7 @@ const iconMap = {
   'Droplets': Droplets
 };
 
-const DOT_PATTERN = {
-  backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-  backgroundSize: '24px 24px',
-};
+const EASE = [0.16, 1, 0.3, 1];
 
 const CommercialLanding = () => {
   useEffect(() => {
@@ -99,18 +96,28 @@ const CommercialLanding = () => {
     <div className="min-h-screen">
 
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white pt-36 pb-24 overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04]" style={DOT_PATTERN} />
+      <section className="relative bg-primary-900 text-white pt-36 pb-24 overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none bg-grid-subtle"
+          aria-hidden="true"
+        />
+        {/* Subtle diagonal light from top-right */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.025) 100%)' }}
+          aria-hidden="true"
+        />
+
         <div className="container-custom relative z-10">
           <motion.div
             className="max-w-3xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4, ease: EASE }}
           >
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-xs font-medium uppercase tracking-widest mb-6 transition-colors"
+              className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-xs font-medium uppercase tracking-widest mb-8 transition-colors duration-200"
             >
               <ArrowRight className="w-3 h-3 rotate-180" />
               Home
@@ -122,20 +129,20 @@ const CommercialLanding = () => {
             <h1 className="text-5xl md:text-6xl font-black text-white tracking-tight mb-5 leading-tight">
               {hero.title}
             </h1>
-            <p className="text-lg text-white/75 mb-8 max-w-2xl">
+            <p className="text-lg text-white/70 mb-8 max-w-2xl leading-relaxed">
               {hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={`tel:${phone}`}
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-primary-900 hover:bg-primary-50 rounded-md font-bold transition-all shadow-lg hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white text-primary-900 hover:bg-primary-50 rounded-[6px] font-bold transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] shadow-lg hover:-translate-y-0.5"
               >
                 <Phone className="w-5 h-5" />
                 <span>{phone}</span>
               </a>
               <Link
                 to="/?modal=estimate"
-                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold transition-all"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 border border-white/40 hover:border-white text-white hover:bg-white/10 rounded-[6px] font-semibold transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               >
                 {hero.secondaryButtonText}
               </Link>
@@ -144,48 +151,62 @@ const CommercialLanding = () => {
         </div>
       </section>
 
-      {/* Core Capabilities */}
-      <section className="section-padding bg-secondary-50/60">
+      {/* Core Capabilities — numbered editorial rows */}
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <motion.div
-            className="text-center mb-12"
+            className="mb-14"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4, ease: EASE }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="accent-rule-dark" />
+              <p className="text-secondary-400 font-semibold text-xs uppercase tracking-[0.2em]">Capabilities</p>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-secondary-900 tracking-tight">
               {capabilitiesSection.heading}
             </h2>
-            <p className="text-lg text-secondary-500 max-w-3xl mx-auto">
+            <p className="text-secondary-500 mt-3 max-w-2xl leading-relaxed">
               {capabilitiesSection.description}
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="divide-y divide-secondary-100">
             {capabilitiesSection.capabilities.map((capability, index) => {
-              const Icon = iconMap[capability.icon] || Building2;
+              const num = String(index + 1).padStart(2, '0');
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white border border-secondary-200 border-l-2 border-l-primary-700 rounded-lg shadow-sm hover:shadow-md transition-shadow p-6"
+                  transition={{ duration: 0.4, delay: index * 0.08, ease: EASE }}
+                  className="group relative flex flex-col sm:flex-row sm:items-start gap-6 py-10 hover:bg-secondary-50/60 transition-colors duration-200 -mx-4 px-4 rounded-[6px]"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-lg bg-primary-900/5 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-primary-700" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-secondary-900 mb-1.5">
-                        {capability.title}
-                      </h3>
-                      <p className="text-secondary-500 text-sm leading-relaxed">
-                        {capability.description}
-                      </p>
-                    </div>
+                  {/* Watermark number */}
+                  <span
+                    className="absolute right-4 top-1/2 -translate-y-1/2 font-mono font-black leading-none text-secondary-100 select-none pointer-events-none hidden sm:block"
+                    style={{ fontSize: 'clamp(3rem, 6vw, 5rem)' }}
+                    aria-hidden="true"
+                  >
+                    {num}
+                  </span>
+
+                  {/* Number badge */}
+                  <div className="flex-shrink-0 flex items-center gap-3 sm:block sm:w-16">
+                    <span className="font-mono text-xs text-secondary-300 tracking-widest">{num}</span>
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 sm:max-w-lg">
+                    <h3 className="text-xl font-black text-secondary-900 mb-2 tracking-tight group-hover:text-primary-800 transition-colors duration-200">
+                      {capability.title}
+                    </h3>
+                    <p className="text-secondary-500 text-base leading-relaxed">
+                      {capability.description}
+                    </p>
                   </div>
                 </motion.div>
               );
@@ -195,24 +216,29 @@ const CommercialLanding = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-secondary-900 text-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] gap-16 items-start">
+
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.4, ease: EASE }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-6">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="accent-rule" />
+                <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Choose Us</p>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-black text-white mb-6 tracking-tight leading-tight">
                 {whyChooseSection.heading}
               </h2>
-              <p className="text-lg text-secondary-500 mb-8 leading-relaxed">
+              <p className="text-white/60 text-lg mb-8 leading-relaxed">
                 {whyChooseSection.description}
               </p>
               <Link
                 to="/portfolio"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-900 hover:bg-primary-800 text-white rounded-md font-semibold transition-colors shadow-md"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-primary-900 hover:bg-secondary-100 rounded-[6px] font-bold transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 shadow-md"
               >
                 {whyChooseSection.buttonText}
                 <ArrowRight className="w-4 h-4" />
@@ -223,41 +249,48 @@ const CommercialLanding = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-secondary-50 rounded-xl p-8"
+              transition={{ duration: 0.4, delay: 0.1, ease: EASE }}
             >
-              <h3 className="text-sm font-semibold text-secondary-500 uppercase tracking-widest mb-6">
+              <p className="text-white/30 text-xs font-semibold uppercase tracking-widest mb-6">
                 Commercial Advantages
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 divide-y divide-white/[0.07]">
                 {whyChooseSection.advantages.map((advantage, index) => (
-                  <div key={index} className="flex items-start gap-2.5">
-                    <Check className="w-4 h-4 text-primary-700 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm font-medium text-secondary-800">{advantage}</span>
+                  <div
+                    key={index}
+                    className="py-3.5 text-sm font-medium text-white/70 first:pt-0 last:pb-0 sm:[&:nth-child(odd)]:pr-6 sm:[&:nth-child(even)]:pl-6 sm:[&:nth-child(even)]:border-l sm:[&:nth-child(even)]:border-l-white/[0.07]"
+                  >
+                    {advantage}
                   </div>
                 ))}
               </div>
             </motion.div>
+
           </div>
         </div>
       </section>
 
       {/* Service Links */}
-      <section className="section-padding bg-secondary-50/60">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <motion.div
-            className="text-center mb-10"
+            className="mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4, ease: EASE }}
           >
-            <h2 className="text-3xl font-bold text-secondary-900 mb-3">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="accent-rule-dark" />
+              <p className="text-secondary-400 font-semibold text-xs uppercase tracking-[0.2em]">Services</p>
+            </div>
+            <h2 className="text-3xl font-black text-secondary-900 tracking-tight">
               Explore Our Commercial Services
             </h2>
-            <p className="text-secondary-500">Detailed information on every service we offer</p>
+            <p className="text-secondary-500 mt-2">Detailed information on every service we offer</p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl">
             {[
               { to: '/services/commercial', service: commercialService, Icon: Building2 },
               { to: '/services/pumps-equipment', service: pumpsService, Icon: Droplets },
@@ -267,20 +300,20 @@ const CommercialLanding = () => {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                transition={{ duration: 0.4, delay: i * 0.08, ease: EASE }}
               >
                 <Link
                   to={to}
-                  className="group flex items-start gap-5 p-6 bg-white border border-secondary-200 rounded-xl hover:border-primary-300 hover:shadow-md transition-all"
+                  className="group flex items-start gap-5 p-6 bg-secondary-50 border border-secondary-200 rounded-[10px] hover:border-secondary-300 hover:bg-white hover:shadow-md transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
                 >
-                  <div className="w-11 h-11 rounded-lg bg-primary-50 flex items-center justify-center flex-shrink-0 group-hover:bg-primary-100 transition-colors">
+                  <div className="w-11 h-11 rounded-[6px] bg-white border border-secondary-200 flex items-center justify-center flex-shrink-0 transition-colors duration-200">
                     <Icon className="w-5 h-5 text-primary-700" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-secondary-900 mb-1 group-hover:text-primary-700 transition-colors">{service.title}</h3>
+                    <h3 className="font-black text-secondary-900 mb-1 tracking-tight group-hover:text-primary-800 transition-colors duration-200">{service.title}</h3>
                     <p className="text-sm text-secondary-500 leading-relaxed">{service.description}</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-secondary-400 group-hover:text-primary-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" />
+                  <ArrowRight className="w-4 h-4 text-secondary-300 group-hover:text-secondary-600 group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 mt-1" />
                 </Link>
               </motion.div>
             ))}
@@ -288,30 +321,60 @@ const CommercialLanding = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="relative section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04]" style={DOT_PATTERN} />
-        <div className="container-custom text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4">
-            {ctaSection.heading}
-          </h2>
-          <p className="text-lg text-white/75 mb-8 max-w-2xl mx-auto">
-            {ctaSection.description}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href={`tel:${phone}`}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-900 hover:bg-primary-50 rounded-md font-bold text-lg transition-all shadow-lg hover:-translate-y-0.5"
+      {/* CTA Section — left-aligned, single texture layer */}
+      <section className="relative section-padding bg-primary-900 text-white overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none bg-grid-subtle"
+          aria-hidden="true"
+        />
+
+        <div className="container-custom relative z-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12 md:gap-16">
+
+            <motion.div
+              className="flex-1 max-w-xl"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, ease: EASE }}
             >
-              <Phone className="w-5 h-5" />
-              <span>{phone}</span>
-            </a>
-            <Link
-              to="/?modal=estimate"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/50 hover:border-white text-white hover:bg-white/10 rounded-md font-semibold text-lg transition-all"
+              <div className="flex items-center gap-3 mb-5">
+                <span className="w-8 h-px bg-white/40 flex-shrink-0" />
+                <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.22em]">Get in Touch</p>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight mb-4 leading-tight">
+                {ctaSection.heading}
+              </h2>
+              <p className="text-white/60 text-base leading-relaxed">
+                {ctaSection.description}
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="flex flex-col gap-3 flex-shrink-0 md:min-w-[260px]"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.1, ease: EASE }}
             >
-              {ctaSection.secondaryButtonText}
-            </Link>
+              <a
+                href={`tel:${phone}`}
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-primary-900 hover:bg-secondary-100 rounded-[6px] font-bold text-base shadow-xl transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:shadow-2xl"
+              >
+                <Phone className="w-5 h-5 flex-shrink-0" />
+                <div className="text-left">
+                  <div className="text-[10px] font-semibold text-primary-600 uppercase tracking-wider leading-none mb-0.5">Call Us Now</div>
+                  <div className="leading-none font-black">{phone}</div>
+                </div>
+              </a>
+              <Link
+                to="/?modal=estimate"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/40 hover:border-white text-white hover:bg-white/10 rounded-[6px] font-semibold text-base transition-all duration-[250ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+              >
+                {ctaSection.secondaryButtonText}
+              </Link>
+            </motion.div>
+
           </div>
         </div>
       </section>
