@@ -139,7 +139,7 @@ const WhoWeServe = () => {
           className={`relative overflow-hidden cursor-pointer transition-[flex] duration-500 ease-in-out ${
             showServices ? 'flex-[1.15]' : 'flex-1 md:hover:flex-[1.1]'
           }`}
-          style={{ background: showServices ? '#f1f5f9' : '#f8fafc' }}
+          style={{ background: showServices ? '#f5f5f5' : '#fafafa' }}
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -290,7 +290,7 @@ const WhoWeServe = () => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="overflow-hidden"
-            style={{ background: '#f8fafc', borderTop: '1px solid rgba(0,0,0,0.08)' }}
+            style={{ background: '#fafafa', borderTop: '1px solid rgba(0,0,0,0.08)' }}
           >
             <div className="container-custom py-10">
               {/* Drawer header */}
