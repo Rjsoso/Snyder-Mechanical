@@ -31,25 +31,29 @@ const pillars = [
 const EASE = [0.16, 1, 0.3, 1];
 
 const SCHEDULE = {
-  eyebrow:  [0.00, 0.18],
-  heading:  [0.14, 0.35],
-  featured: [0.28, 0.46],
-  row0:     [0.38, 0.54],
-  row1:     [0.48, 0.64],
-  row2:     [0.58, 0.74],
+  eyebrow:   [0.00, 0.18],
+  heading:   [0.14, 0.32],
+  statement: [0.28, 0.44],
+  featured:  [0.38, 0.54],
+  row0:      [0.46, 0.62],
+  row1:      [0.56, 0.72],
+  row2:      [0.64, 0.80],
 };
 
 const Y_START = 48;
 
 const WhyChooseUs = ({ scrollProgress }) => {
-  const eyebrowOpacity = useTransform(scrollProgress, SCHEDULE.eyebrow, [0, 1]);
-  const eyebrowY      = useTransform(scrollProgress, SCHEDULE.eyebrow, [Y_START, 0]);
+  const eyebrowOpacity   = useTransform(scrollProgress, SCHEDULE.eyebrow,   [0, 1]);
+  const eyebrowY         = useTransform(scrollProgress, SCHEDULE.eyebrow,   [Y_START, 0]);
 
-  const headingOpacity = useTransform(scrollProgress, SCHEDULE.heading, [0, 1]);
-  const headingY      = useTransform(scrollProgress, SCHEDULE.heading, [Y_START, 0]);
+  const headingOpacity   = useTransform(scrollProgress, SCHEDULE.heading,   [0, 1]);
+  const headingY         = useTransform(scrollProgress, SCHEDULE.heading,   [Y_START, 0]);
 
-  const featuredOpacity = useTransform(scrollProgress, SCHEDULE.featured, [0, 1]);
-  const featuredY       = useTransform(scrollProgress, SCHEDULE.featured, [Y_START, 0]);
+  const stmtOpacity      = useTransform(scrollProgress, SCHEDULE.statement, [0, 1]);
+  const stmtY            = useTransform(scrollProgress, SCHEDULE.statement, [Y_START, 0]);
+
+  const featuredOpacity  = useTransform(scrollProgress, SCHEDULE.featured,  [0, 1]);
+  const featuredY        = useTransform(scrollProgress, SCHEDULE.featured,  [Y_START, 0]);
 
   const row0Opacity = useTransform(scrollProgress, SCHEDULE.row0, [0, 1]);
   const row0Y       = useTransform(scrollProgress, SCHEDULE.row0, [Y_START, 0]);
@@ -81,22 +85,35 @@ const WhyChooseUs = ({ scrollProgress }) => {
       <div className="container-custom relative w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-16 lg:gap-24 items-start">
 
-          {/* Left column — eyebrow, heading, featured pillar */}
+          {/* Left column */}
           <div>
+            {/* Eyebrow */}
             <motion.div
-              className="flex items-center gap-3 mb-4"
+              className="flex items-center gap-3 mb-6"
               style={{ opacity: eyebrowOpacity, y: eyebrowY, willChange: 'transform, opacity' }}
             >
               <span className="w-8 h-px bg-white/25 flex-shrink-0" />
               <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
             </motion.div>
 
+            {/* Tagline */}
             <motion.h2
-              className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-14"
+              className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight mb-8"
               style={{ opacity: headingOpacity, y: headingY, willChange: 'transform, opacity' }}
             >
-              The Trusted Choice in Northeastern Nevada
+              <span className="block text-white/90">Safety.</span>
+              <span className="block text-white/75">Quality.</span>
+              <span className="block text-white/60">Service.</span>
+              <span className="block text-white/45">Construction.</span>
             </motion.h2>
+
+            {/* Company statement */}
+            <motion.p
+              className="text-white/55 text-sm leading-relaxed mb-12 max-w-[38ch]"
+              style={{ opacity: stmtOpacity, y: stmtY, willChange: 'transform, opacity' }}
+            >
+              For over 40 years, Snyder Mechanical has been northern Nevada&rsquo;s preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we meet the critical demands of our clients.
+            </motion.p>
 
             {/* Featured pillar — large, editorial */}
             <motion.div

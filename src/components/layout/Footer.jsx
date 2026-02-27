@@ -146,9 +146,17 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-primary-700">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-primary-300 text-sm">
-              © {currentYear} {name}. All rights reserved.
-            </p>
+            <div className="flex items-center gap-2.5">
+              <img
+                src="/favicon.ico"
+                alt=""
+                aria-hidden="true"
+                className="w-5 h-5 object-contain flex-shrink-0"
+              />
+              <p className="text-primary-300 text-sm">
+                © {currentYear} {name}. All rights reserved.
+              </p>
+            </div>
             <div className="flex items-center gap-2 text-primary-300 text-sm">
               <ShieldCheck className="w-4 h-4 text-primary-300 flex-shrink-0" />
               <span>Licensed, Bonded &amp; Insured in Nevada &mdash; Serving {serviceArea}</span>
