@@ -39,13 +39,6 @@ const ProcessSection = () => {
         aria-hidden="true"
       />
 
-      {/* Copper diagonal gradient */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'linear-gradient(135deg, rgba(184,115,51,0.06) 0%, transparent 55%)' }}
-        aria-hidden="true"
-      />
-
       <div className="container-custom relative">
 
         {/* Section header */}
@@ -57,7 +50,7 @@ const ProcessSection = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="copper-rule" />
+            <span className="accent-rule" />
             <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">The Process</p>
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight max-w-lg">
@@ -87,11 +80,13 @@ const ProcessSection = () => {
                   {step.number}
                 </div>
 
-                {/* Step number badge */}
+                {/* Step icon badge */}
                 <div className="flex-shrink-0 flex items-center gap-4 md:block md:w-16">
-                  <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'rgba(184,115,51,0.12)', border: '1px solid rgba(184,115,51,0.25)' }}>
-                    <Icon className="w-4.5 h-4.5" style={{ color: '#cd8b5a' }} />
+                  <div
+                    className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+                  >
+                    <Icon className="w-4.5 h-4.5 text-white/70" />
                   </div>
                   <span className="text-white/20 font-black text-sm tracking-widest md:hidden">{step.number}</span>
                 </div>
@@ -104,7 +99,7 @@ const ProcessSection = () => {
                   <h3 className="text-xl md:text-2xl font-black text-white mb-3 tracking-tight">{step.title}</h3>
                   <p
                     className="text-white/55 text-base leading-relaxed pl-4"
-                    style={{ borderLeft: '2px solid rgba(184,115,51,0.45)' }}
+                    style={{ borderLeft: '2px solid rgba(255,255,255,0.25)' }}
                   >
                     {step.description}
                   </p>
@@ -124,14 +119,7 @@ const ProcessSection = () => {
         >
           <Link
             to="/?modal=schedule"
-            className="inline-flex items-center gap-3 px-8 py-4 font-bold text-sm rounded-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
-            style={{
-              background: 'rgba(184,115,51,1)',
-              color: 'white',
-              boxShadow: '0 0 0 0 rgba(184,115,51,0)',
-            }}
-            onMouseEnter={e => e.currentTarget.style.background = '#9e6429'}
-            onMouseLeave={e => e.currentTarget.style.background = 'rgba(184,115,51,1)'}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-primary-900 hover:bg-secondary-100 rounded-md font-bold text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/20"
           >
             <CalendarCheck className="w-5 h-5" />
             Schedule Your Service

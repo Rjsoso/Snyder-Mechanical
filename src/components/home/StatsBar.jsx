@@ -33,8 +33,8 @@ const StatsBar = () => {
     <section className="bg-primary-900 py-14 relative overflow-hidden">
       {/* Subtle background geometry */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute right-0 top-0 w-1/2 h-full opacity-[0.03]"
-          style={{ background: 'linear-gradient(135deg, transparent 40%, #b87333 100%)' }} />
+        <div className="absolute right-0 top-0 w-1/2 h-full"
+          style={{ background: 'linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.03) 100%)' }} />
       </div>
 
       <div className="container-custom relative">
@@ -49,7 +49,7 @@ const StatsBar = () => {
             transition={{ duration: 0.55 }}
           >
             <div className="flex items-center gap-3 mb-3">
-              <span className="copper-rule" />
+              <span className="accent-rule" />
               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Snyder Mechanical</span>
             </div>
             <p className="text-2xl font-black text-white leading-tight tracking-tight">
@@ -79,7 +79,7 @@ const StatsBar = () => {
                     duration={1.8}
                     delay={index * 0.1}
                   />
-                  <span className="text-copper-500">{stat.suffix}</span>
+                  <span className="text-white">{stat.suffix}</span>
                 </div>
                 <div className="text-white/50 text-xs font-medium uppercase tracking-widest">
                   {stat.label}

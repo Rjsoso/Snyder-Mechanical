@@ -57,8 +57,8 @@ const ServiceCard = ({ service, index }) => {
     >
       <Link to={service.link} className="group block h-full">
         <div className="relative h-full bg-white border border-secondary-200 rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-secondary-200/70">
-          {/* Copper top accent on hover */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-copper-500/0 group-hover:bg-copper-500 transition-all duration-300" />
+          {/* Dark top accent on hover */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary-900/0 group-hover:bg-primary-900 transition-all duration-300" />
 
           <div className="p-7 flex flex-col flex-1">
             {/* Icon + number */}
@@ -66,15 +66,14 @@ const ServiceCard = ({ service, index }) => {
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center"
                 style={{
-                  background: 'rgba(184,115,51,0.09)',
-                  border: '1px solid rgba(184,115,51,0.20)',
+                  background: 'rgba(0,0,0,0.05)',
+                  border: '1px solid rgba(0,0,0,0.10)',
                 }}
               >
-                <Icon className="w-5 h-5" style={{ color: '#b87333' }} />
+                <Icon className="w-5 h-5 text-primary-700" />
               </div>
               <span
-                className="text-[52px] leading-none font-black select-none -mt-1"
-                style={{ color: '#e2e8f0' }}
+                className="text-[52px] leading-none font-black select-none -mt-1 text-secondary-200"
                 aria-hidden="true"
               >
                 0{index + 1}
@@ -127,7 +126,7 @@ const WhoWeServe = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="container-custom flex items-center gap-3">
-          <span className="copper-rule" />
+          <span className="accent-rule-dark" />
           <p className="text-secondary-500 font-semibold text-xs uppercase tracking-[0.22em]">Who We Serve</p>
         </div>
       </motion.div>
@@ -140,18 +139,18 @@ const WhoWeServe = () => {
           className={`relative overflow-hidden cursor-pointer transition-[flex] duration-500 ease-in-out ${
             showServices ? 'flex-[1.15]' : 'flex-1 md:hover:flex-[1.1]'
           }`}
-          style={{ background: showServices ? '#f0ece6' : '#f7f4f0' }}
+          style={{ background: showServices ? '#f1f5f9' : '#f8fafc' }}
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           onClick={handleResidentialClick}
         >
-          {/* Warm radial accent */}
+          {/* Subtle corner shadow */}
           <div
             className="absolute bottom-0 right-0 w-80 h-80 rounded-full pointer-events-none"
             style={{
-              background: 'radial-gradient(circle, rgba(184,115,51,0.10) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%)',
               transform: 'translate(30%, 30%)',
             }}
             aria-hidden="true"
@@ -163,9 +162,9 @@ const WhoWeServe = () => {
               <div className="flex items-center gap-3 mb-8">
                 <div
                   className="w-12 h-12 rounded-2xl flex items-center justify-center border"
-                  style={{ background: 'rgba(184,115,51,0.10)', borderColor: 'rgba(184,115,51,0.25)' }}
+                  style={{ background: 'rgba(0,0,0,0.06)', borderColor: 'rgba(0,0,0,0.12)' }}
                 >
-                  <Home className="w-5 h-5" style={{ color: '#b87333' }} />
+                  <Home className="w-5 h-5 text-primary-700" />
                 </div>
                 <span className="text-xs font-black uppercase tracking-[0.2em] text-secondary-400">Homeowners</span>
               </div>
@@ -183,9 +182,9 @@ const WhoWeServe = () => {
                   <li key={label} className="flex items-center gap-3 text-sm font-medium text-secondary-600">
                     <span
                       className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(184,115,51,0.10)' }}
+                      style={{ background: 'rgba(0,0,0,0.05)' }}
                     >
-                      <Icon className="w-3.5 h-3.5" style={{ color: '#b87333' }} />
+                      <Icon className="w-3.5 h-3.5 text-primary-600" />
                     </span>
                     {label}
                   </li>
@@ -209,10 +208,10 @@ const WhoWeServe = () => {
             </div>
           </div>
 
-          {/* Right edge accent */}
+          {/* Right edge divider */}
           <div
             className="hidden md:block absolute right-0 top-0 bottom-0 w-px"
-            style={{ background: 'linear-gradient(to bottom, transparent, rgba(184,115,51,0.25), transparent)' }}
+            style={{ background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.08), transparent)' }}
             aria-hidden="true"
           />
         </motion.div>
@@ -238,21 +237,14 @@ const WhoWeServe = () => {
             aria-hidden="true"
           />
 
-          {/* Copper diagonal */}
-          <div
-            className="absolute top-0 left-0 w-full h-full pointer-events-none"
-            style={{ background: 'linear-gradient(135deg, rgba(184,115,51,0.06) 0%, transparent 50%)' }}
-            aria-hidden="true"
-          />
-
           <Link to="/commercial" className="group block h-full p-10 md:p-14 flex flex-col justify-between relative z-10">
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center border"
-                  style={{ background: 'rgba(184,115,51,0.12)', borderColor: 'rgba(184,115,51,0.30)' }}
+                  style={{ background: 'rgba(255,255,255,0.10)', borderColor: 'rgba(255,255,255,0.18)' }}
                 >
-                  <Building2 className="w-5 h-5" style={{ color: '#cd8b5a' }} />
+                  <Building2 className="w-5 h-5 text-white/70" />
                 </div>
                 <span className="text-xs font-black uppercase tracking-[0.2em] text-white/40">Commercial</span>
               </div>
@@ -270,9 +262,9 @@ const WhoWeServe = () => {
                   <li key={label} className="flex items-center gap-3 text-sm font-medium text-white/70">
                     <span
                       className="w-7 h-7 rounded flex items-center justify-center flex-shrink-0"
-                      style={{ background: 'rgba(184,115,51,0.12)', border: '1px solid rgba(184,115,51,0.20)' }}
+                      style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
                     >
-                      <Icon className="w-3.5 h-3.5" style={{ color: '#cd8b5a' }} />
+                      <Icon className="w-3.5 h-3.5 text-white/60" />
                     </span>
                     {label}
                   </li>
@@ -298,12 +290,12 @@ const WhoWeServe = () => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="overflow-hidden"
-            style={{ background: '#f7f4f0', borderTop: '1px solid rgba(184,115,51,0.18)' }}
+            style={{ background: '#f8fafc', borderTop: '1px solid rgba(0,0,0,0.08)' }}
           >
             <div className="container-custom py-10">
               {/* Drawer header */}
               <div className="flex items-center gap-3 mb-8">
-                <span className="copper-rule" />
+                <span className="accent-rule-dark" />
                 <p className="text-secondary-500 font-semibold text-xs uppercase tracking-[0.2em]">
                   Residential Services
                 </p>

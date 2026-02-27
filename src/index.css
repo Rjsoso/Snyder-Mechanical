@@ -37,22 +37,6 @@
   --color-accent-800: #0f172a;
   --color-accent-900: #020617;
 
-  /* Copper — warm industrial accent */
-  --color-copper-100: #f5e6d3;
-  --color-copper-200: #e8c9a0;
-  --color-copper-300: #d9a96e;
-  --color-copper-400: #cd8b5a;
-  --color-copper-500: #b87333;
-  --color-copper-600: #9e6429;
-  --color-copper-700: #7d4e20;
-  --color-copper-800: #5c3a18;
-  --color-copper-900: #3d2610;
-
-  /* Stone — warm residential neutrals */
-  --color-stone-50: #faf9f7;
-  --color-stone-100: #f5f2ee;
-  --color-stone-200: #e8e3dc;
-
   /* Amber — emergency/CTA highlights */
   --color-amber-50: #fffbeb;
   --color-amber-100: #fef3c7;
@@ -224,11 +208,19 @@
     background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.10) 20%, rgba(255,255,255,0.10) 80%, transparent 100%);
   }
 
-  /* Copper accent line */
-  .copper-rule {
+  /* Accent rule — white for dark backgrounds */
+  .accent-rule {
     width: 2rem;
     height: 2px;
-    background-color: var(--color-copper-500);
+    background-color: rgba(255, 255, 255, 0.45);
+    flex-shrink: 0;
+  }
+
+  /* Accent rule — dark charcoal for light backgrounds */
+  .accent-rule-dark {
+    width: 2rem;
+    height: 2px;
+    background-color: #1e293b;
     flex-shrink: 0;
   }
 
