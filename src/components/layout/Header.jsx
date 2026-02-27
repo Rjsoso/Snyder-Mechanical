@@ -86,15 +86,15 @@ const Header = () => {
       <nav className="container-custom py-4">
         <div className="flex items-center justify-between">
           {/* Logo — hangs below the navbar in a decorative box */}
-          <Link to="/" className="flex-shrink-0 mr-8 relative z-10 px-6">
+          <Link to="/" className="flex-shrink-0 mr-8 relative z-10 px-4">
             <span
               aria-hidden="true"
-              className="absolute inset-x-0 top-0 bottom-[-40px] -z-10 bg-[linear-gradient(180deg,#141414_0%,#000_100%)] border-x border-white/[0.1] border-b-[3px] border-b-primary-800/60 shadow-[0_20px_44px_-4px_rgba(0,0,0,0.85),inset_0_1px_0_0_rgba(255,255,255,0.06)] rounded-b"
+              className="absolute inset-x-0 top-0 bottom-[-32px] -z-10 bg-black border-x border-b border-white/[0.12] shadow-[0_12px_28px_-4px_rgba(0,0,0,0.6)] rounded-b-sm"
             />
             <img
               src="/logo.png"
               alt="Snyder Mechanical"
-              className="h-[58px] md:h-[66px] w-auto object-contain relative"
+              className="h-[52px] md:h-[60px] w-auto object-contain relative"
             />
           </Link>
 
