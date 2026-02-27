@@ -35,9 +35,9 @@ const Home = () => {
         <WhoWeServe />
       </div>
 
-      {/* Sticky WhyChooseUs: 300vh gives 200vh of pinned scroll */}
-      <div ref={whyWrapperRef} className="relative z-10" style={{ height: '300vh' }}>
-        <div className="sticky top-0 h-screen overflow-hidden">
+      {/* Sticky WhyChooseUs: 300vh gives 200vh of pinned scroll (lg+). On mobile, renders as normal flow section. */}
+      <div ref={whyWrapperRef} className="relative z-10 lg:h-[300vh]">
+        <div className="lg:sticky lg:top-0 lg:h-screen lg:overflow-hidden">
           <WhyChooseUs scrollProgress={smoothProgress} />
         </div>
       </div>

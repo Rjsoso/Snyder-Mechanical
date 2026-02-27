@@ -93,6 +93,43 @@ const ServiceCard = ({ service, index }) => {
   );
 };
 
+const ServiceDrawerContent = ({ onCollapse }) => (
+  <div className="container-custom py-12">
+    <div className="flex items-center gap-3 mb-10">
+      <span className="accent-rule-dark" />
+      <p className="text-secondary-500 font-semibold text-xs uppercase tracking-[0.2em]">
+        Residential Services
+      </p>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 items-start">
+      {residentialServices.map((service, index) => (
+        <ServiceCard key={service.id} service={service} index={index} />
+      ))}
+    </div>
+
+    <div className="mt-10 flex justify-center">
+      <button
+        onClick={e => { e.stopPropagation(); onCollapse(); }}
+        className="flex items-center gap-2 text-xs font-semibold text-secondary-400 hover:text-secondary-600 uppercase tracking-widest transition-colors duration-200 py-2 px-4"
+      >
+        <ArrowUp className="w-3.5 h-3.5" />
+        Collapse
+      </button>
+    </div>
+  </div>
+);
+
+const drawerMotionProps = {
+  key: 'service-drawer',
+  initial: { opacity: 0, height: 0 },
+  animate: { opacity: 1, height: 'auto' },
+  exit: { opacity: 0, height: 0 },
+  transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
+  className: 'overflow-hidden',
+  style: { background: '#faf9f7', borderTop: '1px solid rgba(0,0,0,0.07)' },
+};
+
 const WhoWeServe = () => {
   const [showServices, setShowServices] = useState(false);
 
@@ -118,7 +155,7 @@ const WhoWeServe = () => {
       </motion.div>
 
       {/* Split panels */}
-      <div className="group/panels flex flex-col md:flex-row min-h-[520px]">
+      <div className="group/panels flex flex-col md:flex-row md:min-h-[520px]">
 
         {/* Residential Panel */}
         <motion.div
@@ -200,6 +237,15 @@ const WhoWeServe = () => {
           />
         </motion.div>
 
+        {/* Mobile-only drawer — renders between Residential and Commercial on small screens */}
+        <AnimatePresence>
+          {showServices && (
+            <motion.div {...drawerMotionProps} className="md:hidden overflow-hidden w-full flex-none" style={{ background: '#faf9f7', borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+              <ServiceDrawerContent onCollapse={() => setShowServices(false)} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Commercial Panel */}
         <motion.div
           className="relative flex-1 md:hover:flex-[1.12] md:group-hover/panels:brightness-95 md:hover:brightness-100 transition-[flex,filter] ease-[cubic-bezier(0.4,0,0.2,1)] duration-[600ms] overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
@@ -247,48 +293,16 @@ const WhoWeServe = () => {
         </motion.div>
       </div>
 
-      {/* Inline service drawer */}
-      <AnimatePresence>
-        {showServices && (
-          <motion.div
-            key="service-drawer"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="overflow-hidden"
-            style={{ background: '#faf9f7', borderTop: '1px solid rgba(0,0,0,0.07)' }}
-          >
-            <div className="container-custom py-12">
-              {/* Drawer header */}
-              <div className="flex items-center gap-3 mb-10">
-                <span className="accent-rule-dark" />
-                <p className="text-secondary-500 font-semibold text-xs uppercase tracking-[0.2em]">
-                  Residential Services
-                </p>
-              </div>
-
-              {/* Service cards with staggered vertical offset */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 items-start">
-                {residentialServices.map((service, index) => (
-                  <ServiceCard key={service.id} service={service} index={index} />
-                ))}
-              </div>
-
-              {/* Collapse affordance */}
-              <div className="mt-10 flex justify-center">
-                <button
-                  onClick={e => { e.stopPropagation(); setShowServices(false); }}
-                  className="flex items-center gap-2 text-xs font-semibold text-secondary-400 hover:text-secondary-600 uppercase tracking-widest transition-colors duration-200 py-2 px-4"
-                >
-                  <ArrowUp className="w-3.5 h-3.5" />
-                  Collapse
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Desktop-only drawer — renders below both panels on md+ screens */}
+      <div className="hidden md:block">
+        <AnimatePresence>
+          {showServices && (
+            <motion.div {...drawerMotionProps}>
+              <ServiceDrawerContent onCollapse={() => setShowServices(false)} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </section>
   );
 };

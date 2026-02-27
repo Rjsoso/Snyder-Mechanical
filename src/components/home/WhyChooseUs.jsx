@@ -1,5 +1,6 @@
 import { motion, useTransform } from 'framer-motion';
 import { useHomePageData } from '../../hooks/useSanityData';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import AwardsCarousel from './AwardsCarousel';
 
 const pillars = [
@@ -34,20 +35,25 @@ const SCHEDULE = {
 
 const Y_START = 48;
 
+const MOBILE_VIEWPORT = { once: true, margin: '-60px' };
+const mobileItemVariants = (delay = 0) => ({
+  hidden: { opacity: 0, y: Y_START },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] } },
+});
+
 const WhyChooseUs = ({ scrollProgress }) => {
   const { data: homePageData } = useHomePageData();
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+  // Desktop scroll-progress transforms
   const eyebrowOpacity  = useTransform(scrollProgress, SCHEDULE.eyebrow,   [0, 1]);
   const eyebrowY        = useTransform(scrollProgress, SCHEDULE.eyebrow,   [Y_START, 0]);
-
   const headingOpacity  = useTransform(scrollProgress, SCHEDULE.heading,   [0, 1]);
   const headingY        = useTransform(scrollProgress, SCHEDULE.heading,   [Y_START, 0]);
-
   const stmtOpacity     = useTransform(scrollProgress, SCHEDULE.statement, [0, 1]);
   const stmtY           = useTransform(scrollProgress, SCHEDULE.statement, [Y_START, 0]);
-
-  const carouselOpacity = useTransform(scrollProgress, SCHEDULE.carousel, [0, 1]);
-  const carouselY       = useTransform(scrollProgress, SCHEDULE.carousel, [Y_START, 0]);
-
+  const carouselOpacity = useTransform(scrollProgress, SCHEDULE.carousel,  [0, 1]);
+  const carouselY       = useTransform(scrollProgress, SCHEDULE.carousel,  [Y_START, 0]);
   const row0Opacity = useTransform(scrollProgress, SCHEDULE.row0, [0, 1]);
   const row0Y       = useTransform(scrollProgress, SCHEDULE.row0, [Y_START, 0]);
   const row1Opacity = useTransform(scrollProgress, SCHEDULE.row1, [0, 1]);
@@ -57,7 +63,7 @@ const WhyChooseUs = ({ scrollProgress }) => {
   const row3Opacity = useTransform(scrollProgress, SCHEDULE.row3, [0, 1]);
   const row3Y       = useTransform(scrollProgress, SCHEDULE.row3, [Y_START, 0]);
 
-  const rowValues = [
+  const desktopRowValues = [
     { opacity: row0Opacity, y: row0Y },
     { opacity: row1Opacity, y: row1Y },
     { opacity: row2Opacity, y: row2Y },
@@ -66,7 +72,7 @@ const WhyChooseUs = ({ scrollProgress }) => {
 
   return (
     <section
-      className="section-padding h-screen max-h-screen flex items-center text-white relative z-10 overflow-hidden"
+      className="section-padding py-16 lg:py-0 lg:h-screen lg:max-h-screen flex items-center text-white relative z-10 lg:overflow-hidden"
       style={{ background: 'rgba(2, 6, 23, 0.20)' }}
     >
       <div
@@ -76,48 +82,110 @@ const WhyChooseUs = ({ scrollProgress }) => {
       />
 
       <div className="container-custom relative w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[42%_58%] gap-12 lg:gap-24 items-start">
 
           {/* Left column — eyebrow, tagline, company statement */}
           <div>
-            <motion.div
-              className="flex items-center gap-3 mb-6"
-              style={{ opacity: eyebrowOpacity, y: eyebrowY, willChange: 'transform, opacity' }}
-            >
-              <span className="w-8 h-px bg-white/25 flex-shrink-0" />
-              <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
-            </motion.div>
+            {isDesktop ? (
+              <motion.div
+                className="flex items-center gap-3 mb-6"
+                style={{ opacity: eyebrowOpacity, y: eyebrowY, willChange: 'transform, opacity' }}
+              >
+                <span className="w-8 h-px bg-white/25 flex-shrink-0" />
+                <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
+              </motion.div>
+            ) : (
+              <motion.div
+                className="flex items-center gap-3 mb-6"
+                variants={mobileItemVariants(0)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={MOBILE_VIEWPORT}
+              >
+                <span className="w-8 h-px bg-white/25 flex-shrink-0" />
+                <p className="text-white/40 font-semibold text-xs uppercase tracking-[0.2em]">Why Snyder Mechanical</p>
+              </motion.div>
+            )}
 
-            <motion.h2
-              className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-8"
-              style={{ opacity: headingOpacity, y: headingY, willChange: 'transform, opacity' }}
-            >
-              Safety. Quality.<br className="hidden md:block" /> Service. Construction.
-            </motion.h2>
+            {isDesktop ? (
+              <motion.h2
+                className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-8"
+                style={{ opacity: headingOpacity, y: headingY, willChange: 'transform, opacity' }}
+              >
+                Safety. Quality.<br className="hidden md:block" /> Service. Construction.
+              </motion.h2>
+            ) : (
+              <motion.h2
+                className="text-4xl font-black text-white leading-tight tracking-tight mb-8"
+                variants={mobileItemVariants(0.06)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={MOBILE_VIEWPORT}
+              >
+                Safety. Quality. Service. Construction.
+              </motion.h2>
+            )}
 
-            <motion.p
-              className="text-white/55 text-base leading-relaxed max-w-[38ch]"
-              style={{ opacity: stmtOpacity, y: stmtY, willChange: 'transform, opacity' }}
-            >
-              For over 40 years, Snyder Mechanical has been northern Nevada&rsquo;s preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we meet the critical demands of our clients.
-            </motion.p>
+            {isDesktop ? (
+              <motion.p
+                className="text-white/55 text-base leading-relaxed max-w-[38ch]"
+                style={{ opacity: stmtOpacity, y: stmtY, willChange: 'transform, opacity' }}
+              >
+                For over 40 years, Snyder Mechanical has been northern Nevada&rsquo;s preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we meet the critical demands of our clients.
+              </motion.p>
+            ) : (
+              <motion.p
+                className="text-white/55 text-base leading-relaxed max-w-[38ch]"
+                variants={mobileItemVariants(0.12)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={MOBILE_VIEWPORT}
+              >
+                For over 40 years, Snyder Mechanical has been northern Nevada&rsquo;s preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we meet the critical demands of our clients.
+              </motion.p>
+            )}
 
-            <motion.div style={{ opacity: carouselOpacity, y: carouselY, willChange: 'transform, opacity' }}>
-              <AwardsCarousel images={homePageData?.awardsCarousel || []} />
-            </motion.div>
+            {isDesktop ? (
+              <motion.div style={{ opacity: carouselOpacity, y: carouselY, willChange: 'transform, opacity' }}>
+                <AwardsCarousel images={homePageData?.awardsCarousel || []} />
+              </motion.div>
+            ) : (
+              <motion.div
+                variants={mobileItemVariants(0.18)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={MOBILE_VIEWPORT}
+              >
+                <AwardsCarousel images={homePageData?.awardsCarousel || []} />
+              </motion.div>
+            )}
           </div>
 
-          {/* Right column — all 4 pillars, no prefix decorations */}
+          {/* Right column — all 4 pillars */}
           <div className="flex flex-col divide-y divide-white/[0.08]">
             {pillars.map((pillar, i) => (
-              <motion.div
-                key={pillar.title}
-                style={{ opacity: rowValues[i].opacity, y: rowValues[i].y, willChange: 'transform, opacity' }}
-                className="py-7 first:pt-0 last:pb-0"
-              >
-                <h3 className="text-lg font-black text-white mb-2 tracking-tight">{pillar.title}</h3>
-                <p className="text-white/50 text-base leading-relaxed">{pillar.description}</p>
-              </motion.div>
+              isDesktop ? (
+                <motion.div
+                  key={pillar.title}
+                  style={{ opacity: desktopRowValues[i].opacity, y: desktopRowValues[i].y, willChange: 'transform, opacity' }}
+                  className="py-7 first:pt-0 last:pb-0"
+                >
+                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{pillar.title}</h3>
+                  <p className="text-white/50 text-base leading-relaxed">{pillar.description}</p>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={pillar.title}
+                  className="py-7 first:pt-0 last:pb-0"
+                  variants={mobileItemVariants(i * 0.08)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={MOBILE_VIEWPORT}
+                >
+                  <h3 className="text-lg font-black text-white mb-2 tracking-tight">{pillar.title}</h3>
+                  <p className="text-white/50 text-base leading-relaxed">{pillar.description}</p>
+                </motion.div>
+              )
             ))}
           </div>
 
