@@ -89,9 +89,6 @@ const CTABanner = () => {
               Request Service Online
             </Link>
 
-            <p className="text-center text-white/25 text-xs font-medium mt-1">
-              Free estimates · No obligation
-            </p>
           </motion.div>
         </div>
       </div>

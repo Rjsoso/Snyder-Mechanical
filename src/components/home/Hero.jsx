@@ -119,7 +119,7 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
-            {['Licensed & Insured', 'Free Estimates', 'Local & Family-Owned'].map((badge, i) => (
+            {['Licensed & Insured', 'Local & Family-Owned'].map((badge, i) => (
               <span key={badge} className="flex items-center gap-2">
                 {i > 0 && <span className="w-px h-4 bg-white/25" />}
                 {badge}
