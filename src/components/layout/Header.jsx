@@ -68,22 +68,20 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-black shadow-md border-b border-white/20 fixed top-0 left-0 right-0 z-50 overflow-visible">
-      <nav className="container-custom">
-        <div className="flex items-start justify-between h-[68px]">
-          {/* Logo — white badge box with top margin so the dark bar is visible above */}
+    <header className="bg-black shadow-md border-b border-white/20 fixed top-0 left-0 right-0 z-50">
+      <nav className="container-custom py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo — sits cleanly inside the black bar */}
           <Link to="/" className="flex-shrink-0 mr-8">
-            <div className="bg-white rounded-none shadow-xl px-5 pt-2 pb-4 mt-2">
-              <img
-                src="/logo.png"
-                alt="Snyder Mechanical"
-                className="h-[80px] md:h-[88px] w-auto object-contain"
-              />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Snyder Mechanical"
+              className="h-[52px] md:h-[60px] w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center self-center gap-7">
+          <div className="hidden lg:flex items-center gap-7">
             <Link
               to="/"
               className={`${NAV_LINK} ${isActive('/') ? NAV_ACTIVE : NAV_IDLE}`}
@@ -180,7 +178,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden self-center p-2 text-white/85 hover:text-white transition-colors"
+            className="lg:hidden p-2 text-white/85 hover:text-white transition-colors"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
