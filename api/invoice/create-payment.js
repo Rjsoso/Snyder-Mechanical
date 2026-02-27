@@ -11,6 +11,17 @@ const sanityClient = createClient({
   useCdn: false
 });
 
+const DEMO_INVOICE_ID = 'demo-invoice-99999';
+const DEMO_INVOICE = {
+  _id: DEMO_INVOICE_ID,
+  invoiceNumber: 'DEMO-99999',
+  customerName: 'Demo Customer',
+  customerEmail: 'demo@demo.com',
+  amount: 1250.00,
+  status: 'unpaid',
+  stripePaymentIntentId: null,
+};
+
 export default async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== 'POST') {
@@ -32,18 +43,17 @@ export default async function handler(req, res) {
       });
     }
 
-    // Fetch invoice from Sanity
-    const query = `*[_type == "invoice" && _id == $invoiceId][0]{
-      _id,
-      invoiceNumber,
-      customerName,
-      customerEmail,
-      amount,
-      status,
-      stripePaymentIntentId
-    }`;
-
-    const invoice = await sanityClient.fetch(query, { invoiceId });
+    // Demo mode: use hardcoded invoice, skip Sanity fetch and patch
+    const isDemo = invoiceId === DEMO_INVOICE_ID;
+    const invoice = isDemo
+      ? DEMO_INVOICE
+      : await sanityClient.fetch(
+          `*[_type == "invoice" && _id == $invoiceId][0]{
+            _id, invoiceNumber, customerName, customerEmail,
+            amount, status, stripePaymentIntentId
+          }`,
+          { invoiceId }
+        );
 
     // Check if invoice exists
     if (!invoice) {
@@ -59,8 +69,8 @@ export default async function handler(req, res) {
       });
     }
 
-    // If payment intent already exists, return it
-    if (invoice.stripePaymentIntentId) {
+    // If payment intent already exists (real invoices only), return it
+    if (!isDemo && invoice.stripePaymentIntentId) {
       try {
         const existingPaymentIntent = await stripe.paymentIntents.retrieve(
           invoice.stripePaymentIntentId
@@ -83,7 +93,7 @@ export default async function handler(req, res) {
 
     // Create Stripe Payment Intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: chargeAmount, // Amount in cents (may include processing fee)
+      amount: chargeAmount,
       currency: 'usd',
       metadata: {
         invoiceId: invoice._id,
@@ -91,16 +101,19 @@ export default async function handler(req, res) {
         customerName: invoice.customerName,
         customerEmail: invoice.customerEmail,
         originalAmount: Math.round(invoice.amount * 100),
-        totalAmount: chargeAmount
+        totalAmount: chargeAmount,
+        ...(isDemo && { demo: 'true' }),
       },
-      description: `Payment for Invoice ${invoice.invoiceNumber}`
+      description: `Payment for Invoice ${invoice.invoiceNumber}${isDemo ? ' (Demo)' : ''}`
     });
 
-    // Store payment intent ID in Sanity
-    await sanityClient
-      .patch(invoice._id)
-      .set({ stripePaymentIntentId: paymentIntent.id })
-      .commit();
+    // Store payment intent ID in Sanity (real invoices only)
+    if (!isDemo) {
+      await sanityClient
+        .patch(invoice._id)
+        .set({ stripePaymentIntentId: paymentIntent.id })
+        .commit();
+    }
 
     // Return client secret
     return res.status(200).json({

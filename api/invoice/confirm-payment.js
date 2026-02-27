@@ -12,6 +12,8 @@ const sanityClient = createClient({
   useCdn: false
 });
 
+const DEMO_INVOICE_ID = 'demo-invoice-99999';
+
 export default async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== 'POST') {
@@ -44,12 +46,28 @@ export default async function handler(req, res) {
       });
     }
 
+    const isDemo = invoiceId === DEMO_INVOICE_ID;
+    const paidAt = new Date().toISOString();
+
+    if (isDemo) {
+      // Demo mode: skip Sanity update and email, return success immediately
+      return res.status(200).json({
+        success: true,
+        message: 'Payment confirmed successfully',
+        invoice: {
+          invoiceNumber: 'DEMO-99999',
+          amount: 1250.00,
+          paidAt,
+        }
+      });
+    }
+
     // Update invoice in Sanity
     const updatedInvoice = await sanityClient
       .patch(invoiceId)
       .set({ 
         status: 'paid',
-        paidAt: new Date().toISOString(),
+        paidAt,
         stripePaymentIntentId: paymentIntentId
       })
       .commit();

@@ -12,6 +12,16 @@ const sanityClient = createClient({
   useCdn: false
 });
 
+const DEMO_INVOICE_ID = 'demo-invoice-99999';
+const DEMO_INVOICE = {
+  _id: DEMO_INVOICE_ID,
+  invoiceNumber: 'DEMO-99999',
+  customerName: 'Demo Customer',
+  customerEmail: 'demo@demo.com',
+  amount: 1250.00,
+  status: 'unpaid',
+};
+
 export default async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== 'POST') {
@@ -40,19 +50,18 @@ export default async function handler(req, res) {
     if (!/^\d{4,17}$/.test(accountNumber)) {
       return res.status(400).json({ error: 'Invalid account number.' });
     }
-    
-    // Get invoice from Sanity
-    const invoice = await sanityClient.fetch(
-      `*[_type == "invoice" && _id == $invoiceId][0]{
-        _id,
-        invoiceNumber,
-        customerName,
-        customerEmail,
-        amount,
-        status
-      }`,
-      { invoiceId }
-    );
+
+    const isDemo = invoiceId === DEMO_INVOICE_ID;
+
+    // Demo mode: use hardcoded invoice, skip Sanity fetch and patch
+    const invoice = isDemo
+      ? DEMO_INVOICE
+      : await sanityClient.fetch(
+          `*[_type == "invoice" && _id == $invoiceId][0]{
+            _id, invoiceNumber, customerName, customerEmail, amount, status
+          }`,
+          { invoiceId }
+        );
     
     if (!invoice) {
       return res.status(404).json({ error: 'Invoice not found' });
@@ -70,6 +79,7 @@ export default async function handler(req, res) {
       metadata: {
         invoiceId: invoice._id,
         invoiceNumber: invoice.invoiceNumber,
+        ...(isDemo && { demo: 'true' }),
       },
     });
     
@@ -77,9 +87,9 @@ export default async function handler(req, res) {
     const chargeAmount = requestedAmount || Math.round(invoice.amount * 100);
 
     // Create and confirm Payment Intent for ACH in one step
-    // Stripe automatically verifies test routing numbers
+    // Stripe automatically verifies test routing numbers in test mode
     const confirmedIntent = await stripe.paymentIntents.create({
-      amount: chargeAmount, // Amount in cents (may include processing fee)
+      amount: chargeAmount,
       currency: 'usd',
       customer: customer.id,
       payment_method_types: ['us_bank_account'],
@@ -96,16 +106,15 @@ export default async function handler(req, res) {
           email: invoice.customerEmail,
         },
       },
-      description: `Payment for Invoice ${invoice.invoiceNumber}`,
+      description: `Payment for Invoice ${invoice.invoiceNumber}${isDemo ? ' (Demo)' : ''}`,
       metadata: {
         invoiceId: invoice._id,
         invoiceNumber: invoice.invoiceNumber,
         originalAmount: Math.round(invoice.amount * 100),
-        totalAmount: chargeAmount
+        totalAmount: chargeAmount,
+        ...(isDemo && { demo: 'true' }),
       },
-      // Confirm immediately (required when using mandate_data)
       confirm: true,
-      // ACH requires mandate acceptance
       mandate_data: {
         customer_acceptance: {
           type: 'online',
@@ -117,33 +126,34 @@ export default async function handler(req, res) {
       },
     });
     
-    // Update invoice status to "processing"
-    await sanityClient
-      .patch(invoiceId)
-      .set({
-        status: 'processing',
-        paymentMethod: 'ach',
-        stripePaymentIntentId: confirmedIntent.id,
-        achProcessingStatus: 'processing',
-      })
-      .commit();
-    
-    console.log(`ACH payment initiated for invoice ${invoice.invoiceNumber}`);
+    // Update invoice status in Sanity (real invoices only)
+    if (!isDemo) {
+      await sanityClient
+        .patch(invoiceId)
+        .set({
+          status: 'processing',
+          paymentMethod: 'ach',
+          stripePaymentIntentId: confirmedIntent.id,
+          achProcessingStatus: 'processing',
+        })
+        .commit();
 
-    // Send ACH initiated email (non-blocking)
-    try {
-      await sendACHInitiatedEmail({
-        customerEmail: invoice.customerEmail,
-        customerName: invoice.customerName || accountHolder,
-        invoiceNumber: invoice.invoiceNumber,
-        amount: invoice.amount,
-        estimatedClearanceDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
-      });
-    } catch (emailError) {
-      // Log but don't fail payment if email fails
-      console.error('Failed to send ACH initiated email:', emailError);
+      // Send ACH initiated email (non-blocking)
+      try {
+        await sendACHInitiatedEmail({
+          customerEmail: invoice.customerEmail,
+          customerName: invoice.customerName || accountHolder,
+          invoiceNumber: invoice.invoiceNumber,
+          amount: invoice.amount,
+          estimatedClearanceDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+        });
+      } catch (emailError) {
+        console.error('Failed to send ACH initiated email:', emailError);
+      }
     }
     
+    console.log(`ACH payment initiated for invoice ${invoice.invoiceNumber}${isDemo ? ' (demo)' : ''}`);
+
     return res.status(200).json({
       success: true,
       paymentIntent: {
