@@ -8,7 +8,7 @@ const AwardsCarousel = ({ images }) => {
     if (!images || images.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 2500);
+    }, 3500);
     return () => clearInterval(interval);
   }, [images]);
 
@@ -42,7 +42,7 @@ const AwardsCarousel = ({ images }) => {
               <img
                 src={imageUrl}
                 alt={image.alt || image.title || 'Award'}
-                className="w-full h-auto block"
+                className="max-h-[180px] w-auto mx-auto block"
               />
             </div>
           );
