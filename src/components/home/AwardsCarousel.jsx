@@ -16,25 +16,33 @@ const AwardsCarousel = ({ images }) => {
 
   return (
     <div className="mt-10">
-      {/* Image frame */}
-      <div className="relative w-full max-w-[320px] aspect-[4/3] overflow-hidden rounded-lg">
+      {/* Image frame — height driven by the active photo (ghost sizing) */}
+      <div className="relative w-full max-w-[320px] overflow-hidden rounded-lg">
         {images.map((image, index) => {
           const imageUrl = image.asset
-            ? urlFor(image.asset).width(640).height(480).quality(85).url()
+            ? urlFor(image.asset).width(640).quality(85).url()
             : image.assetUrl || null;
 
           if (!imageUrl) return null;
 
+          const isActive = index === currentIndex;
+
           return (
             <div
               key={image.asset?._ref || index}
-              className="absolute inset-0 transition-opacity duration-700"
-              style={{ opacity: index === currentIndex ? 1 : 0 }}
+              className="transition-opacity duration-700"
+              style={{
+                opacity: isActive ? 1 : 0,
+                position: isActive ? 'relative' : 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+              }}
             >
               <img
                 src={imageUrl}
                 alt={image.alt || image.title || 'Award'}
-                className="w-full h-full object-contain bg-white/5 p-4"
+                className="w-full h-auto block"
               />
             </div>
           );

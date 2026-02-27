@@ -25,6 +25,7 @@ const SCHEDULE = {
   eyebrow:   [0.00, 0.18],
   heading:   [0.12, 0.30],
   statement: [0.24, 0.42],
+  carousel:  [0.34, 0.52],
   row0:      [0.34, 0.50],
   row1:      [0.44, 0.60],
   row2:      [0.54, 0.70],
@@ -43,6 +44,9 @@ const WhyChooseUs = ({ scrollProgress }) => {
 
   const stmtOpacity     = useTransform(scrollProgress, SCHEDULE.statement, [0, 1]);
   const stmtY           = useTransform(scrollProgress, SCHEDULE.statement, [Y_START, 0]);
+
+  const carouselOpacity = useTransform(scrollProgress, SCHEDULE.carousel, [0, 1]);
+  const carouselY       = useTransform(scrollProgress, SCHEDULE.carousel, [Y_START, 0]);
 
   const row0Opacity = useTransform(scrollProgress, SCHEDULE.row0, [0, 1]);
   const row0Y       = useTransform(scrollProgress, SCHEDULE.row0, [Y_START, 0]);
@@ -98,7 +102,9 @@ const WhyChooseUs = ({ scrollProgress }) => {
               For over 40 years, Snyder Mechanical has been northern Nevada&rsquo;s preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we meet the critical demands of our clients.
             </motion.p>
 
-            <AwardsCarousel images={homePageData?.awardsCarousel || []} />
+            <motion.div style={{ opacity: carouselOpacity, y: carouselY, willChange: 'transform, opacity' }}>
+              <AwardsCarousel images={homePageData?.awardsCarousel || []} />
+            </motion.div>
           </div>
 
           {/* Right column — all 4 pillars, no prefix decorations */}
