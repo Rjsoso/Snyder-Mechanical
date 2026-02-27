@@ -122,7 +122,7 @@ const WhoWeServe = () => {
 
         {/* Residential Panel */}
         <motion.div
-          className={`relative overflow-hidden cursor-pointer transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] min-h-[320px] md:min-h-0 md:min-w-[49%] ${
+          className={`relative overflow-hidden cursor-pointer transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] min-h-[320px] md:min-h-0 ${
             showServices ? 'flex-[1.15]' : 'flex-1 md:hover:flex-[1.1]'
           }`}
           style={{ background: showServices ? '#f5f3ef' : '#faf9f7' }}
@@ -143,7 +143,7 @@ const WhoWeServe = () => {
           />
 
           <div className="p-8 md:p-14 flex flex-col justify-between relative z-10 h-full gap-8">
-            <div>
+            <div className="w-max max-w-full">
               {/* Eyebrow */}
               <div className="mb-8">
                 <span className="text-xs font-black uppercase tracking-[0.22em] text-secondary-400">Homeowners</span>
@@ -202,7 +202,7 @@ const WhoWeServe = () => {
 
         {/* Commercial Panel */}
         <motion.div
-          className="relative flex-1 md:hover:flex-[1.1] md:min-w-[49%] transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
+          className="relative flex-1 md:hover:flex-[1.1] transition-[flex] ease-[cubic-bezier(0.16,1,0.3,1)] duration-[400ms] overflow-hidden cursor-pointer bg-primary-800 min-h-[320px] md:min-h-0"
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -215,7 +215,7 @@ const WhoWeServe = () => {
           />
 
           <Link to="/commercial" className="group block h-full p-8 md:p-14 flex flex-col justify-between relative z-10">
-            <div>
+            <div className="w-max max-w-full">
               <div className="mb-8">
                 <span className="text-xs font-black uppercase tracking-[0.22em] text-white/40">Commercial</span>
               </div>
