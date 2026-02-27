@@ -50,6 +50,7 @@
   --color-amber-900: #78350f;
   
   --font-family-sans: Inter, system-ui, sans-serif;
+  --font-family-display: "Passion One", sans-serif;
   
   --spacing-128: 32rem;
   --spacing-144: 36rem;
@@ -75,6 +76,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
+    font-family: "Passion One", sans-serif;
     font-weight: 700;
     color: #1a1a1a;
   }
