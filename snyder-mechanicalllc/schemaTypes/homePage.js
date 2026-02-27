@@ -116,6 +116,31 @@ export default {
       ]
     },
     {
+      name: 'awardsCarousel',
+      title: 'Awards Carousel',
+      type: 'array',
+      description: 'Award images displayed in an auto-rotating carousel under the Why Snyder Mechanical description.',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'title',
+              title: 'Award Title',
+              type: 'string'
+            },
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+              validation: Rule => Rule.required()
+            }
+          ]
+        }
+      ]
+    },
+    {
       name: 'safetySection',
       title: 'Safety Section',
       type: 'object',

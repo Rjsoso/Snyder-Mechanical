@@ -330,7 +330,14 @@ export function useHomePageData() {
         },
         quickServiceSelector,
         servicesGridSection,
-        safetySection
+        safetySection,
+        awardsCarousel[] {
+          asset,
+          "assetUrl": asset->url,
+          alt,
+          title,
+          hotspot
+        }
       }`)
       .then((data) => {
         setData(data);

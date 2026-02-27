@@ -1,4 +1,6 @@
 import { motion, useTransform } from 'framer-motion';
+import { useHomePageData } from '../../hooks/useSanityData';
+import AwardsCarousel from './AwardsCarousel';
 
 const pillars = [
   {
@@ -32,6 +34,7 @@ const SCHEDULE = {
 const Y_START = 48;
 
 const WhyChooseUs = ({ scrollProgress }) => {
+  const { data: homePageData } = useHomePageData();
   const eyebrowOpacity  = useTransform(scrollProgress, SCHEDULE.eyebrow,   [0, 1]);
   const eyebrowY        = useTransform(scrollProgress, SCHEDULE.eyebrow,   [Y_START, 0]);
 
@@ -94,6 +97,8 @@ const WhyChooseUs = ({ scrollProgress }) => {
             >
               For over 40 years, Snyder Mechanical has been northern Nevada&rsquo;s preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we meet the critical demands of our clients.
             </motion.p>
+
+            <AwardsCarousel images={homePageData?.awardsCarousel || []} />
           </div>
 
           {/* Right column — all 4 pillars, no prefix decorations */}
