@@ -6,7 +6,6 @@ import WhoWeServe from '../components/home/WhoWeServe';
 import WhyChooseUs from '../components/home/WhyChooseUs';
 import ReviewsSection from '../components/home/ReviewsSection';
 import ProcessSection from '../components/home/ProcessSection';
-import CTABanner from '../components/home/CTABanner';
 import LocationSection from '../components/home/LocationSection';
 import Footer from '../components/layout/Footer';
 
@@ -46,7 +45,6 @@ const Home = () => {
       <div className="relative z-20 bg-primary-900">
         <ReviewsSection />
         <ProcessSection />
-        <CTABanner />
         <LocationSection />
         <Footer />
       </div>
