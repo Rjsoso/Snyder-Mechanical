@@ -16,8 +16,8 @@ const AwardsCarousel = ({ images }) => {
 
   return (
     <div className="mt-10">
-      {/* Image frame — height driven by the active photo (ghost sizing) */}
-      <div className="relative w-full max-w-[320px] overflow-hidden rounded-lg">
+      {/* Image frame — fixed height so layout never shifts */}
+      <div className="relative w-full max-w-[320px] h-[180px] overflow-hidden rounded-lg">
         {images.map((image, index) => {
           const imageUrl = image.asset
             ? urlFor(image.asset).width(640).quality(85).url()
@@ -25,24 +25,16 @@ const AwardsCarousel = ({ images }) => {
 
           if (!imageUrl) return null;
 
-          const isActive = index === currentIndex;
-
           return (
             <div
               key={image.asset?._ref || index}
-              className="transition-opacity duration-700"
-              style={{
-                opacity: isActive ? 1 : 0,
-                position: isActive ? 'relative' : 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-              }}
+              className="absolute inset-0 transition-opacity duration-700"
+              style={{ opacity: index === currentIndex ? 1 : 0 }}
             >
               <img
                 src={imageUrl}
                 alt={image.alt || image.title || 'Award'}
-                className="max-h-[180px] w-auto mx-auto block"
+                className="w-full h-full object-contain"
               />
             </div>
           );

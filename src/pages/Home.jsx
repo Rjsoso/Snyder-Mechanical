@@ -37,12 +37,12 @@ const Home = () => {
 
       {/* Sticky WhyChooseUs: 300vh gives 200vh of pinned scroll */}
       <div ref={whyWrapperRef} className="relative z-10" style={{ height: '300vh' }}>
-        <div className="sticky top-0 h-screen">
+        <div className="sticky top-0 h-screen overflow-hidden">
           <WhyChooseUs scrollProgress={smoothProgress} />
         </div>
       </div>
 
-      <div className="relative z-20">
+      <div className="relative z-20 bg-primary-900">
         <ReviewsSection />
         <ProcessSection />
         <CTABanner />
