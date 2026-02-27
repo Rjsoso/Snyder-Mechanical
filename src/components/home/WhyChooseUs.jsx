@@ -82,14 +82,14 @@ const WhyChooseUs = ({ scrollProgress }) => {
             </motion.div>
 
             <motion.h2
-              className="text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight mb-8"
+              className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-8"
               style={{ opacity: headingOpacity, y: headingY, willChange: 'transform, opacity' }}
             >
               Safety. Quality.<br className="hidden md:block" /> Service. Construction.
             </motion.h2>
 
             <motion.p
-              className="text-white/55 text-sm leading-relaxed max-w-[38ch]"
+              className="text-white/55 text-base leading-relaxed max-w-[38ch]"
               style={{ opacity: stmtOpacity, y: stmtY, willChange: 'transform, opacity' }}
             >
               For over 40 years, Snyder Mechanical has been northern Nevada&rsquo;s preferred mechanical contractor and service provider for design/build projects. With both a commercial department and a residential service department, we meet the critical demands of our clients.
@@ -104,8 +104,8 @@ const WhyChooseUs = ({ scrollProgress }) => {
                 style={{ opacity: rowValues[i].opacity, y: rowValues[i].y, willChange: 'transform, opacity' }}
                 className="py-7 first:pt-0 last:pb-0"
               >
-                <h3 className="text-base font-black text-white mb-2 tracking-tight">{pillar.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{pillar.description}</p>
+                <h3 className="text-lg font-black text-white mb-2 tracking-tight">{pillar.title}</h3>
+                <p className="text-white/50 text-base leading-relaxed">{pillar.description}</p>
               </motion.div>
             ))}
           </div>
