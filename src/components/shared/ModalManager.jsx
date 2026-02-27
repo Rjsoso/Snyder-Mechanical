@@ -50,46 +50,39 @@ const ModalManager = () => {
 
           {/* Modal Content */}
           <motion.div
-            className="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.9, y: 20 }}
+            className="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            initial={{ scale: 0.94, y: 24 }}
             animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.9, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            exit={{ scale: 0.94, y: 24 }}
+            transition={{ type: 'spring', damping: 28, stiffness: 320 }}
           >
-            {/* Call strip — shown on schedule modal (close button integrated here) */}
-            {activeModal === 'schedule' ? (
-              <div className="bg-primary-900 rounded-t-xl px-6 py-4 flex flex-row items-center justify-between gap-3">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 min-w-0">
-                  <div className="min-w-0">
-                    <p className="text-white/60 text-xs uppercase tracking-[0.15em] font-medium mb-0.5">Prefer to talk?</p>
-                    <p className="text-white font-semibold text-sm">Call us and we'll get you booked right away.</p>
-                  </div>
-                  <a
-                    href={`tel:${PHONE.replace(/[^0-9]/g, '')}`}
-                    className="inline-flex items-center gap-2 bg-white text-primary-900 hover:bg-primary-50 px-5 py-2.5 rounded-md font-bold text-sm transition-colors flex-shrink-0 shadow"
-                  >
-                    <Phone className="w-4 h-4" />
-                    {PHONE}
-                  </a>
+            {/* Header strip — always dark, always includes close */}
+            <div className="bg-secondary-900 rounded-t-2xl px-6 py-4 flex items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 min-w-0">
+                <div className="min-w-0">
+                  <p className="text-white/50 text-[10px] uppercase tracking-[0.18em] font-semibold mb-0.5">
+                    Prefer to talk?
+                  </p>
+                  <p className="text-white/90 font-medium text-sm">
+                    Call us and we'll get you booked right away.
+                  </p>
                 </div>
-                <button
-                  onClick={closeModal}
-                  className="flex-shrink-0 p-1.5 rounded-md bg-white/20 hover:bg-white/30 transition-colors ml-2"
-                  aria-label="Close modal"
+                <a
+                  href={`tel:${PHONE.replace(/[^0-9]/g, '')}`}
+                  className="inline-flex items-center gap-2 bg-white text-secondary-900 hover:bg-secondary-100 px-4 py-2 rounded-lg font-bold text-sm transition-colors flex-shrink-0"
                 >
-                  <X className="w-4 h-4 text-white" />
-                </button>
+                  <Phone className="w-3.5 h-3.5" />
+                  {PHONE}
+                </a>
               </div>
-            ) : (
-              /* Close Button */
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 z-10 p-2 rounded-md bg-white/80 hover:bg-secondary-100 transition-colors"
+                className="flex-shrink-0 p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
                 aria-label="Close modal"
               >
-                <X className="w-5 h-5 text-secondary-700" />
+                <X className="w-4 h-4 text-white" />
               </button>
-            )}
+            </div>
 
             {/* Form Content */}
             <div className="p-8">
