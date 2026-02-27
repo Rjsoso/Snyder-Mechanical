@@ -22,8 +22,8 @@ const DEFAULT_BUSINESS_SERVICES = [
 ];
 
 const NAV_LINK = 'text-[11px] font-bold uppercase tracking-[0.14em] transition-colors pb-0.5';
-const NAV_ACTIVE = 'text-primary-900 border-b border-primary-900';
-const NAV_IDLE = 'text-secondary-600 hover:text-primary-900';
+const NAV_ACTIVE = 'text-white border-b border-white';
+const NAV_IDLE = 'text-white/60 hover:text-white';
 
 const DROPDOWN_ITEM = 'block px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-secondary-600 hover:bg-secondary-50 hover:text-primary-900 transition-colors';
 
@@ -68,20 +68,18 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-md border-b border-secondary-200 fixed top-0 left-0 right-0 z-50 overflow-visible">
+    <header className="bg-primary-900 shadow-md border-b border-white/10 fixed top-0 left-0 right-0 z-50 overflow-visible">
       <nav className="container-custom">
         <div className="flex items-start justify-between h-[68px]">
-          {/* Logo — starts at top of nav bar and hangs below */}
-          <Link to="/" className="flex-shrink-0 mr-6 pt-1">
-            <img
-              src="/logo.png"
-              alt="Snyder Mechanical"
-              className="h-[110px] md:h-[124px] w-auto object-contain"
-              style={{
-                filter:
-                  'drop-shadow(0 3px 6px rgba(0,0,0,0.55)) drop-shadow(0 1px 2px rgba(0,0,0,0.35))',
-              }}
-            />
+          {/* Logo — white badge box starts flush at top and hangs below */}
+          <Link to="/" className="flex-shrink-0 mr-8">
+            <div className="bg-white rounded-b-2xl shadow-xl px-5 pt-2.5 pb-4">
+              <img
+                src="/logo.png"
+                alt="Snyder Mechanical"
+                className="h-[80px] md:h-[88px] w-auto object-contain"
+              />
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -164,7 +162,7 @@ const Header = () => {
             {/* Payments CTA */}
             <Link
               to="/resources"
-              className="px-5 py-2 bg-primary-900 text-white text-[11px] font-bold uppercase tracking-[0.14em] hover:bg-primary-700 transition-colors rounded-sm"
+              className="px-5 py-2 bg-white text-primary-900 text-[11px] font-bold uppercase tracking-[0.14em] hover:bg-white/85 transition-colors rounded-sm"
             >
               {paymentsLabel}
             </Link>
@@ -172,7 +170,7 @@ const Header = () => {
             {/* Phone Number */}
             <a
               href={`tel:${phone}`}
-              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-secondary-600 hover:text-primary-900 transition-colors"
+              className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white/60 hover:text-white transition-colors"
             >
               <Phone className="w-3.5 h-3.5 flex-shrink-0" />
               <span className="hidden xl:inline">{phone}</span>
@@ -182,7 +180,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden self-center p-2 text-secondary-700 hover:text-primary-900 transition-colors"
+            className="lg:hidden self-center p-2 text-white/70 hover:text-white transition-colors"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -190,11 +188,11 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-3 py-4 pb-40 border-t border-secondary-200 max-h-[calc(100vh-7rem)] overflow-y-auto">
+          <div className="lg:hidden mt-0 py-4 pb-40 border-t border-white/10 max-h-[calc(100vh-7rem)] overflow-y-auto">
             <div className="flex flex-col gap-5">
               <Link
                 to="/"
-                className={`${NAV_LINK} ${isActive('/') ? 'text-primary-900' : 'text-secondary-700'}`}
+                className={`${NAV_LINK} ${isActive('/') ? 'text-white' : 'text-white/60'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
@@ -202,12 +200,12 @@ const Header = () => {
 
               {/* About Submenu */}
               <div className="space-y-2">
-                <div className={`${NAV_LINK} text-secondary-900`}>About</div>
+                <div className={`${NAV_LINK} text-white/80`}>About</div>
                 {aboutDropdown.map((item, index) => (
                   <Link
                     key={index}
                     to={item.path}
-                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-secondary-600 hover:text-primary-900"
+                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 hover:text-white"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -217,24 +215,24 @@ const Header = () => {
 
               {/* Services Submenu */}
               <div className="space-y-2">
-                <div className={`${NAV_LINK} text-secondary-900`}>Services</div>
-                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-secondary-400 pl-4 mt-2">Homeowners</div>
+                <div className={`${NAV_LINK} text-white/80`}>Services</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/30 pl-4 mt-2">Homeowners</div>
                 {homeownersServices.map((item, index) => (
                   <Link
                     key={index}
                     to={item.path}
-                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-secondary-600 hover:text-primary-900"
+                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 hover:text-white"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
                   </Link>
                 ))}
-                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-secondary-400 pl-4 mt-3">Commercial</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-white/30 pl-4 mt-3">Commercial</div>
                 {businessServices.map((item, index) => (
                   <Link
                     key={index}
                     to={item.path}
-                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-secondary-600 hover:text-primary-900"
+                    className="block pl-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/50 hover:text-white"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -244,7 +242,7 @@ const Header = () => {
 
               <Link
                 to="/portfolio"
-                className={`${NAV_LINK} ${isActive('/portfolio') ? 'text-primary-900' : 'text-secondary-700'}`}
+                className={`${NAV_LINK} ${isActive('/portfolio') ? 'text-white' : 'text-white/60'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Portfolio
@@ -252,7 +250,7 @@ const Header = () => {
 
               <Link
                 to="/contact"
-                className={`${NAV_LINK} ${isActive('/contact') ? 'text-primary-900' : 'text-secondary-700'}`}
+                className={`${NAV_LINK} ${isActive('/contact') ? 'text-white' : 'text-white/60'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
@@ -260,7 +258,7 @@ const Header = () => {
 
               <Link
                 to="/resources"
-                className="self-start px-5 py-2.5 bg-primary-900 text-white text-[11px] font-bold uppercase tracking-[0.14em] hover:bg-primary-700 transition-colors rounded-sm"
+                className="self-start px-5 py-2.5 bg-white text-primary-900 text-[11px] font-bold uppercase tracking-[0.14em] hover:bg-white/85 transition-colors rounded-sm"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {paymentsLabel}
@@ -268,7 +266,7 @@ const Header = () => {
 
               <a
                 href={`tel:${phone}`}
-                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em] text-secondary-700 hover:text-primary-900 py-1"
+                className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.1em] text-white/60 hover:text-white py-1"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <Phone className="w-4 h-4" />
