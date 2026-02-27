@@ -68,12 +68,12 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-primary-900 shadow-md border-b border-white/10 fixed top-0 left-0 right-0 z-50 overflow-visible">
+    <header className="bg-[#111111] shadow-md border-b border-white/10 fixed top-0 left-0 right-0 z-50 overflow-visible">
       <nav className="container-custom">
         <div className="flex items-start justify-between h-[68px]">
-          {/* Logo — white badge box starts flush at top and hangs below */}
+          {/* Logo — white badge box with top margin so the dark bar is visible above */}
           <Link to="/" className="flex-shrink-0 mr-8">
-            <div className="bg-white rounded-b-2xl shadow-xl px-5 pt-2.5 pb-4">
+            <div className="bg-white rounded-2xl shadow-xl px-5 pt-2 pb-4 mt-2">
               <img
                 src="/logo.png"
                 alt="Snyder Mechanical"
